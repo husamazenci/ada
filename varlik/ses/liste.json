@@ -1,0 +1,259 @@
+{
+  "oran": 32000,
+  "roller": {
+    "nefes-sakin": [
+      {
+        "dosya": "nefes-sakin-1.wav",
+        "kaynak": "breath-female.wav",
+        "sureS": 0.56
+      },
+      {
+        "dosya": "nefes-sakin-2.wav",
+        "kaynak": "breath-female.wav",
+        "sureS": 0.56
+      },
+      {
+        "dosya": "nefes-sakin-3.wav",
+        "kaynak": "breath-female.wav",
+        "sureS": 0.7
+      },
+      {
+        "dosya": "nefes-sakin-4.wav",
+        "kaynak": "breath-female.wav",
+        "sureS": 0.56
+      },
+      {
+        "dosya": "nefes-sakin-5.wav",
+        "kaynak": "breath-female.wav",
+        "sureS": 0.46
+      },
+      {
+        "dosya": "nefes-sakin-6.wav",
+        "kaynak": "breath-female.wav",
+        "sureS": 0.5
+      },
+      {
+        "dosya": "nefes-sakin-7.wav",
+        "kaynak": "breath-female.wav",
+        "sureS": 0.48
+      },
+      {
+        "dosya": "nefes-sakin-8.wav",
+        "kaynak": "breath-female.wav",
+        "sureS": 0.46
+      },
+      {
+        "dosya": "nefes-sakin-9.wav",
+        "kaynak": "breath-female.wav",
+        "sureS": 0.46
+      },
+      {
+        "dosya": "nefes-sakin-10.wav",
+        "kaynak": "breath-female.wav",
+        "sureS": 0.54
+      },
+      {
+        "dosya": "nefes-sakin-11.wav",
+        "kaynak": "breath-female.wav",
+        "sureS": 0.48
+      },
+      {
+        "dosya": "nefes-sakin-12.wav",
+        "kaynak": "breath-female.wav",
+        "sureS": 0.56
+      },
+      {
+        "dosya": "nefes-sakin-13.wav",
+        "kaynak": "breath-female.wav",
+        "sureS": 0.56
+      },
+      {
+        "dosya": "nefes-sakin-14.wav",
+        "kaynak": "breath-female.wav",
+        "sureS": 0.56
+      },
+      {
+        "dosya": "nefes-sakin-15.wav",
+        "kaynak": "breath-female.wav",
+        "sureS": 0.52
+      },
+      {
+        "dosya": "nefes-sakin-16.wav",
+        "kaynak": "breath-female.wav",
+        "sureS": 0.54
+      },
+      {
+        "dosya": "nefes-sakin-17.wav",
+        "kaynak": "breath-female.wav",
+        "sureS": 0.6
+      },
+      {
+        "dosya": "nefes-sakin-18.wav",
+        "kaynak": "breath-female2.wav",
+        "sureS": 0.52
+      },
+      {
+        "dosya": "nefes-sakin-19.wav",
+        "kaynak": "breath-female2.wav",
+        "sureS": 0.56
+      },
+      {
+        "dosya": "nefes-sakin-20.wav",
+        "kaynak": "breath-female2.wav",
+        "sureS": 0.52
+      },
+      {
+        "dosya": "nefes-sakin-21.wav",
+        "kaynak": "breath-female2.wav",
+        "sureS": 0.48
+      },
+      {
+        "dosya": "nefes-sakin-22.wav",
+        "kaynak": "breath-female2.wav",
+        "sureS": 0.58
+      }
+    ],
+    "nefes-korku": [
+      {
+        "dosya": "nefes-korku-1.wav",
+        "kaynak": "scared-breathing.wav",
+        "sureS": 1.42
+      },
+      {
+        "dosya": "nefes-korku-2.wav",
+        "kaynak": "scared-breathing.wav",
+        "sureS": 0.44
+      },
+      {
+        "dosya": "nefes-korku-3.wav",
+        "kaynak": "scared-breathing.wav",
+        "sureS": 2.86
+      },
+      {
+        "dosya": "nefes-korku-4.wav",
+        "kaynak": "scared-breathing.wav",
+        "sureS": 2.68
+      },
+      {
+        "dosya": "nefes-korku-5.wav",
+        "kaynak": "scared-breathing.wav",
+        "sureS": 0.32
+      },
+      {
+        "dosya": "nefes-korku-6.wav",
+        "kaynak": "scared-breathing.wav",
+        "sureS": 0.7
+      },
+      {
+        "dosya": "nefes-korku-7.wav",
+        "kaynak": "scared-breathing.wav",
+        "sureS": 0.52
+      },
+      {
+        "dosya": "nefes-korku-8.wav",
+        "kaynak": "scared-breathing.wav",
+        "sureS": 1.78
+      },
+      {
+        "dosya": "nefes-korku-9.wav",
+        "kaynak": "scared-breathing.wav",
+        "sureS": 1.7
+      },
+      {
+        "dosya": "nefes-korku-10.wav",
+        "kaynak": "scared-breathing.wav",
+        "sureS": 1.28
+      }
+    ],
+    "aci": [
+      {
+        "dosya": "aci-1.wav",
+        "kaynak": "gasp1.wav",
+        "sureS": 0.48
+      },
+      {
+        "dosya": "aci-2.wav",
+        "kaynak": "gasp1.wav",
+        "sureS": 0.64
+      },
+      {
+        "dosya": "aci-3.wav",
+        "kaynak": "gasp1.wav",
+        "sureS": 0.48
+      },
+      {
+        "dosya": "aci-4.wav",
+        "kaynak": "gasp1.wav",
+        "sureS": 0.44
+      },
+      {
+        "dosya": "aci-5.wav",
+        "kaynak": "gasp1.wav",
+        "sureS": 0.62
+      }
+    ],
+    "yeme": [
+      {
+        "dosya": "yeme-1.wav",
+        "kaynak": "drink-sip-and-swallow.wav",
+        "sureS": 2.27
+      }
+    ],
+    "dip": [
+      {
+        "dosya": "dip-1.wav",
+        "kaynak": "yawn2.wav",
+        "sureS": 2.41
+      }
+    ],
+    "dal-kirilmasi": [
+      {
+        "dosya": "dal-kirilmasi-1.wav",
+        "kaynak": "dal-tek.ogg",
+        "sureS": 0.32
+      },
+      {
+        "dosya": "dal-kirilmasi-2.wav",
+        "kaynak": "dal-dizi.ogg",
+        "sureS": 0.4
+      },
+      {
+        "dosya": "dal-kirilmasi-3.wav",
+        "kaynak": "dal-dizi.ogg",
+        "sureS": 0.32
+      },
+      {
+        "dosya": "dal-kirilmasi-4.wav",
+        "kaynak": "dal-dizi.ogg",
+        "sureS": 0.32
+      }
+    ],
+    "uluma": [
+      {
+        "dosya": "uluma-1.wav",
+        "kaynak": "uluma.ogg",
+        "sureS": 2.3
+      },
+      {
+        "dosya": "uluma-2.wav",
+        "kaynak": "uluma.ogg",
+        "sureS": 4.26
+      },
+      {
+        "dosya": "uluma-3.wav",
+        "kaynak": "uluma.ogg",
+        "sureS": 4.22
+      },
+      {
+        "dosya": "uluma-4.wav",
+        "kaynak": "uluma.ogg",
+        "sureS": 6.18
+      },
+      {
+        "dosya": "uluma-5.wav",
+        "kaynak": "uluma.ogg",
+        "sureS": 5.24
+      }
+    ]
+  }
+}

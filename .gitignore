@@ -1,0 +1,5 @@
+.godot/
+.scratch/
+.DS_Store
+dist/
+*.translation
