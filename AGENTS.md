@@ -40,30 +40,53 @@ yapıldı; ikisi de aynı yerde takıldı. Ölçüldü: 15.028 satırın yalnız
 
 Kullanıcıya sorulmadan değiştirilmez. Zemin değişti, bunlar değişmedi.
 
+<!-- DEGISMEZ-KURALLAR:BASLA — AGENTS.md §2 ile belge/OYUN-TASARIMI.md §6 birebir aynı tutulur -->
 - Arkadaş LLM ile yapılmaz. İhtiyaç tabanlı utility AI.
 - **İlişki barı yok.** Hiçbir sayı, çubuk, yüzde gösterilmez. Güven yalnızca
   davranıştan okunur.
-- **Güven hızlı düşer, yavaş yükselir.** Yalnızca **bedeli olan** davranışlarla
-  yükselir: sen açken yiyeceğini vermek, verdiğin sözü bir geceyi geçirerek
-  tutmak, onu tehlikeden çıkarmak. İlke: o an **senin ihtiyacın olan** bir şeyden
-  vazgeçmek. Ucuz jestler (yanında durmak, konuşmak) tek başına yükseltmez.
-- Arkadaş **kalıcı olarak ölebilir** ve **küsüp gidebilir**. Küserse adanın başka
-  bir yerine çekilir; bulup geri kazanman gerekir.
-- **Arkadaş tehditten ÖLMEZ, senin yüzünden ölür** (K-049). Hayvan ve doğa onu
-  yaralar, yıpratır, korkutur — öldürmez. Ölümü ancak SENİN birikmiş davranışının
-  sonucudur ve ani değildir: günlerce görünür biçimde çöker.
+- **Güven hızlı düşer, yavaş yükselir.** Yalnızca **bedeli olan**
+  davranışlarla yükselir: sen açken yiyeceğini ya da suyunu vermek, verdiğin
+  sözü tutmak, onu tehlikeden çıkarmak. İlke şudur: o an **senin ihtiyacın
+  olan** bir şeyden vazgeçmek. Liste kapalı değil, ilke kapalı. Ucuz jestler
+  (yanında durmak, tokken vermek) tek başına yükseltmez. Düşüş yükselişin
+  üç katı hızlıdır ve her düşüş, **onun ihtiyacı olan** bir şeyi almak ya da
+  vermemektir (K-055).
+- **Arkadaş yalnızca gördüğünü değerlendirir.** O bakmıyorken yaptığın
+  fedakârlığı bilmez, o bakmıyorken yediğini de bilmez. **Yokluk da algıdır:**
+  yanında olmadığını fark eder (K-055).
+- **Arkadaş gerçek bir insan gibi hissettirmelidir** (kullanıcı kararı, K-056).
+  Bu bir üslup tercihi değil, kabul kriteridir. Kaynağı: kendi gündemi olması
+  (sen olmasan da bir şey yapar), gecikme ve tereddüt, eksik dikkat, seçici
+  hafıza, tutarsızlık, beceriksizlik, bedensel süreklilik ve bakış. **Kişilik
+  geçmişten değil ALIŞKANLIKTAN gelir** — hep ateşin aynı tarafına oturması,
+  yakıtı atmadan önce yoklaması gibi. İllüzyonu kıran davranışların listesi
+  kapalıdır ve denetlenir (`OYUN-TASARIMI.md` §4).
+- **Arkadaş kalıcı olarak ölebilir** ve **küsüp gidebilir**. Gidiş **5. günden
+  önce olmaz** (K-055): güven dibe vursa bile o güne kadar uzaklaşır,
+  konuşmaz, ateşin karşı tarafında uyur — ama oradadır. Gidince geri
+  kazanılmaz; gidişi salın yanında ikinci bir sondur.
+- **Arkadaş tehditten ÖLMEZ, senin yüzünden ölür** (K-049, K-055). Hayvan ve
+  doğa onu yaralar, yıpratır, korkutur — öldürmez. Koşullar (açlık, susuzluk,
+  soğuk, yara) moralini **orta**ya kadar indirebilir, dibe indiremez; dibe
+  ancak **senin ihmalin** indirir. Ölüm ani değildir: çöküş 4. günden itibaren
+  görünür, en erken 6. günün şafağında gelir, iki tam gün müdahale penceresi
+  vardır. Sebep: "kötü şans" ölümü oyuncunun hikâyesi olmaz.
 - **Arkadaşın geçmişi öğrenilmez, kendisi öğrenilir** (K-049). Adı, nereden
-  geldiği hiç söylenmez. Ama NE olduğu davranışından okunur. **Çelişen ipucu YOK;
-  hiç ipucu yok.**
+  geldiği, kim olduğu hiç söylenmez — o kendini anlatmaz. Ama NE olduğu
+  davranışından okunur. **Çelişen ipucu YOK; hiç ipucu yok.** Bağlanma
+  bilgiden değil, birlikte yaşanandan doğar.
 - Adada daha önce bir insanın bulunduğunu **kesinleştiren** hiçbir iz yoktur.
-- **Oyun ÖĞRETMEZ, anlatır** (K-041). Öğretici yok, görev listesi yok, işaret/ok/
-  HUD yok. Yönlendirme dünyadan gelir. Ama oyun bir HİKÂYE anlatır: kontrolün
-  alındığı sayılı ve kısa sahneler, nadiren beliren kısa satırlar olabilir.
-  Ölçüt: o satır oyuncuya ne yapacağını değil, ne YAŞADIĞINI söylüyorsa doğrudur.
-- Fantastik yaratık yok, kötü adam yok. Tehdit hayvan ve doğa. Arkadaş kötü adam
-  değildir; ama çaresizlikte sana karşı güç kullanabilir. (K-026)
+- **Oyun ÖĞRETMEZ, anlatır** (K-041). Öğretici yok, görev listesi yok,
+  işaret/ok/HUD yok. Yönlendirme dünyadan gelir: arkadaş yapar ve bakar, yarım
+  iş yarım durur. Ama oyun bir HİKÂYE anlatır: kontrolün alındığı sayılı ve
+  kısa sahneler ve nadiren beliren kısa satırlar olabilir. Ölçüt: o satır
+  oyuncuya ne yapacağını değil, ne YAŞADIĞINI söylüyorsa doğrudur.
+- Fantastik yaratık yok, kötü adam yok. Tehdit hayvan ve doğa. Arkadaş kötü
+  adam değildir; ama çaresizlikte sana karşı güç kullanabilir (itmek, yiyeceği
+  zorla almak). Bu bir tehdit türü değil, ilişkinin sonucudur. (K-026)
 - Multiplayer yok. **Elle kayıt ve yükleme yok.** Tek yuvalı askıya alma: oyun
   sürerken tek yuvaya sürekli yazılır; ölüm kesinleştiği an yuva silinir. (K-006)
+<!-- DEGISMEZ-KURALLAR:BITIR -->
 
 <!-- GORSEL-YON:BASLA -->
 **Görsel yön:** Doğal, kasvetli ve **tutarlı stilize** (kullanıcı kararı, K-053).

@@ -1,32 +1,40 @@
 #!/usr/bin/env bash
-# AGENTS.md §2 ile belge/OYUN-TASARIMI.md §6'daki görsel yön bloğu
-# BİREBİR AYNI olmalı. İkinci denemede bu kural yazılıydı ama denetlenmiyordu;
-# "ileride bir test bu eşitliği denetleyecek" diye borç bırakılmıştı.
+# AGENTS.md ile belge/OYUN-TASARIMI.md'deki işaretli bloklar BİREBİR AYNI olmalı.
+# İkinci denemede bu kural yazılıydı ama denetlenmiyordu ("ileride bir test bu
+# eşitliği denetleyecek" diye borç bırakılmıştı).
 # Çıkış: 0 eşit · 1 farklı · 2 ÇALIŞTIRILAMADI.
 set -u
 cd "$(dirname "$0")/.."
 
-cikar() {  # cikar <dosya>
-	awk '/<!-- GORSEL-YON:BASLA -->/{y=1;next} /<!-- GORSEL-YON:BITIR -->/{y=0} y' "$1"
+BLOKLAR="GORSEL-YON DEGISMEZ-KURALLAR"
+
+cikar() {  # cikar <dosya> <blok-adi>
+	awk -v b="$2" '
+		$0 ~ "<!-- " b ":BASLA" {y=1; next}
+		$0 ~ "<!-- " b ":BITIR"  {y=0}
+		y' "$1"
 }
 
 for f in AGENTS.md belge/OYUN-TASARIMI.md; do
 	[ -f "$f" ] || { echo "ÇALIŞTIRILAMADI: dosya yok: $f" >&2; exit 2; }
 done
 
-a=$(cikar AGENTS.md)
-t=$(cikar belge/OYUN-TASARIMI.md)
+hata=0
+for b in $BLOKLAR; do
+	a=$(cikar AGENTS.md "$b")
+	t=$(cikar belge/OYUN-TASARIMI.md "$b")
+	if [ -z "$a" ] || [ -z "$t" ]; then
+		echo "ÇALIŞTIRILAMADI: '$b' bloğu bir dosyada boş — test bir şey ölçmez." >&2
+		exit 2
+	fi
+	if [ "$a" = "$t" ]; then
+		echo "  ✓ $b — birebir aynı ($(printf '%s' "$a" | wc -l | tr -d ' ') satır)"
+	else
+		echo "  ✗ $b — FARKLI:" >&2
+		diff <(printf '%s\n' "$a") <(printf '%s\n' "$t") >&2
+		hata=1
+	fi
+done
 
-if [ -z "$a" ] || [ -z "$t" ]; then
-	echo "ÇALIŞTIRILAMADI: işaretler arasında blok bulunamadı (boş taranırsa test bir şey ölçmez)." >&2
-	exit 2
-fi
-
-if [ "$a" = "$t" ]; then
-	echo "GEÇTİ — görsel yön bloğu iki dosyada birebir aynı ($(printf '%s' "$a" | wc -l | tr -d ' ') satır)."
-	exit 0
-fi
-
-echo "BAŞARISIZ — bloklar farklı:" >&2
-diff <(printf '%s\n' "$a") <(printf '%s\n' "$t") >&2
-exit 1
+[ "$hata" -eq 0 ] && { echo "GEÇTİ — işaretli blokların hepsi eşit."; exit 0; }
+echo "BAŞARISIZ" >&2; exit 1

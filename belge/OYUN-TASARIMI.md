@@ -231,45 +231,53 @@ geleneği); bu yüzden dil bir kimlik ipucu sayılmaz.
 
 Kullanıcıya sorulmadan değiştirilmez.
 
-<!-- DEGISMEZ-KURALLAR:BASLA — AGENTS.md §2 ile docs/OYUN-TASARIMI.md §6 birebir aynı tutulur -->
+<!-- DEGISMEZ-KURALLAR:BASLA — AGENTS.md §2 ile belge/OYUN-TASARIMI.md §6 birebir aynı tutulur -->
 - Arkadaş LLM ile yapılmaz. İhtiyaç tabanlı utility AI.
 - **İlişki barı yok.** Hiçbir sayı, çubuk, yüzde gösterilmez. Güven yalnızca
   davranıştan okunur.
 - **Güven hızlı düşer, yavaş yükselir.** Yalnızca **bedeli olan**
-  davranışlarla yükselir: sen açken yiyeceğini vermek, verdiğin sözü bir
-  geceyi geçirerek tutmak, onu tehlikeden çıkarmak. İlke şudur: o an **senin
-  ihtiyacın olan** bir şeyden vazgeçmek. Liste kapalı değil, ilke kapalı.
-  Ucuz jestler (yanında durmak, konuşmak) tek başına yükseltmez.
-- Arkadaş **kalıcı olarak ölebilir** ve **küsüp gidebilir**. Küserse adanın
-  başka bir yerine çekilir; bulup geri kazanman gerekir.
-- **Arkadaş tehditten ÖLMEZ, senin yüzünden ölür** (K-049, kullanıcı kararı).
-  Hayvan ve doğa onu yaralar, yıpratır, korkutur — öldürmez. Ölümü ancak
-  SENİN birikmiş davranışının sonucudur ve ani değildir: günlerce görünür
-  biçimde çöker, oyuncunun müdahale etmek için defalarca fırsatı olur.
-  Sebep: "kötü şans" ölümü oyuncunun hikâyesi olmaz; bu oyunda ölüm bir
-  kazaya değil, bir birikime bağlı.
-- **Arkadaşın geçmişi öğrenilmez, kendisi öğrenilir** (K-049, kullanıcı
-  kararı). Adı, nereden geldiği, kim olduğu hiç söylenmez — o kendini
-  anlatmaz. Ama NE olduğu davranışından okunur: neyi paylaşır, neye kızar,
-  ne zaman yanında durur. **Çelişen ipucu YOK; hiç ipucu yok.** Bağlanma
-  bilgiden değil, birlikte yaşanandan doğar; kopmayı zorlaştıran da odur.
+  davranışlarla yükselir: sen açken yiyeceğini ya da suyunu vermek, verdiğin
+  sözü tutmak, onu tehlikeden çıkarmak. İlke şudur: o an **senin ihtiyacın
+  olan** bir şeyden vazgeçmek. Liste kapalı değil, ilke kapalı. Ucuz jestler
+  (yanında durmak, tokken vermek) tek başına yükseltmez. Düşüş yükselişin
+  üç katı hızlıdır ve her düşüş, **onun ihtiyacı olan** bir şeyi almak ya da
+  vermemektir (K-055).
+- **Arkadaş yalnızca gördüğünü değerlendirir.** O bakmıyorken yaptığın
+  fedakârlığı bilmez, o bakmıyorken yediğini de bilmez. **Yokluk da algıdır:**
+  yanında olmadığını fark eder (K-055).
+- **Arkadaş gerçek bir insan gibi hissettirmelidir** (kullanıcı kararı, K-056).
+  Bu bir üslup tercihi değil, kabul kriteridir. Kaynağı: kendi gündemi olması
+  (sen olmasan da bir şey yapar), gecikme ve tereddüt, eksik dikkat, seçici
+  hafıza, tutarsızlık, beceriksizlik, bedensel süreklilik ve bakış. **Kişilik
+  geçmişten değil ALIŞKANLIKTAN gelir** — hep ateşin aynı tarafına oturması,
+  yakıtı atmadan önce yoklaması gibi. İllüzyonu kıran davranışların listesi
+  kapalıdır ve denetlenir (`OYUN-TASARIMI.md` §4).
+- **Arkadaş kalıcı olarak ölebilir** ve **küsüp gidebilir**. Gidiş **5. günden
+  önce olmaz** (K-055): güven dibe vursa bile o güne kadar uzaklaşır,
+  konuşmaz, ateşin karşı tarafında uyur — ama oradadır. Gidince geri
+  kazanılmaz; gidişi salın yanında ikinci bir sondur.
+- **Arkadaş tehditten ÖLMEZ, senin yüzünden ölür** (K-049, K-055). Hayvan ve
+  doğa onu yaralar, yıpratır, korkutur — öldürmez. Koşullar (açlık, susuzluk,
+  soğuk, yara) moralini **orta**ya kadar indirebilir, dibe indiremez; dibe
+  ancak **senin ihmalin** indirir. Ölüm ani değildir: çöküş 4. günden itibaren
+  görünür, en erken 6. günün şafağında gelir, iki tam gün müdahale penceresi
+  vardır. Sebep: "kötü şans" ölümü oyuncunun hikâyesi olmaz.
+- **Arkadaşın geçmişi öğrenilmez, kendisi öğrenilir** (K-049). Adı, nereden
+  geldiği, kim olduğu hiç söylenmez — o kendini anlatmaz. Ama NE olduğu
+  davranışından okunur. **Çelişen ipucu YOK; hiç ipucu yok.** Bağlanma
+  bilgiden değil, birlikte yaşanandan doğar.
 - Adada daha önce bir insanın bulunduğunu **kesinleştiren** hiçbir iz yoktur.
-  (6. günün "kaynağı belirsiz izleri" K-049 ile kaldırıldı: adada koca bir
-  enkaz varken her iz "kazadandır" diye açıklanıyordu, gerilim doğmadan
-  sönüyordu.)
-- **Oyun ÖĞRETMEZ, anlatır** (K-041, kullanıcı kararı 2026-09-20). Öğretici
-  yok, görev listesi yok, ekranda "şunu yap" yazmaz, işaret/ok/HUD yok.
-  Yönlendirme dünyadan gelir: arkadaş yapar ve bakar, yarım iş yarım durur.
-  Ama oyun bir HİKÂYE anlatır: kontrolün alındığı birkaç sahne (sayılı ve
-  kısa) ve ekranda nadiren beliren kısa satırlar olabilir. Ölçüt: o satır
-  oyuncuya ne yapacağını değil, o anda ne YAŞADIĞINI söylüyorsa doğrudur.
-  Anlamı yine oyuncu kurar.
+- **Oyun ÖĞRETMEZ, anlatır** (K-041). Öğretici yok, görev listesi yok,
+  işaret/ok/HUD yok. Yönlendirme dünyadan gelir: arkadaş yapar ve bakar, yarım
+  iş yarım durur. Ama oyun bir HİKÂYE anlatır: kontrolün alındığı sayılı ve
+  kısa sahneler ve nadiren beliren kısa satırlar olabilir. Ölçüt: o satır
+  oyuncuya ne yapacağını değil, ne YAŞADIĞINI söylüyorsa doğrudur.
 - Fantastik yaratık yok, kötü adam yok. Tehdit hayvan ve doğa. Arkadaş kötü
   adam değildir; ama çaresizlikte sana karşı güç kullanabilir (itmek, yiyeceği
   zorla almak). Bu bir tehdit türü değil, ilişkinin sonucudur. (K-026)
-- Multiplayer yok. **Elle kayıt ve yükleme yok.** Tek yuvalı askıya alma var:
-  oyun sürerken tek yuvaya sürekli yazılır, oyuncu kaldığı yerden devam eder;
-  ölüm kesinleştiği an yuva silinir ve oyun biter. (K-006)
+- Multiplayer yok. **Elle kayıt ve yükleme yok.** Tek yuvalı askıya alma: oyun
+  sürerken tek yuvaya sürekli yazılır; ölüm kesinleştiği an yuva silinir. (K-006)
+<!-- DEGISMEZ-KURALLAR:BITIR -->
 
 <!-- GORSEL-YON:BASLA -->
 **Görsel yön:** Doğal, kasvetli ve **tutarlı stilize** (kullanıcı kararı, K-053).
@@ -284,7 +292,9 @@ kenarında taç/boy 0.5–0.8; genç ağaç 3–12 m). (K-035, K-053)
 çakışırsa **bütçe kazanır**. Hedef makine fansızdır (K-001). Stilize hedefi
 **HEDEFTİR**; 60 fps bir **SINIRDIR**.
 <!-- GORSEL-YON:BITIR -->
-<!-- DEGISMEZ-KURALLAR:BITIR -->
+> Bu blok `AGENTS.md` §2 ile **birebir aynıdır**. Birini değiştiren
+> ikisini birden değiştirir; `testler/degismez-esitlik.sh` denetler.
+
 
 ## 7. Dünya
 

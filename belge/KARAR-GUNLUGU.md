@@ -1571,3 +1571,70 @@ okuyordu; artık oyuncunun gördüğü şeyi ölçüyor (mesafe kapanıyor mu).
   elle bağlamayı söylüyordu; kurulum çıktısı brew'un ikiliyi zaten bağladığını
   gösterdi ("Linking Binary 'Godot' to '/opt/homebrew/bin/godot'"). Adım
   kaldırıldı.
+
+## K-055 · 2026-09-23 · Tasarım gözden geçirmesi, tur 1: kapsam, zincir, gidiş, su
+
+> Kullanıcı kod yazmadan önce mekanikleri baştan gözden geçirmek istedi:
+> "her böyle aceleyle oyuna geçtiğimde çokça hata oldu ve yazılım sırasında
+> fikir değişikliklerine gittik, bunu minimalleştirmemiz lazım." Haklı:
+> K-049, K-050, K-051 ve K-052'nin dördü de kod yazıldıktan SONRA gelen
+> tasarım değişiklikleriydi ve her biri yazılmışı sildi.
+
+### Kapsam: 12 gün → 6 gün, 4 saat → 120 dakika (kullanıcı kararı)
+
+- Gün uzunluğu değişmedi (~20 dk: gündüz ~13, alacakaranlık ~2, gece ~5).
+  6 × 20 = 120. Üç perde duruyor: I (1–2), II (3–4), III (5–6).
+- **Gerekçe:** iki deneme de 1. gün çalışmadan öldü. Tek kişi + AI ajanlarıyla
+  4 saatlik anlatı üretmek aynı duvara üçüncü kez koşmak olurdu. Kaybedilen
+  "uzunluk", kazanılan "bitme ihtimali".
+- **Yan faydalar:** kalıcı ölüm 120 dakikada adil, 4 saatte zalim · oyuncu
+  "arkadaş köpekten ölmüyormuş" kalıbını 6 günde öğrenemez · ada gerçekten
+  elle tasarlanabilir boyutta kalır.
+- **Yeni omurga:** (1) Uyanış · (2) Ateş ve yer · (3) Ayrılık ve köpek ·
+  (4) Yaralı gün ve fırtına · (5) Çöküş ve sal · (6) Seçim.
+  Kıtlık artık kendi günü değil, ayrılığın SEBEBİ. Yara ve fırtına aynı güne
+  geldi — yorgun ve eksik halde sınava girmek eskisinden güçlü.
+- **11. günün boşluğu (K-050'de açık kalan tek soru) kendiliğinden kapandı:**
+  sıkıştırmada boş gün kalmadı.
+
+### A1 · Zincir kırılabiliyordu — koşullu/koşulsuz iz ayrımı (düzeltme)
+
+- **Bulgu:** fırtınanın izi `barinak-hasari` idi ve kriz + sal buna bağlıydı.
+  Ama barınak ZORUNLU DEĞİL (3. gün "tek başına yapılabilir"). Barınak yoksa
+  iz yok, iz yoksa kriz ve sal hiç tetiklenmiyor — **oyun kapanış sahnesine
+  hiç ulaşamıyor**, 20 günlük güvenlik tavanına kadar boş akıyordu. Aynı
+  kırılma 6. günde de vardı (`yara-ve-o-gecenin-hafizasi`, ama köpek
+  sahnesinin üç sonucundan biri yarasız).
+- **Düzeltme:** her sahne iki tür iz bırakır.
+  - **Koşulsuz iz:** sahne oldu. Oyuncu ne yaparsa yapsın, orada olmasa bile
+    düşer (`firtina-gecti`).
+  - **Koşullu iz:** o sahnede ne yapıldı (`barinak-hasarli`, `yara-oyuncuda`).
+- **Yeni değişmez:** zincirin önkoşulu YALNIZCA koşulsuz iz olabilir. Koşullu
+  izler zinciri değil VARYANTLARI besler. K-052'deki "izGerekli daha önceki
+  bir sahnenin izi olmalı" değişmezinin eksik kalan yarısıdır; aynı yerde
+  denetlenecek — koşullu iz önkoşul olarak kullanılırsa oyun hiç yüklenmez.
+- **Sonuç:** oyuncu hiçbir şey yapmasa bile oyun sonuna varır; ama bambaşka
+  bir oyun olur.
+
+### Gidiş: kalıyor, ama 5. günden önce olmuyor (kullanıcı kararı)
+
+- Güven dibe vursa bile arkadaş 5. güne kadar gitmez: uzaklaşır, konuşmaz,
+  ateşin karşı tarafında uyur — ama ORADADIR.
+- **Gerekçe:** 12 günde bulup geri kazanmaya vakit vardı; 6 günde 3. gün
+  giderse oyunun yarısı boş bir adada geçerdi. Gidiş 5–6. güne saklanınca
+  tehdit bütün oyun boyunca ASILI kalır ve salın yanında ikinci bir son olur:
+  kalkıp gittiği için seçimi o yapmış olur.
+- **Geri kazanma mekaniği kaldırıldı** (bulmak, uzaktan bedelli jestle mesafe
+  kapatmak). 6 güne sığmıyordu. `OYUN-TASARIMI.md` §4'teki "Gidiş ve geri
+  kazanma" bölümü buna göre yeniden yazılacak.
+
+### Su: tam ihtiyaç oluyor (kullanıcı kararı, B2)
+
+- Susuzluk ikinci bir sayaç; hem oyuncuda hem arkadaşta işler.
+- **Gerekçe (kullanıcı seçimi):** fedakârlık FIRSATI sayısını artırır. A3'te
+  saptanan kırılganlık buydu — tez "sen açken vermek"e dayanıyor ama 120
+  dakikada o durumun kaç kez oluşacağı belirsizdi. İkinci ihtiyaç fırsatı
+  ikiye katlar.
+- **Kabul edilen bedel:** ikinci sayaç, ikinci kaynak, kap sistemi, ikinci
+  "aç mıyım / susadım mı" okunabilirlik sorunu. Tasarımın ucuz ve keskin
+  kalması şart — birinci denemede yedi ihtiyaç vardı ve kalabalıktı.
