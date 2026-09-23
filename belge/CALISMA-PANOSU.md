@@ -81,7 +81,22 @@ DOKUNMA:  `betik/sim/` `betik/ai/` `betik/veri/` `testler/` `belge/` `AGENTS.md`
 
 ## 5. ChatGPT kuyruğu
 
-## [ ] CC0 varlık araştırması — sahip: gpt
+## [x] CC0 varlık araştırması — sahip: gpt · **ÖLÇÜLDÜ (Claude, 2026-09-24)**
+
+SONUÇ:    `belge/VARLIK-KAYNAKLARI.md` yazıldı. 18 URL çağrıldı, 18'i yaşıyor;
+          sayfa başlıkları eşleşiyor (yanlış sayfa yok); lisanslar sayfanın
+          kendisinden okundu. Beş kategoride de ≥3 aday geldi — kabul ölçütü
+          karşılandı.
+DÜZELTME: (1) Kurt varlığı için GPL şüphem yanlıştı — sayfa çoklu lisans
+          veriyor (CC0/GPL2/GPL3), ChatGPT haklıydı. (2) `Character: Dog`
+          gerçekten CC-BY 3.0, atıf gerekir. (3) ChatGPT'nin atladığı asıl
+          bulgu: Quaternius **Universal Animation Library** (CC0, 120+ anim,
+          Base Characters ile AYNI rig, Godot'da test edilmiş) — Mixamo'ya
+          gerek kalmıyor, retarget riski sıfır.
+ÖNERİ:    Beş paketin hepsi Quaternius, hepsi CC0, hepsi aynı görsel dil →
+          stil birliği riski kökünden kalkıyor. Kullanıcı onayı bekliyor.
+
+## [ ] (arşiv) CC0 varlık araştırması — özgün madde
 
 DOSYA:    **yeni dosya** `belge/VARLIK-KAYNAKLARI.md` (kod yok, yalnızca tablo)
 SORUN:    Bütçe 0 TL, yalnızca CC0/ücretsiz varlık kullanılacak. Elde hiç 3B

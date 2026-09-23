@@ -1638,3 +1638,95 @@ okuyordu; artık oyuncunun gördüğü şeyi ölçüyor (mesafe kapanıyor mu).
 - **Kabul edilen bedel:** ikinci sayaç, ikinci kaynak, kap sistemi, ikinci
   "aç mıyım / susadım mı" okunabilirlik sorunu. Tasarımın ucuz ve keskin
   kalması şart — birinci denemede yedi ihtiyaç vardı ve kalabalıktı.
+
+## K-056 · 2026-09-24 · Tasarım gözden geçirmesi, tur 2: su, fiiller, moral, insan hissi
+
+### İnsan hissi kural seviyesine çıktı (kullanıcı kararı)
+
+> Kullanıcı: "yanımızdaki arkadaşı gerçek bir insan hissiyatı vermesini
+> istiyorum."
+
+Bu bir üslup tercihi değil, **kabul kriteridir**. LLM yok (değişmez kural),
+geçmiş ipucu yok (K-049) — yani insanlık YALNIZCA davranıştan gelmek zorunda.
+Kaynakları:
+
+1. **Kendi gündemi var.** Sen olmasan da bir şey yapar: su içmeye gider, ateşe
+   odun atar, oturup dinlenir. *Tepki veren şey evcil hayvandır; kendi işi olan
+   şey insandır.* En önemli madde budur.
+2. **Gecikme ve tereddüt.** Anında karar vermez (çağırınca 0.4–1.2 sn).
+   Bazen başlar, durur, geri döner.
+3. **Eksik dikkat.** Her şeyi görmez; arkası dönükken olanı bilmez.
+4. **Seçici hafıza.** Belirli anları hatırlar (ilk gece yalnız mıydı, yaralıyken
+   yanında mıydın), ayrıntıyı unutur.
+5. **Tutarsızlık.** Aynı durumda hep aynı şeyi yapmaz.
+6. **Beceriksizlik.** Bazen başaramaz: ateşi tutturamaz, düşürür, geç kalır.
+   *Kusursuz olan şey insan değildir.*
+7. **Bedensel süreklilik.** Yorulur, üşür, ıslanır, aksar — ertesi gün de sürer.
+8. **Bakış.** En ucuz ve en güçlü kanal: ne zaman baktığı, ne kadar tuttuğu.
+
+**Kişilik geçmişten değil ALIŞKANLIKTAN gelir.** "Hiç ipucu yok" kuralıyla
+"gerçek insan" hedefi ancak böyle uzlaşır: hep ateşin aynı tarafına oturması,
+yakıtı atmadan önce yoklaması, yürürken bir kez geriye bakması. Alışkanlık,
+geçmiş anlatmadan kişilik verir.
+
+**İllüzyon kırıcılar (kapalı liste, denetlenir).** Bu liste pozitif listeden
+daha kıymetlidir çünkü her maddesi 3 dakikalık kayıtta gözle görülür:
+anında tepki · kusursuz yol bulma (hiç takılmamak) · aynı animasyonun birebir
+tekrarı · **görmediği şeye tepki vermek** (en çok kıran) · hiç boşta kalmamak ·
+sürekli oyuncuya bakmak · hiçbir şeyi kendi başlatmamak · her zaman müsait
+olmak · hiç yanılmamak · derdini kusursuz jestle anlatmak.
+
+### Su: tasarımı (B2'nin uygulaması)
+
+- **Dere açıklığın İÇİNDEDİR.** Evde su bedava; susuzluk yalnızca iki yerde
+  ısırır: (1) 3. gün uzak yiyecek yolculuğunda, (2) 5. gün arkadaş kalkamazken.
+  İkisi de oyunun zaten basınç istediği anlar.
+- **Tek kap** (enkazdan, 1. gün). Bir dolum bir kişilik. Fedakârlık yeni bir
+  sisteme değil **nesnenin kendisine** gömülü: bir kap, iki insan.
+- Simetri: **yiyecek uzakta ve az; su yakında ama taşınmak zorunda.**
+- Okunabilirlik iki kanal: açlık = ağırlaşma + derin nefes + "açsın";
+  susuzluk = görüşün kenarında kuruluk + yutkunma + "susadın". Arkadaşta ihtiyaç
+  **bakış yönünden** okunur (yiyeceğe mi, dereye/kaba mı bakıyor) — bu,
+  animasyon setinin şartıdır.
+
+### Fiil listesi: dört tuş (B3)
+
+- **E** — bağlama göre etkileş. Elinde bir şey varsa **kendine kullan** (ye, iç).
+  Dünyada: al, kabı doldur, ateşe yakıt at, barınağı kur/onar, salı it.
+- **F** — elindekini **ona ver**.
+- **Q** — çağır.  · **Shift** — koş.
+
+Oyunun bütün ahlaki seçimi **tek tuş aralığına** iner: E kendine, F ona. Aynı
+nesne, aynı an, iki tuş. Menü yok, çark yok.
+
+### Günün ritmi (B4)
+
+| Parça | Süre | İş |
+|---|---|---|
+| Gündüz | ~13 dk | Yiyecek, yakıt, su, barınak, yolculuk — **fırsatlar burada doğar** |
+| Alacakaranlık | ~2 dk | Dönüş baskısı: karanlık basmadan kampta olmak |
+| Gece | ~5 dk | Ateş başında. Az eylem, çok dikkat — **arkadaşı burada okursun** |
+
+Gecenin "az eylem" olması kusur değil tasarımın kendisi: davranış tablosunun
+görünür olduğu tek yer orası. Kabul kriteri olan 3 dakikalık kayıt da bir gece
+sahnesi olacak. Gün içi döngü dört basınçtan doğar (yiyecek biter, yakıt biter,
+kap boşalır, karanlık gelir) ve hepsi tek yöne bakar: **ışığın kenarına gitmek.**
+
+### Tezin sağlamlığı — sayıya bağlandı
+
+Endişe şuydu: "sen açken ver" görünmez bir değişkene bağlı ve 120 dakikada kaç
+kez gerçekleşeceği belirsiz. Hedefler:
+
+- 6 günde **12–16 bedelli fırsat** doğsun (ikinizin de ihtiyacı var, elde tek
+  kaynak var, **ve arkadaş görebiliyor**).
+- Yüksek güvene çıkmak için **5–6 tanesini** almak yetsin.
+- Hiç almayan oyuncuda güven 3. gün ortaya, 5. gün dibe insin.
+- **Saf simülasyon bunu ölçsün:** penceresiz koşan test
+  `6 gün · 14 fırsat doğdu · 6'sı alındı · güven: yüksek` bassın. Tez, grafik
+  yapılmadan önce doğrulanır.
+
+### D2 · Cutscene sayısı kilitlendi
+
+Üç tam cutscene (uyanış · fırtınanın uyanma anı · kapanış). Dördüncüsü bu
+sürümde eklenmez. Sebep: "sonra ekleriz" en pahalı yol — cutscene kamera
+sistemi, kontrol devri ve iskelet animasyonu demektir.
