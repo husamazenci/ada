@@ -17,6 +17,7 @@ kos() {  # kos <test-adi> → çıkış kodu
 		esitlik) ./testler/degismez-esitlik.sh >/dev/null 2>&1 ;;
 		altigun) $GODOT --headless --path . --script res://testler/alti-gun.gd >/dev/null 2>&1 ;;
 		moral)   $GODOT --headless --path . --script res://testler/moral-tabani.gd >/dev/null 2>&1 ;;
+		zincir)  $GODOT --headless --path . --script res://testler/zincir.gd >/dev/null 2>&1 ;;
 	esac
 	return $?
 }
@@ -124,6 +125,25 @@ if sabotaj betik/veri/ayarlar.gd 's/const COKUS_EN_AZ_GUN := 2.0/const COKUS_EN_
 fi
 dene moral "geri yüklendi" 0
 rm -f /tmp/_sab.yedek /tmp/_g.yedek
+
+# ============ zincir (A1 değişmezi) ============
+echo "negatif-kontrol · zincir"
+dene zincir "temiz kopya" 0
+
+# İLK SABOTAJ ESKİ HATANIN TA KENDİSİ: fırtınanın önkoşulunu koşullu ize
+# bağlamak. Barınak kurmayan oyuncuda kriz ve sal hiç tetiklenmiyor, oyun
+# kapanışa ulaşamıyordu (K-055/A1). Test bunu yakalamıyorsa hiçbir şey
+# yakalamıyordur.
+if sabotaj betik/veri/sahneler.gd 's/"onkosul": "kopek-gecti"/"onkosul": "barinak-hasarli"/'; then
+	dene zincir "sabotaj: önkoşul KOŞULLU ize bağlandı (eski hata)" 1; geri betik/veri/sahneler.gd
+fi
+if sabotaj betik/veri/sahneler.gd 's/"ad": "ayrilik",     "gun": 6/"ad": "ayrilik",     "gun": 9/'; then
+	dene zincir "sabotaj: son sahne takvim dışına itildi" 1; geri betik/veri/sahneler.gd
+fi
+if sabotaj betik/veri/sahneler.gd 's/"kosullu": \["kriz-siddeti"\], "cutscene": false/"kosullu": ["kriz-siddeti"], "cutscene": true/'; then
+	dene zincir "sabotaj: dördüncü cutscene eklendi (kilit D2)" 1; geri betik/veri/sahneler.gd
+fi
+dene zincir "geri yüklendi" 0
 
 echo "GENEL TOPLAM: $gecti geçti, $kalan kaldı"
 [ "$kalan" -eq 0 ] && exit 0 || exit 1

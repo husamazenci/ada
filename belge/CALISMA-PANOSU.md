@@ -44,6 +44,38 @@ ChatGPT'nin ağacı yoktur — web sohbetidir. İşi kullanıcı yapıştırır 
 
 *Yalnızca Claude Code yazar.*
 
+### GECE RAPORU — 2026-09-24 (kullanıcı uyurken)
+
+Dal: `claude/faz-1-cekirdek`. **`main`'e BİRLEŞTİRİLMEDİ** — kod dalı, onay bekler.
+
+**Yazılanlar (saf katman, penceresiz):** `veri/ayarlar.gd` (bütün ayarlanabilir
+sayılar tek kaynakta) · `veri/sahneler.gd` (9 sahnelik omurga + inşa
+değişmezleri) · `sim/ihtiyaclar.gd` · `sim/dunya.gd` (fırsat sayacı) ·
+`ai/guven.gd` (güven + moral + ihmal).
+
+**Testler:** `alti-gun` (tez ölçümü) · `moral-tabani` (A2 değişmezi) ·
+`zincir` (A1 değişmezi) · `katman-kurallari` · `degismez-esitlik`.
+**26 negatif kontrolün 26'sı geçiyor.**
+
+**Altı günlük koşu:**
+| tip | fırsat | alınan | ihanet | güven | moral | son |
+|---|---|---|---|---|---|---|
+| fedakâr | 11 | 11 | 0 | 1.00 yüksek | 0.68 yüksek | — |
+| dengeli | 8 | 6 | 3 | 0.17 düşük | 0.58 orta | — |
+| bencil | 4 | 0 | 4 | 0.00 düşük | 0.26 dip | arkadaş gitti |
+
+**Kullanıcıya üç soru** (sabah):
+1. **"Dengeli" oyuncu düşük güvende bitiyor.** 3× oranı çoğunlukla yardım eden
+   ama ara sıra kendini düşünen oyuncuyu da dibe atıyor. Orta güven neredeyse
+   ulaşılamaz. Oran 3× kalsın mı, 2×'e mi insin?
+2. **Fırsat sayısı 11, hedef 12–16 idi.** Hedefi ben tahminle koymuştum ve
+   dayandığı ekonomi henüz tasarlanmadı; testi geçirmek için hedefi
+   değiştirmedim, iddia olmaktan çıkarıp ölçüm olarak raporladım. Ekonomi
+   tasarlanınca band onaylanacak.
+3. **Su henüz fırsat üretmiyor.** Dere kampta olduğu için susuzluk yalnızca
+   yolculukta ve çöküşte ısırmalı; ikisi de mekân gerektiriyor, yani gri kutu
+   sahnesinden sonra.
+
 ### Şu an
 - Faz 0 bitti: proje iskeleti, iki test, dokuz negatif kontrol, LFS, 48 CC0 ses.
 - Tasarım gözden geçirmesi bitti (K-055, K-056): kapsam 6 gün/120 dk, zincir
