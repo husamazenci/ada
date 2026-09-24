@@ -76,6 +76,16 @@ değişmezleri) · `sim/ihtiyaclar.gd` · `sim/dunya.gd` (fırsat sayacı) ·
    yolculukta ve çöküşte ısırmalı; ikisi de mekân gerektiriyor, yani gri kutu
    sahnesinden sonra.
 
+### BİRLEŞME — 2026-09-24 (kullanıcı onayıyla)
+
+`claude/faz-1-cekirdek` ve `cursor/ilk` `main`'e alındı, çakışma yok.
+Birleşme sonrası ölçüm (§6.6): **7/7 çıkış 0** — katman-kurallari, zincir,
+moral-tabani, alti-gun, degismez-esitlik, negatif-kontrol (26/26), oyun 180
+kare. Üç oyuncu tipi üç güven seviyesine ayrışıyor.
+
+**Açık borç:** ışık yukarı bakıyor (kuyrukta, Cursor, tek satır). Gri kutu
+`main`'de ama düz aydınlatılıyor.
+
 ### Şu an
 - Faz 0 bitti: proje iskeleti, iki test, dokuz negatif kontrol, LFS, 48 CC0 ses.
 - Tasarım gözden geçirmesi bitti (K-055, K-056): kapsam 6 gün/120 dk, zincir
