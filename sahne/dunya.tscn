@@ -50,7 +50,9 @@ height = 1.75
 environment = SubResource("Environment_gri")
 
 [node name="Isik" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.642788, -0.766044, 0, 0.766044, 0.642788, 0, 10, 0)
+; Godot'nun Transform3D serileştirmesi SATIR önceliklidir; ışığın yönü -Z SÜTUNUdur.
+; X dönüşü -50°. Sütunları satır diye yazınca işaretler döner ve -Z yukarı bakar.
+transform = Transform3D(1, 0, 0, 0, 0.642788, 0.766044, 0, -0.766044, 0.642788, 0, 10, 0)
 light_energy = 1.1
 shadow_enabled = true
 
