@@ -2149,3 +2149,55 @@ değişmez kuralı artık kâğıtta değil.
 
 Kalan iki kaynak (ateşi söndürme, sözü tutmama) hâlâ bağlı değil ama
 ulaşılabilirlik için artık gerekli değiller.
+
+## K-067 · 2026-09-24 · Altıncı gün; zaman çizgisi düzeltmesi; adalet kuralı
+
+### Zaman çizgisi düzeltildi (kullanıcı) — hata bendeydi
+
+Altıncı gün briefinde sırayı "şafak → son gün → **son gece** → ertesi şafak
+gelgit" diye dizmiştim. Bu oyunu **yedi güne taşıyordu**: altıncı günün akşamı,
+sonra sabah, sonra yine "aynı günün batımı".
+
+Doğrusu: **son gece ateş sahnesi BEŞİNCİ gecededir**; seçim altıncı gün
+yaşanır; sal altıncı günün **batımında** gider. Zincirde `son-gece` 5. güne
+alındı; 10/10 açılmaya devam ediyor.
+
+Bir de kullanıcının eklediği doğru ayrıntı: **arkadaş 5. gün ayrıldıysa iki
+kişilik ateş sahnesi yaşanamaz — onun YOKLUĞU sahnenin karşılığı olur.**
+Sahne yine geçer, izi yine düşer. A1'in doğru uygulaması.
+
+### ADALET KURALI (kullanıcı) — ve ölçümü
+
+> *"Beşinci günkü tam bakım iyileştirir; yalnızca bir kısmını yapıp öncesinde
+> ağır ihmal biriktirmemiş oyuncuyu ani ölümle cezalandırmayız."*
+> *"Birikmiş ihmal varsa arkadaşın yavaş vazgeçişi fırtınadan önce de
+> bedeniyle görülmeli."*
+
+İkinci cümle 4. günün metnine koşullu ayrıntı olarak eklendi: ihmal varsa
+çöküş **fırtınadan önce** görünür, böylece 6. gün uyanmaması yalnızca 5. günkü
+hastalığa bağlanmaz.
+
+Birinci cümle **zaten modelin sonucuydu**, şimdi teste bağlandı. Ölçüldü:
+
+| İhmal | 6. günde ölüm mümkün mü |
+|---|---|
+| 0.10 · 0.25 · 0.40 · 0.55 | **HAYIR** |
+| 0.90 | evet |
+
+Matematiksel eşik: `taban = 0.34 × (1 − ihmal) ≤ 0.12` → **ihmal ≥ 0.647.**
+Pratikte bu, üç gece üst üste çökmüş arkadaşı yalnız bırakmak (3 × 0.25) ya da
+dört kez tehlikede bırakmak demek — ve ihmal bakımla günde 0.15 gerilediği için
+**tek seferlik bir eksiklik asla yetmez.** Kullanıcının istediği adalet
+sayıyla sağlanıyor.
+
+### Sonun kurallarına uyulmuş
+
+Metin on üç kısıtın tamamını tuttu. Özellikle:
+- **Ahlaki hüküm yok:** *"Kurtuluş görüntüsü, kararların özeti ya da doğru
+  seçimi açıklayan bir cümle gelmez. Ada birkaç saniye daha görünür."*
+- **Arkadaşın kararı sürpriz değil sonuç:** yüksek güvende salı sana iter, sen
+  ısrar edersen bir süre sonra kabul eder; düşük güvende senden önce biner ve
+  dönüp bakmaz.
+- **Güç, güvenin yerine geçmez:** *"Ayağa kalkamayacak kadar güçsüzse bunu
+  yapamaz; güvensizlik ona kaybettiği gücü geri vermez."* — iki eksenin
+  (güven / moral) birbirine karışmadığının en net cümlesi.

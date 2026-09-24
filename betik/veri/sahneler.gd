@@ -29,8 +29,8 @@ const OMURGA: Array[Dictionary] = [
 	 "kosullu": ["kriz-siddeti", "su-verildi", "yiyecek-verildi", "gece-yaninda-kalindi"], "cutscene": false},
 	{"ad": "sal",         "gun": 5, "onkosul": "firtina-gecti",      "iz": "sal-dunyada",
 	 "kosullu": ["sal-cekildi"], "cutscene": false},
-	{"ad": "son-gece",    "gun": 6, "onkosul": "sal-dunyada",        "iz": "son-gece-gecti",
-	 "kosullu": [], "cutscene": false},
+	{"ad": "son-gece",    "gun": 5, "onkosul": "sal-dunyada",        "iz": "son-gece-gecti",
+	 "kosullu": ["yanindaydi", "yalniz-gecti"], "cutscene": false},
 	{"ad": "ayrilik",     "gun": 6, "onkosul": "son-gece-gecti",     "iz": "oyun-bitti",
 	 "kosullu": ["kim-gitti"], "cutscene": true},
 ]

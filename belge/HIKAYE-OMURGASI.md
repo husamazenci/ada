@@ -226,6 +226,11 @@ Kısa ve sert bir açılış; oyun 2. günde normal uzunluğuna kavuşur.
   yükü öteki ele alırsın. O yaralandıysa barınaktan kalkması uzun sürer,
   ağırlığını sağlam bacağına verir. **Hanginiz yaralıysa bugün yavaştır ve
   koşamaz.** Günün tamamı bu yaraya göre değişir.
+- **KOŞULLU AYRINTI (K-067, adalet için):** günlerdir biriken **ağır ihmal**
+  varsa arkadaşın yavaş vazgeçişi **fırtınadan ÖNCE de bedeniyle görülmelidir**
+  — nefesi seyrekleşir, başı düşer, uzattığın şeye uzanan eli yarıda kalır.
+  Sebep: altıncı gün uyanmaması yalnızca beşinci günkü hastalığa bağlanmasın.
+  *İhmal yoksa bu ayrıntı hiç görünmez; gün normal geçer.*
 - **Fırtına sessizce haber verir:** rüzgâr panelin gevşek kenarını kaldırır,
   deniz dünkünden koyu görünür, kıyıda beslenen kuşlar adanın içine çekilir.
   **İkiniz de görürsünüz. Kimse fırtınanın geleceğini söylemez.**
@@ -344,17 +349,71 @@ Kısa ve sert bir açılış; oyun 2. günde normal uzunluğuna kavuşur.
   da başka bir yerde uyursan sabah farkı görürsün:** nefesi daha sığdır,
   başını daha az kaldırır, uzanan eli yine yarıda kalır. **Gün içinde
   verdiğin bakımın bir kısmı kaybolmuştur.**
-- **Gün biter. Arkadaşın hayattadır. Sal kıyıdadır. İkisi de altıncı güne kalır.**
+- **[SAHNE 9 · Son gece]** *(BEŞİNCİ gecededir — kullanıcı düzeltmesi)*
+  Arkadaş hâlâ kamptaysa ikiniz de ateşin yanında uyanıksınızdır. Konuşmazsınız.
+  **Bazen nefes alırken omuzlarının yükseldiğini görürsün; bazen bunu görmek
+  için daha uzun süre bakman gerekir.** Ateş azalır; odun koyarsın ya da
+  koymazsın. Ekranda yalnızca bir satır belirebilir: *"O hâlâ orada."*
+  - **Beşinci gün ayrıldıysa iki kişilik ateş sahnesi yaşanmaz — onun
+    YOKLUĞU sahnenin karşılığı olur.** Sahne yine geçer, izi yine düşer.
+  - *Koşulsuz iz:* `son-gece-gecti`. *Koşullu:* `yanindaydi`, `yalniz-gecti`.
+- **Gün biter. Sal kıyıdadır.**
 
-**Gün 6 · Seçim.**
-- **[SAHNE 8 · Son gece]** Ateş başında, ikisi de uyanık. Ekranda tek satır
-  belirebilir — duyum/durum cümlesi ("o hâlâ orada"), oyuncunun iç sesi değil.
-- **[SAHNE 9 · Ayrılık]** Gelgit sabahı. Sal bugün gider — biriyle ya da boş.
-  Seçenekler: sen binersin · ona verirsin · ikiniz de binmezsiniz · o senden
-  önce davranır (düşük güvende). **[cutscene 3: kapanış, seçimden SONRA]**
-  Kamera **kıyıda kalanla** kalır. Kurtuluş gösterilmez. Gün batımında biter.
+**Gün 6 · Seçim.** *(yazılmış metin — 2026-09-24)*
 
----
+> **Zaman çizgisi düzeltmesi (kullanıcı):** son gece ateş sahnesi BEŞİNCİ
+> gecededir; seçim altıncı gün yaşanır; sal altıncı günün BATIMINDA gider.
+> Aksi hâlde "altıncı günün akşamı, sonra sabah, yine aynı günün batımı"
+> oyunu yedi güne taşıyordu.
+
+**Şafakta üç açılıştan biri:**
+
+| | Koşulu | Ekranda |
+|---|---|---|
+| **Uyanır** | Dün yiyecek + su verdin ve geceyi yanında geçirdin | Seslendiğinde başını kaldırır. Nefesi düzenlidir; hâlâ zayıf, ayağa kalkmak için zamana ihtiyacı var |
+| **Uyanır ama daha güçsüz** | Eksik bakım, ama günlerdir süren ağır ihmal YOK | **Tek bir eksik jest onu bir gecede öldürmez** |
+| **Uyanmaz** | Günlerdir biriken ağır ihmal | Aynı duruşla yatıyordur; **bu kez omuzları nefesle yükselmez** |
+| **Orada değildir** | 5. gün yürüyebilecek durumdayken ayrıldı | Gece oturduğu yerde kimse yoktur |
+
+> **Ölüm sürpriz değildir:** *"Dördüncü günden beri giderek daha az hareket
+> ettiğini, dün uzatılan yiyeceğe elinin yetişmediğini, gece nefesinin
+> seyrekleştiğini görmüşsündür. Su taşımak, yiyecek getirmek ve yanında kalmak
+> için zaman vardı."*
+
+- **Gelgit gün boyu yükselir.** Sabah suyun altında olmayan **koyu kaya
+  çizgisi öğlene doğru kaybolur.** Sal sahanlıktan yavaş yavaş kalkar; kenarı
+  her saat biraz daha serbestçe hareket eder. **Bunu bildiren yazı ya da sesli
+  uyarı yoktur.** Sala gitmesen de su yükselir; akşam onu alacaktır.
+- **Gün boyunca hiçbir şey seni zorlamaz.** Yanında oturabilir, ateşi
+  besleyebilir, ona son kez su taşıyabilirsin. Sala gidebilir, kıyı boyunca
+  daha yakına çekebilir, hiç dokunmayabilirsin. **Ağır, su dolmuş salı
+  kayalıktan yukarı çıkaramazsın; bırakılabildiği her yer akşamki gelgit
+  çizgisinin altındadır.**
+- **[SAHNE 10 · Ayrılık]** *(cutscene 3 — seçimden SONRA)*
+
+  **Arkadaş yürüyebilecek durumdaysa salın yanındaki davranışı tanıdıktır:**
+
+  | Güven | Davranış |
+  |---|---|
+  | **Yüksek** | Sana yakın durur. Su salı kaldırmaya başladığında kenarından tutup **onu sana doğru iter**, sonra geri çekilir. Sen salı ona yaklaştırıp kıyıda kalırsan **önce yeniden sana bırakır.** Kararında ısrar ettiğini davranışından anlarsa bir süre sonra sala geçebilir |
+  | **Orta** | Birkaç adım uzakta bekler. **Eli sala gitmez.** Kararını senin hareketinden sonra verir |
+  | **Düşük** | Sal serbest kalır kalmaz ona doğru gider; sen binmediysen **senden önce yerleşir, arkasına dönmez.** *Ayağa kalkamayacak kadar güçsüzse bunu yapamaz — **güvensizlik ona kaybettiği gücü geri vermez.*** |
+
+  **Batım yaklaşırken dört sonuçtan biri:**
+
+  | Sonuç | Ne olur |
+  |---|---|
+  | **Sen binersin** | Salı suya bırakırsın. Arkadaş hayattaysa **kamera onunla kıyıda kalır**; bedeni, suya açılan sala karşı duruşundan okunur. Ölmüş ya da ayrılmışsa kamera yine kıyıdadır |
+  | **Salı ona verirsin** | Binebileceği yere getirip kenara çekilirsin. **Erken yaptıysan oyun sürer:** ateşin yanına dönebilir, yakınında bekleyebilir, kıyıda tek başına yürüyebilirsin. Gelgit yükseldiğinde sal onu götürür. **Kamera seninle kıyıda kalır** |
+  | **İkiniz de binmezsiniz** | Su salı kayadan ayırır. Önce birkaç adım ötede kalır, sonra akıntıyla uzaklaşır. **Altı günün mesafesi kapanışta da değişmez** |
+  | **O senden önce davranır** | Düşük güvenle ve yürüyebilecek güçteyse önce o biner. **Bakışını geri çevirmeden uzaklaşır** |
+
+  - **Uyanmamışsa** sala yaklaşırken önünde bir paylaşma kararı yoktur.
+    Binebilir ya da kıyıda kalabilirsin. Boş bırakırsan gelgit onu yine götürür.
+  - *Koşulsuz iz:* `oyun-bitti`. *Koşullu:* `kim-gitti`.
+- **Güneş battığında kamera kıyıdadır. Kurtuluş görüntüsü, kararların özeti ya
+  da doğru seçimi açıklayan bir cümle GELMEZ. Ada birkaç saniye daha görünür.
+  Oyun biter.**
 
 ## 4. Ölüm ve başarısızlık
 

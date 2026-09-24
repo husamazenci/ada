@@ -120,6 +120,24 @@ func _initialize() -> void:
 	if y3.moral_tabani() > A.MORAL_COKUS_ESIGI:
 		hata.append("üç gün ihmalle bile taban çöküş eşiğinin ÜSTÜNDE (%.3f) — moral ölümü hâlâ ulaşılamaz" % y3.moral_tabani())
 
+	# 9 · ADALET KURALI (K-067, kullanıcı): "yalnızca bir kısmını yapıp
+	# öncesinde ağır ihmal biriktirmemiş oyuncuyu ani ölümle cezalandırmayız."
+	# Tek bir eksik jest bir gecede öldürmemeli. Orta düzey ihmalde ölüm
+	# 6. günde bile MÜMKÜN OLMAMALI.
+	for orta_ihmal in [0.10, 0.25, 0.40, 0.55]:
+		var a := Gv.new()
+		a.ihmal_ekle(orta_ihmal)
+		_ez(a, 1.0, 10)          # koşullar cehennem olsa bile
+		if a.olebilir_mi(6):
+			hata.append("İHLAL: ihmal %.2f (ağır değil) iken 6. günde ölüm mümkün — eksik bakım ani ölümle cezalandırılıyor" % orta_ihmal)
+	# Buna karşılık AĞIR ihmalde ölüm mümkün OLMALI, yoksa kural kâğıtta kalır.
+	var b := Gv.new()
+	b.ihmal_ekle(0.9)
+	_ez(b, 1.0, 10)
+	if not b.olebilir_mi(6):
+		hata.append("ağır ihmalde bile ölüm mümkün değil — son yine kapalı")
+	print("adalet: ihmal 0.10–0.55 → ölüm YOK · ihmal 0.90 → ölüm mümkün (%s)" % b.olebilir_mi(6))
+
 	print("")
 	if hata.is_empty():
 		print("GEÇTİ — A2 değişmezi tutuyor: arkadaş koşullardan ölemiyor.")
