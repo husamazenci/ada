@@ -43,7 +43,7 @@ const GUVEN_BASLANGIC := 0.35     # yabancı
 const GUVEN_DUSUK_UST := 0.33
 const GUVEN_YUKSEK_ALT := 0.66
 const GUVEN_YUKSELIS := 0.06      # bedelli jest başına
-const GUVEN_DUSUS := 0.18         # 3× — "hızlı düşer, yavaş yükselir"
+const GUVEN_DUSUS := 0.12         # 2× — "hızlı düşer, yavaş yükselir" (K-057)
 const GUVEN_GUNLUK_YUKSELIS_TAVANI := 2   # günde en çok 2 jest sayılır;
                                           # yoksa oyuncu jesti çiftlik yapar
 

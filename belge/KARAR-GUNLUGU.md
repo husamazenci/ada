@@ -1730,3 +1730,26 @@ kez gerçekleşeceği belirsiz. Hedefler:
 Üç tam cutscene (uyanış · fırtınanın uyanma anı · kapanış). Dördüncüsü bu
 sürümde eklenmez. Sebep: "sonra ekleriz" en pahalı yol — cutscene kamera
 sistemi, kontrol devri ve iskelet animasyonu demektir.
+
+## K-057 · 2026-09-24 · Güven düşüşü 3×'ten 2×'e indi (ölçümle)
+
+- **Tür:** ayar kararı (kullanıcı: "2x'i dene"). Değişmez kuralı da etkiler.
+- **Sebep bir zevk meselesi değil, kabul kriteri:** davranış tablosunda ÜÇ
+  güven seviyesi var ve "bir davranış ekranda ayırt edilemiyorsa o seviye yok
+  demektir" oyunun kabul kriteridir. 3× oranında ORTA seviye pratikte
+  ulaşılamıyordu — yani kabul kriterinin üçte biri hiç gösterilemezdi.
+- **Ölçüm (tek değişken değişti, §5.7 — yalnızca `GUVEN_DUSUS`):**
+
+  | Oyuncu | 3× (0.18) | 2× (0.12) |
+  |---|---|---|
+  | fedakâr | 1.00 yüksek | 1.00 yüksek — **değişmedi** |
+  | dengeli | 0.17 **düşük** | 0.35 **orta** ← aranan |
+  | bencil | 0.00 düşük, arkadaş gitti | 0.00 düşük, arkadaş gitti — **değişmedi** |
+
+- **Kritik olan:** uçlar hiç yumuşamadı. Bencil oyuncu hâlâ arkadaşını
+  kaybediyor, fedakâr oyuncu hâlâ tavana çıkıyor. Değişen tek şey, arada bir
+  yerin artık var olması.
+- **"Hızlı düşer, yavaş yükselir" korunuyor:** 2× hâlâ asimetrik. Bir ihanet
+  iki fedakârlığı siliyor.
+- İki belgedeki değişmez blok birlikte güncellendi; `degismez-esitlik.sh`
+  eşitliği doğruladı. 26 negatif kontrolün 26'sı geçiyor.
