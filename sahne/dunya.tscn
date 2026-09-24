@@ -1,3 +1,90 @@
-[gd_scene format=3 uid="uid://b0adaworld01"]
+[gd_scene load_steps=11 format=3 uid="uid://b0adaworld01"]
+
+[ext_resource type="Script" path="res://betik/cizim/oyuncu.gd" id="1_oyuncu"]
+
+[sub_resource type="Environment" id="Environment_gri"]
+background_mode = 1
+background_color = Color(0.58, 0.6, 0.62, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.62, 0.63, 0.65, 1)
+ambient_light_energy = 0.65
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_zemin"]
+albedo_color = Color(0.38, 0.39, 0.4, 1)
+roughness = 0.95
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_zemin"]
+size = Vector3(60, 1, 60)
+
+[sub_resource type="BoxMesh" id="BoxMesh_zemin"]
+material = SubResource("StandardMaterial3D_zemin")
+size = Vector3(60, 1, 60)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oyuncu"]
+albedo_color = Color(0.62, 0.63, 0.66, 1)
+roughness = 0.9
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_arkadas"]
+albedo_color = Color(0.74, 0.71, 0.66, 1)
+roughness = 0.9
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_govde"]
+radius = 0.28
+height = 1.75
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_oyuncu"]
+material = SubResource("StandardMaterial3D_oyuncu")
+radius = 0.28
+height = 1.75
+
+; Arkadaşın ağı ayrı. İkisi aynı boş malzemeli ağı paylaşınca headless
+; dummy çizici "material is null" basıyor; malzeme ağın üstünde durunca susuyor.
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_arkadas"]
+material = SubResource("StandardMaterial3D_arkadas")
+radius = 0.28
+height = 1.75
 
 [node name="Dunya" type="Node3D"]
+
+[node name="Ortam" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_gri")
+
+[node name="Isik" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.642788, -0.766044, 0, 0.766044, 0.642788, 0, 10, 0)
+light_energy = 1.1
+shadow_enabled = true
+
+[node name="Zemin" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="Carpisma" type="CollisionShape3D" parent="Zemin"]
+shape = SubResource("BoxShape3D_zemin")
+
+[node name="Ag" type="MeshInstance3D" parent="Zemin"]
+mesh = SubResource("BoxMesh_zemin")
+
+[node name="Oyuncu" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+script = ExtResource("1_oyuncu")
+
+[node name="Carpisma" type="CollisionShape3D" parent="Oyuncu"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.875, 0)
+shape = SubResource("CapsuleShape3D_govde")
+
+[node name="Govde" type="MeshInstance3D" parent="Oyuncu"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.875, 0)
+mesh = SubResource("CapsuleMesh_oyuncu")
+
+[node name="Kamera" type="Camera3D" parent="Oyuncu"]
+current = true
+
+[node name="Arkadas" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1, 0, -3.6)
+
+[node name="Carpisma" type="CollisionShape3D" parent="Arkadas"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.875, 0)
+shape = SubResource("CapsuleShape3D_govde")
+
+[node name="Govde" type="MeshInstance3D" parent="Arkadas"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.875, 0)
+mesh = SubResource("CapsuleMesh_arkadas")
