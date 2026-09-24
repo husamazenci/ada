@@ -190,6 +190,9 @@ fi
 if sabotaj betik/veri/defter.gd 's/"iz": "firtina-gecti"/"iz": "barinak-hasarli"/'; then
 	dene defter "sabotaj: hafıza KOŞULLU ize bağlandı" 1; geri betik/veri/defter.gd
 fi
+if sabotaj betik/veri/defter.gd 's/"anahtar": "defter.is.su",      "gun": 2/"anahtar": "defter.is.su",      "gun": 1/'; then
+	dene defter "sabotaj: defterden ÖNCE yazılmış girdi" 1; geri betik/veri/defter.gd
+fi
 dene defter "geri yüklendi" 0
 
 # ============ dil (K-010) ============

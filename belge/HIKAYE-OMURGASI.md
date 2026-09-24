@@ -88,27 +88,43 @@ Her gün ~20 dk: gündüz ~13, alacakaranlık ~2, gece ~5.
 
 ### Perde I — Tanışma
 
-**Gün 1 · Uyanış.**
+**Gün 1 · Uyanış.** *(kaza günü — kısa)*
 - **[SAHNE 1 · Uyanış]** *(cutscene 1)* Kumsalda yüzükoyun. Kontrol ALINIR:
-  nefes, dalga, uzakta enkaz. 30–40 sn, sonra kontrol sende.
-- Enkaz: içine girilir. İlk eşyalar — **tek kap** (susuzluk buradan başlar)
-  ve **boş defter** (K-059). Defter bulunduğu an bir şey yazmaz; karakter ilk
-  satırı kendi eliyle o akşam yazar. Yazma anlarında **kontrol oyuncuda kalır**
-  — tam cutscene sayısı 3'te kilitli (D2).
-  Arkadaş enkazın öbür ucunda oturuyor, sana bakıyor, konuşmuyor. Yanına
-  gitmek zorunda değilsin.
-- Gece: ateş YOK. İlk gece üşüyerek, karanlıkta, yan yana ya da ayrı geçer.
+  nefes, dalga, hemen yanında enkaz. 30–40 sn, sonra kontrol sende.
+- **Enkaz kumsaldadır** ama kapısı sıkışmıştır; bugün girilemez. Dışarıdan
+  dolaşılır. Arkadaş enkazın öbür ucunda oturuyor — sana bakıyor, konuşmuyor.
+  Yanına gitmek zorunda değilsin.
+- **Gece: ateş YOK ve uyunmaz.** Karanlıkta odun toplanır — yan yana ya da
+  ayrı. Ateş başlatıcısı kapalı kapının ardındadır; bu gecenin ateşsiz
+  olmasının SEBEBİ budur, tasarım kararı değil dünyanın hâli.
   *Koşullu iz:* `ilk-gece-yalniz`.
 
-**Gün 2 · Ateş ve yer.**
-- **[SAHNE 2 · Ateş]** Arkadaş çakmaktaşını çıkarır, dener, olmaz; sana uzatır.
-  Yönlendirme sözle değil ELLE: o yapar, durur, bakar.
-  *Varyant:* güven yoksa kendi ateşini kendine kurar, seninkini kurmaz.
-  *Koşulsuz iz:* `ates-sahnesi-gecti` — ateş yanmasa bile düşer.
-- Açıklık bulunur: **dere + ağaç + düz zemin**. Ev olacak yer seçilir.
-  Dere açıklığın içindedir: evde su bedava, yolda değil.
-- Barınak iskeleti kurulabilir — iki kişilik iş; tek başına iki kat uzun sürer.
-  *İlk "bedeli olan yakınlık".* Zorunlu değildir (zincir buna bağlı değil).
+**Gün 2 · Ateş ve yer.** *(yazılmış metin — 2026-09-24)*
+- Sabah metalin taşa vurma sesiyle uyanırsın: **o çoktan çalışıyor.** Gövdeden
+  kopmuş dar bir metal parçayı kapının altına sokmaya çalışır. Seni görünce
+  geri çekilip parçayı sana uzatır.
+- **[SAHNE 2 · Ateş]** Metali sen yerleştirirsin, o eğilmiş kenarı tutar.
+  Kapı önce kıpırdamaz, sonra kısa ve sert bir sesle açılır. İkiniz de geri
+  çekilir, içeriden bir ses gelip gelmeyeceğini beklersiniz. **Gelmez.**
+  - İçeride: sarkan kayışlar, yerinden kopmuş koltuk, bir acil durum kutusu.
+    Kutudan **ateş başlatıcısı**; yerde **ezilmiş metal kap** ve **sayfaları
+    kuru kalmış boş defter**.
+  - **Arkadaş kutuyu alır; sen kabı ve defteri taşırsın.** Başlatıcı ONDADIR —
+    ateşin yanması ona bağlıdır, ve bu güvenin ilk maddi karşılığıdır.
+  - Su sesi sizi dereye çıkarır. Yakınında rüzgârı kısmen kesen bir açıklık:
+    **ev olacak yer.** Dün gece toplanan odunlar buraya taşınır.
+  - Arkadaş başlatıcıyı dener. Kıvılcım düşer, ıslak yapraklar söner. Bir kez
+    daha dener. Sonra elindekini **sana uzatır.**
+  - Kuru koltuk dolgusundan lif ayırıp odunların altına koyarsın. Kıvılcım bu
+    kez tutar. Sen üflerken **o rüzgârı elleriyle keser.** Duman, sonra alev.
+  - *Varyant:* güven yoksa başlatıcıyı sana uzatmaz; kendi ateşini kendine
+    kurar.
+  - **Akşam:** ateşin karşı tarafına oturur. Bir süre seni izlemez. Sonra
+    elindeki kuru dalı **senin ulaşabileceğin bir yere bırakır.** İlk kez sana
+    yardım ettiğinden emin olursun; bunun güven mi yoksa yalnızca ateşin
+    yanmasını istemesi mi olduğunu bilemezsin. *Oyunun tezi bu belirsizliktir.*
+  - *Koşulsuz iz:* `ates-sahnesi-gecti` — ateş yanmasa bile düşer.
+    *Koşullu:* `ates-yakildi`, `defter-alindi`.
 
 ### Perde II — Sınav
 
