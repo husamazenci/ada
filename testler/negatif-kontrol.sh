@@ -22,6 +22,7 @@ kos() {  # kos <test-adi> → çıkış kodu
 		defter)  $GODOT --headless --path . --script res://testler/defter.gd >/dev/null 2>&1 ;;
 		dil)     $GODOT --headless --path . --script res://testler/dil.gd >/dev/null 2>&1 ;;
 		kayit)   $GODOT --headless --path . --script res://testler/kayit.gd >/dev/null 2>&1 ;;
+		davranis) $GODOT --headless --path . --script res://testler/davranis.gd >/dev/null 2>&1 ;;
 	esac
 	return $?
 }
@@ -243,6 +244,27 @@ if sabotaj betik/sim/kayit.gd 's/^	if FileAccess.file_exists(YUVA):$/	if false:/
 	dene kayit "sabotaj: ölünce yuva silinmiyor" 1; geri betik/sim/kayit.gd
 fi
 dene kayit "geri yüklendi" 0
+
+# ============ davranis (gri kutu kapısı) ============
+echo "negatif-kontrol · davranis"
+dene davranis "temiz kopya" 0
+
+# ASIL SINAV: iki kanal birbirine taşarsa yakalanmalı. Spekt bunu "dip moralin
+# oturması izleyiciyi sistematik olarak 'düşük güven' yanıtına götürür" diye
+# uyarmıştı; sayısal karşılığı budur.
+if sabotaj betik/ai/davranis.gd 's/^	if moral < A.MORAL_ORTA_ALT:\n		return 0.0/	if moral < A.MORAL_ORTA_ALT:\n		return 0.0/'; then
+	geri betik/ai/davranis.gd
+fi
+if sabotaj betik/ai/davranis.gd 's/		return Vector2(1.5, 2.5)/		return Vector2(1.5, 4.0)/'; then
+	dene davranis "sabotaj: yüksek ve orta mesafe bandı çakıştı" 1; geri betik/ai/davranis.gd
+fi
+if sabotaj betik/ai/davranis.gd 's/^	return 0.70$/	return 1.00/'; then
+	dene davranis "sabotaj: orta moral temposu yüksekle aynı oldu" 1; geri betik/ai/davranis.gd
+fi
+if sabotaj betik/ai/davranis.gd 's/^	return 0.0$/	return 1.0/'; then
+	dene davranis "sabotaj: düşük güvende göz teması kuruluyor" 1; geri betik/ai/davranis.gd
+fi
+dene davranis "geri yüklendi" 0
 
 echo "GENEL TOPLAM: $gecti geçti, $kalan kaldı"
 [ "$kalan" -eq 0 ] && exit 0 || exit 1

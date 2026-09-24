@@ -1,6 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://b0adaworld01"]
 
 [ext_resource type="Script" path="res://betik/cizim/oyuncu.gd" id="1_oyuncu"]
+[ext_resource type="Script" path="res://betik/cizim/arkadas.gd" id="2_arkadas"]
 
 [sub_resource type="Environment" id="Environment_gri"]
 background_mode = 1
@@ -80,8 +81,9 @@ mesh = SubResource("CapsuleMesh_oyuncu")
 [node name="Kamera" type="Camera3D" parent="Oyuncu"]
 current = true
 
-[node name="Arkadas" type="StaticBody3D" parent="."]
+[node name="Arkadas" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1, 0, -3.6)
+script = ExtResource("2_arkadas")
 
 [node name="Carpisma" type="CollisionShape3D" parent="Arkadas"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.875, 0)

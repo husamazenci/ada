@@ -12,7 +12,8 @@
 | `betik/sim/` `betik/ai/` `betik/veri/` | **Claude** | Saf katman; görsel düğüm giremez |
 | `testler/` | **Claude** | Her test negatif kontrolüyle |
 | `belge/` `AGENTS.md` | **Claude** | Tasarım kararı kullanıcınındır |
-| `sahne/` `betik/cizim/` | **Cursor** | Görsel, kamera, kontrol, oyun hissi |
+| `sahne/` `betik/cizim/oyuncu.gd` | **Cursor** | Oyuncunun kontrolü ve oyun hissi |
+| `betik/cizim/arkadas.gd` | **Claude** | Arkadaşın gövdesi — `betik/ai/davranis.gd`'yi UYGULAR, karar vermez. His sayıları `@export`, kullanıcı ayarlar |
 | `varlik/` | **ChatGPT** (araştırma) → kullanıcı (indirme) | Lisans defteri şart |
 | `project.godot` | **paylaşımlı** | Cursor yalnızca `[input]`, Claude yalnızca `[application]`/`[rendering]` |
 
