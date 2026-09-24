@@ -2103,3 +2103,49 @@ bedelini görünür kılar."
 ### Yeni koşullu izler
 
 `malzeme-getirildi`, `nobet-kimde` eklendi. Zincir hâlâ 10/10 açılıyor.
+
+## K-066 · 2026-09-24 · Beşinci gün — ve kapanan bir son
+
+Metin **on iki kısıtın on ikisini de** tuttu; en temiz gün bu.
+
+### Tek kap döngüsü: mekanik ile duygu aynı cümlede
+
+> *"Kabı doldurup döndüğünde arkadaşına su verirsin. Sonra kendinin de
+> susadığını fark edersin. Yeniden gitmen gerekir."*
+
+K-056'da suyu "ucuz ve keskin" tasarlarken bunu arıyordum ama bulamamıştım:
+tek kap, bedeli **nesnenin kendisine** gömüyor. Ve her gidiş onu yalnız
+bırakıyor — yani bakım eylemi ile ihmal eylemi **aynı hareket**. Oyunun tezi
+("senin ihtiyacın olan bir şeyden vazgeçmek") burada en saf hâlinde.
+
+### Oyuncunun yanlış okumasını önleyen cümle
+
+> *"Su içince kısa süreliğine doğrulması, iyileştiği anlamına gelmez."*
+
+Geri bildirimin yanlış yorumlanma riskini metin kendisi kapatıyor. Toparlanma
+üç şart ister: yiyecek VE su VE geceyi yanında geçirmek (spekt §9).
+
+### Salın sınırı yazısız sezdiriliyor
+
+> *"Kenarına bastığında bordası hemen suya yaklaşır; ağırlığını çekince
+> yeniden yükselir. Üzerinde kapasitesini anlatan bir yazı yoktur."*
+
+ChatGPT'nin §11'deki önerisi ("sınırı önceden sezdir") uygulanmış. Oyuncu
+"bir kişi taşır"ı son gün deneyerek öğrenmiyor.
+
+### ÜÇÜNCÜ İHMAL KAYNAĞI BAĞLANDI — ve bir son açıldı
+
+Metnin *"ayrılıp başka bir yerde uyursan sabah farkı görürsün"* cümlesi
+`Guven.gece_yalniz_birakti(muhtac_mi)` olarak koda geçti. "Gördü mü" şartı
+yok — **yokluk da algıdır.** Ucuz ikizi de var: sağlamken yanından ayrılmak
+ihmal sayılmaz.
+
+**Ölçüldü:** üç gün üst üste ihmal (tehlikede bırakma + gece yalnız bırakma)
+→ ihmal **1.00**, moral tabanı **0.000**, çöküş eşiği 0.12'nin çok altında.
+
+**K-061'de "moral ölümü hiçbir oynanışla tetiklenemiyor — bir son tamamen
+kapalı" diye yazdığım borç KAPANDI.** "Arkadaş kalıcı olarak ölebilir"
+değişmez kuralı artık kâğıtta değil.
+
+Kalan iki kaynak (ateşi söndürme, sözü tutmama) hâlâ bağlı değil ama
+ulaşılabilirlik için artık gerekli değiller.

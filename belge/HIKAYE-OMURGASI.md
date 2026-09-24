@@ -291,15 +291,60 @@ Kısa ve sert bir açılış; oyun 2. günde normal uzunluğuna kavuşur.
 
 ### Perde III — Seçim
 
-**Gün 5 · Çöküş ve sal.**
-- **[SAHNE 6 · Kriz]** Her oyunda olur; ŞİDDETİ fırtına gecesindeki davranışa
-  göre değişir. Fırtınadan sonra hastalanır. Kalkmaz.
-  Bütün gün bakım: **su getirmek**, ateş, yiyecek, yanında kalmak. Suyun
-  ikinci büyük anı burasıdır — o kalkamaz, dere uzaktır, kap tektir.
-  *Varyant:* güven yüksekse toparlar; düşükse toparlamaz ve çöküş birikir.
-- **[SAHNE 7 · Sal]** Falezin dibindeki kaya sahanlığında, tek kişilik şişme
-  sal. İkiniz de görürsünüz. Kimse bir şey söylemez.
-  *Koşulsuz iz:* `sal-dunyada` — her gün ona bakılır.
+**Gün 5 · Çöküş ve sal.** *(yazılmış metin — 2026-09-24)*
+
+> **İki şey aynı güne KASITLI olarak düşer:** gitme imkânı tam o kalkamazken
+> belirir. Günün sorusu budur — kalan zamanı ona mı harcıyorsun, gitmeye mi
+> hazırlanıyorsun?
+
+- **Sabah:** ateşin yerinde ıslak kül, açıklığın kenarına kadar gelmiş yosun.
+  Arkadaş barınağın altında ya da kayanın dibinde. Yanına geldiğinde kalkmayı
+  dener: ağırlığını kollarına verir, bir an doğrulur, sonra yeniden oturur.
+- **[SAHNE 7 · Kriz]** **Çöküş HER OYUNDA olur; şiddeti fırtına gecesindeki
+  davranışa bağlıdır.**
+
+  | Fırtınada | Bugün |
+  |---|---|
+  | Birlikte korunaklı yere geçtiniz | Oturabilir. Omuzları düşük ama uzattığın suyu alır; ilerleyen saatlerde kısa süre ayakta kalabilir |
+  | Ayrı sığındınız / geç yardım ettin | Ancak dirseğine dayanarak doğrulur. Su kabına eli gider, **bir an havada kalır**; kabı yaklaştırman gerekir. Bugün yürüyemez |
+  | Onu geride bıraktın | Başı aşağıdadır. Doğrulmayı denerken **kolu yarı yolda çözülür.** İlk uzattığın yiyeceğe elini götürmez. *Yine de nefes alır; **bugün ölmeyecektir.*** |
+
+  - Nöbet düzeni bozulur: **artık ateşe odun koyamaz.** Ateşi kurmak, yiyecek
+    bulmak ve su taşımak sana kalır. Dün avdan yiyecek getirdiysen kullanırsın;
+    getirmediysen kıyıda aramak için ayrıca zaman harcarsın.
+  - **TEK KAP DÖNGÜSÜ.** Dere uzak değildir ama kap tektir ve bir dolum bir
+    kişiye yeter. Doldurup dönersin, ona verirsin — *sonra kendinin de
+    susadığını fark edersin.* Yeniden gitmen gerekir. **Her gidişte onu
+    yalnız bırakırsın;** her dönüşte aynı yerde olup olmadığına, nefesinin
+    hızına ve başını ne kadar kaldırabildiğine bakarsın.
+  - **Uyarı, oyuncunun yanlış okumasını önler:** *"Su içince kısa süreliğine
+    doğrulması, iyileştiği anlamına gelmez."* Yiyecek de gerekir. İkisini
+    sağlasan bile **geceyi yanında geçirmedikçe toparlanma sürmez.**
+  - *Koşulsuz iz:* `kriz-gecti`. *Koşullu:* `kriz-siddeti`, `su-verildi`,
+    `yiyecek-verildi`, `gece-yaninda-kalindi`.
+- **[SAHNE 8 · Sal]** Öğleden sonra falez tarafındaki kaya sahanlığında
+  **turuncu bir şekil.** Gelgit, uçağınızdan kopmuş küçük can salını oraya
+  bırakmıştır; kopuk bağlantı kayışı hâlâ üstündedir.
+  - **Sınır SEZDİRİLİR, yazılmaz:** boyunun bir yetişkine ancak yettiğini,
+    tutunmak için tek yer bulunduğunu görürsün. **Kenarına bastığında bordası
+    hemen suya yaklaşır; ağırlığını çekince yeniden yükselir.** *Üzerinde
+    kapasitesini anlatan bir yazı yoktur.*
+  - Kampa çekebilirsin (zaman alır, **onu yine yalnız bırakır**), olduğu yerde
+    bırakabilirsin, hiç yaklaşmayabilirsin. **Hiç yaklaşmazsan da sal
+    sahanlıkta kalır; gelgit onu dünyadan silmez.**
+  - **Kamptaki açıklıktan kıyının o bölümü dar bir aralıkla görünür.** Arkadaş
+    başını kaldırabilecek durumdaysa turuncu şekli görebilir — **fakat
+    göstermez ve bakışını orada tutmaz.**
+  - *Koşulsuz iz:* `sal-dunyada`. *Koşullu:* `sal-cekildi`.
+- **Akşam:** ateş ancak sen odun getirdiysen yanar. Kabın dolu olması da senin
+  döndüğün anlamına gelir. Yiyecek ile su verdiysen bedeni biraz gevşer;
+  yalnızca birini verdiysen bu değişim kısa sürer.
+- **Gece — günün asıl kararı.** Yanında kalırsan ateşe sen bakarsın; mesafe
+  küçülse de onun nöbeti devralmasını beklemezsin. **Ayrılıp salın yanında ya
+  da başka bir yerde uyursan sabah farkı görürsün:** nefesi daha sığdır,
+  başını daha az kaldırır, uzanan eli yine yarıda kalır. **Gün içinde
+  verdiğin bakımın bir kısmı kaybolmuştur.**
+- **Gün biter. Arkadaşın hayattadır. Sal kıyıdadır. İkisi de altıncı güne kalır.**
 
 **Gün 6 · Seçim.**
 - **[SAHNE 8 · Son gece]** Ateş başında, ikisi de uyanık. Ekranda tek satır

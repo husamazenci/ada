@@ -48,6 +48,18 @@ func tehlikede_birakti(gordu_mu: bool, denedi_mi: bool) -> bool:
 	ihmal_ekle(A.IHMAL_TEHLIKEDE_BIRAKMA)
 	return true
 
+func gece_yalniz_birakti(muhtac_mi: bool) -> bool:
+	# K-066: çökmüş ya da yaralı haldeyken geceyi yanında geçirmemek.
+	# "Gördü mü" şartı YOKTUR — yokluk da algıdır (K-055): orada olmadığını
+	# fark eder. Zaten görmek için senin orada olman gerekirdi.
+	#
+	# İhmal kanalının dünyaya bağlanan ÜÇÜNCÜ kaynağı (K-061 borcu).
+	# Sağlamken yanından ayrılmak ihmal DEĞİLDİR — ucuz ikiz kuralı.
+	if not muhtac_mi:
+		return false
+	ihmal_ekle(A.IHMAL_GECE_YALNIZ_BIRAKMA)
+	return true
+
 func ihmal_ekle(miktar: float) -> void:
 	ihmal = minf(ihmal + miktar, 1.0)
 

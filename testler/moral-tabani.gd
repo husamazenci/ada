@@ -100,6 +100,26 @@ func _initialize() -> void:
 	if d2.ihmal <= 0.0:
 		hata.append("bilerek bırakma ihmal üretmedi — ikinci kaynak bağlanmamış")
 
+	# 8 · Gece yalnız bırakma (K-066) — ve UCUZ İKİZİ.
+	var n1 := Gv.new(); var n2 := Gv.new()
+	n1.gece_yalniz_birakti(true)    # çökmüşken bırakıldı → ihmal
+	n2.gece_yalniz_birakti(false)   # sağlamken ayrıldın → ihmal DEĞİL
+	print("gece yalnız bırakma → muhtaçken ihmal %.2f · sağlamken %.2f" % [n1.ihmal, n2.ihmal])
+	if n1.ihmal <= 0.0:
+		hata.append("çökmüşken yalnız bırakma ihmal üretmedi")
+	if n2.ihmal > 0.0:
+		hata.append("İHLAL: sağlamken yanından ayrılmak ihmal sayıldı (ucuz ikiz)")
+
+	# Üç kaynak bağlandığında çöküş oynanışla ULAŞILABİLİR olmalı (K-061 borcu).
+	var y3 := Gv.new()
+	for gun in 3:
+		y3.tehlikede_birakti(true, false)
+		y3.gece_yalniz_birakti(true)
+	print("üç gün üst üste ihmal → ihmal %.2f · moral tabanı %.3f (çöküş eşiği %.2f)" % [
+		y3.ihmal, y3.moral_tabani(), A.MORAL_COKUS_ESIGI])
+	if y3.moral_tabani() > A.MORAL_COKUS_ESIGI:
+		hata.append("üç gün ihmalle bile taban çöküş eşiğinin ÜSTÜNDE (%.3f) — moral ölümü hâlâ ulaşılamaz" % y3.moral_tabani())
+
 	print("")
 	if hata.is_empty():
 		print("GEÇTİ — A2 değişmezi tutuyor: arkadaş koşullardan ölemiyor.")

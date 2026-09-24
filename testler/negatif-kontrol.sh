@@ -136,6 +136,12 @@ fi
 if sabotaj betik/ai/guven.gd 's/	if not gordu_mu:/	if false:/'; then
 	dene moral "sabotaj: görmediği için de cezalandırıyor" 1; geri betik/ai/guven.gd
 fi
+if sabotaj betik/ai/guven.gd 's/	if not muhtac_mi:/	if false:/'; then
+	dene moral "sabotaj: sağlamken ayrılmak da ihmal sayılıyor (ucuz ikiz)" 1; geri betik/ai/guven.gd
+fi
+if sabotaj betik/veri/ayarlar.gd 's/const IHMAL_GECE_YALNIZ_BIRAKMA := 0.25/const IHMAL_GECE_YALNIZ_BIRAKMA := 0.0/'; then
+	dene moral "sabotaj: gece yalnız bırakma ihmal üretmiyor" 1; geri betik/veri/ayarlar.gd
+fi
 dene moral "geri yüklendi" 0
 rm -f /tmp/_sab.yedek /tmp/_g.yedek
 
