@@ -125,6 +125,27 @@ kararı: "kelime duyulmasın, karakterin boğuk mırıltısı duyulsun". Uydurma
 bir yer tutucu koymaktansa sessiz bırakıldı. CC0 bir mırıltı/nefes sesi
 gerekiyor (`varlik/ses/` altında 48 CC0 ses var, aralarında yok).
 
+### GECE PLANI — 2026-09-25 (kullanıcı uyurken, ~5 saat)
+
+**Claude'un sırası (bu gece):**
+
+1. **Köpeği sahneye bağla.** Simülasyon çalışıyor, model (Husky) depoda, ama
+   ikisi bağlı değil — köpek ekranda YOK. `betik/cizim/kopek.gd` + sahne
+   düğümü + animasyon durum makinesi (Walk / Gallop / Attack / Idle_2_HeadLow).
+2. **Ateşi sahneye koy.** Ocak nesnesi + ışık + `ATES_ISIK_YARICAPI_M` = 6 m'lik
+   gerçek çember. Şu an K-058'in "ateş ışığı istisnası" yalnızca sayıda var,
+   ekranda yok — ve `oyun.gd`'deki bağlam merdiveni onun yerine duruyor.
+3. **Çöküş ile ölümü ekranda ayır.** `Death01` son karesinde arkadaş yüzüstü
+   yatıyor; canlıyken küçük bir nefes devinimi gerekiyor, yoksa gerçekten
+   öldüğünde hiçbir şey değişmiyor.
+4. **Orta moralin bedeni.** Spektin 12°'lik omuz düşüşü `SkeletonModifier3D`
+   ile animasyonun ÜSTÜNE eklenmeli.
+5. Sıra vakit kalırsa: yakıt yığınlarını sahneye koymak (odun toplamak
+   "ışığın kenarına gitmek" olsun).
+
+Hepsi tek dalda: `claude/kopek`. Kod dalı — sabah birleştirme için onay
+sorulacak.
+
 ### Şu an
 - Faz 0 bitti: proje iskeleti, iki test, dokuz negatif kontrol, LFS, 48 CC0 ses.
 - Tasarım gözden geçirmesi bitti (K-055, K-056): kapsam 6 gün/120 dk, zincir
@@ -144,14 +165,62 @@ gerekiyor (`varlik/ses/` altında 48 CC0 ses var, aralarında yok).
   caydırıyor; üç sonuç (girdin / denedin / girmedin) ayrışıyor. Güveni
   yükseltmenin ÜÇÜNCÜ yolu ("onu tehlikeden çıkarmak") açıldı.
   13 test, 102 negatif kontrol.
-- Sıradaki: köpeğin görsel varlığı (Quaternius Ultimate Animated Animal Pack,
-  CC0 — kullanıcı indirecek) ve "bekle" sözü → `IHMAL_SOZ_TUTMAMA`
-  (son ihmal kaynağı; K-063'ün kapalı söz türü listesi yüzünden önce bir
-  tasarım kararı gerekiyor).
+- **"Bekle" sözü bağlandı (K-072)** — Q'ya basmak "gel", basılı tutmak "kal".
+  Yeni söz türü açılmadı. **İhmalin beş kaynağı da artık dünyada.**
+- **Köpeğin gövdesi geldi** — Husky (kurt değil), 0.74 m, 12 klip.
+- 14 test, 111 negatif kontrol.
 
 ---
 
 ## 4. Cursor kuyruğu
+
+> **ÖNCE:** `cursor/ilk` dalı `main`'in gerisinde. Başlamadan
+> `git merge main` — yoksa köpek, animasyon ve ateş hiç yokmuş gibi görünür.
+
+---
+
+## [ ] Köpeğin his ayarı — sahip: cursor · **GECE İŞİ 2026-09-25**
+
+DOSYA:    `betik/cizim/kopek.gd` (Claude gece kuracak), `sahne/dunya.tscn`
+SORUN:    Köpeğin simülasyonu ölçüldü ve çalışıyor (K-071): uluma 0.0156 gün,
+          kenarda 0.0209 gün, saldırı penceresi 0.005 gün. Ama bunlar SAF
+          sayılar — hayvanın ekranda ne hızla dolandığı, nasıl atıldığı,
+          ısırmadan sonra nasıl çekildiği hiç ayarlanmadı.
+İSTENEN:  `@export` his sayıları: dolanma hızı, atılma hızı, atılma mesafesi,
+          çekilme hızı, dönüş hızı. Ateşin çemberi etrafında dolanırken
+          `Walk`, atılırken `Gallop`, ısırırken `Attack` oynasın.
+KABUL:    (1) Köpek ışığın sınırında GÖRÜNÜR ama çembere GİRMEZ — ateş
+          yarıçapı `ATES_ISIK_YARICAPI_M` = 6.0 m.
+          (2) Atılma anı gözle "ani" okunmalı; oyuncunun 0.005 gün (~6 sn)
+          tepki penceresi var, hayvan o süre içinde erişmeli.
+          (3) `araclar/gri-kutu.gd` hâlâ 0 ile çıkmalı.
+DOKUNMA:  `betik/sim/kopek.gd` YOK (kural orada, sen hisse bak).
+          `betik/ai/*` ve `betik/veri/*` YOK.
+
+## [ ] Koşma (Shift) ayarı — sahip: cursor
+
+DOSYA:    `betik/cizim/oyuncu.gd`
+SORUN:    K-030 koşmayı tarif ediyor ama ayarlanmadı: "Yaralıyken ve çok
+          açken koşulamaz. Köpekten hızlı değildir."
+İSTENEN:  Shift ile koşma; `sim.oyuncu.yarali` true iken ve
+          `aclik >= ESIK_AGIR` iken koşma KAPALI.
+KABUL:    Köpek galop hızı > oyuncu koşu hızı (ölçülmüş iki sayı, panoya yaz).
+          Koşarken kamera salınımı artmalı ama mide bulandırmamalı.
+DOKUNMA:  `betik/sim/*`, `betik/ai/*` YOK.
+
+## [ ] Isırık geri bildirimi — sahip: cursor
+
+DOSYA:    `betik/cizim/oyuncu.gd`, `betik/cizim/damga-katmani.gd` DEĞİL
+SORUN:    Köpek ısırdığında (`kopek_sonucu` = "araya girdin") ekranda hiçbir
+          şey olmuyor. Yara iki gün sürüyor ama oyuncu ısırıldığını bile
+          anlamayabilir.
+İSTENEN:  Kısa kamera sarsıntısı + yaralıyken hafif, sürekli bir eğim/ağırlık
+          hissi. HUD YOK, sayı YOK, kırmızı kenar YOK (§2: ekranda gösterge
+          olmaz — bedenden okunur).
+KABUL:    Kod bilmeyen biri kaydı izleyince "ısırıldı" diyebilmeli.
+DOKUNMA:  `betik/sim/*` YOK.
+
+---
 
 ## [x] Gri kutu: birinci şahıs kontrol ve sahne — sahip: cursor · **ÖLÇÜLDÜ (Claude)**
 
@@ -210,6 +279,58 @@ DOKUNMA:  `betik/sim/` `betik/ai/` `betik/veri/` `testler/` `belge/` `AGENTS.md`
 ---
 
 ## 5. ChatGPT kuyruğu
+
+---
+
+## [ ] CC0 kıyafet paketi araştırması — sahip: gpt · **GECE İŞİ 2026-09-25**
+
+Karakter modeli (Quaternius Universal Base Characters) **iç çamaşırlı bir
+temel gövde**. Hayatta kalma oyunu için kıyafet gerekiyor.
+
+ŞART:     (1) CC0 ya da atıfla kullanılabilir — lisans SAYFADAN okunmuş olmalı,
+          ikinci elden değil.
+          (2) **Quaternius Universal rigine uyumlu** ya da rigsiz/gövdeye
+          giydirilebilir olmalı. 65 kemik, UE adlandırması (`pelvis`,
+          `spine_01..03`, `thigh_l`, `upperarm_l` …).
+          (3) Görsel dil: doğal, kasvetli, yarı gerçekçi (K-044). Parlak,
+          çizgi film ya da fantastik giysi OLMAZ — uçak kazasından çıkmış
+          biri: yırtık gömlek, pantolon, çıplak ayak ya da tek ayakkabı.
+İSTENEN:  En fazla 5 aday, her biri için tek satır: ad · URL · lisans ·
+          format · üçgen sayısı · rig uyumu · neden uygun.
+          **Lisansı belirsiz olanı listeye yazma.**
+
+## [ ] CC0 mırıltı / nefes sesi araştırması — sahip: gpt · **GECE İŞİ**
+
+Çağırma mekaniği (K-068) çalışıyor ama SESSİZ. Kullanıcı kararı:
+*"kelime duyulmasın, karakterin boğuk mırıltısı duyulsun, yazı ekranda
+görünsün"*. `varlik/ses/` altında 48 CC0 ses var, aralarında mırıltı yok.
+
+ŞART:     CC0. İnsan sesi ama **kelime değil**: boğuk mırıltı, nefes, iç
+          çekme, kısık "hey" benzeri. Erkek ve/veya nötr.
+İSTENEN:  3–6 aday dosya, her biri için: ad · URL · lisans · süre · örnekleme
+          hızı. Ayrıca ayrı bir liste: arkadaşın **nefes** sesleri (çöküşte
+          canlı olduğunu göstermek için gerekiyor — panoda açık borç).
+
+## [ ] Ada yerleşim taslağı — sahip: gpt · **GECE İŞİ, uzun**
+
+Dilim şu an 60×60 m düz bir kutuda geçiyor. Ada ELLE tasarlanacak (§4:
+prosedürel üretim YOK) ve **en az 300 m çap** olacak.
+
+VERİLENLER (bunlar sabit, değiştirme):
+- 6 gün, ~107 dakika. Günde ~20 dk: gündüz 13, alacakaranlık 2, gece 5.
+- Zorunlu yerler: **enkaz** (kumsal, 1. gün), **açıklık + dere** (2. gün
+  kamp), **kayalık kıyı + gelgit havuzları** (3. gün balık), **barınak**
+  (kayanın arkası), **sal** (kıyı, 5. gün), **yiyecek noktaları** (uzak).
+- Ateş ışığı yarıçapı 6 m; gece görüşü 5.4 m. Köpek ışığın dışında dolanır.
+- Günde 4 odun + 2 yiyecek toplanabiliyor; toplama yürüyüş demek.
+İSTENEN:  Tek sayfa metin: hangi yer nerede, aralarındaki YÜRÜME SÜRESİ
+          (saniye, 1.6 m/s ile), ve her yerin hangi güne hizmet ettiği.
+          Kroki gerekmez, mesafe tablosu yeter.
+ÖLÇÜT:    Kamp ile dere arası ≤ 30 sn (su günde birkaç kez taşınıyor).
+          Kamp ile uzak yiyecek arası 60–120 sn (kıtlığın bedeli yürüyüş).
+          Kamp ile sal arası ≥ 120 sn (son yolculuk kısa olmamalı).
+
+---
 
 ## [x] Arkadaşın animasyon durum makinesi — sahip: gpt (Sol-6) · **İNCELENDİ**
 
