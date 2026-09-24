@@ -120,6 +120,11 @@ func _esit(a, b, nerede: String, hata: Array) -> bool:
 		"a.susuzluk": [a.arkadas.susuzluk, b.arkadas.susuzluk],
 		"duyum": [a.duyumlar.size(), b.duyumlar.size()],
 		"gitti": [a.arkadas_gitti, b.arkadas_gitti],
+		"ates": [a.ates_yaniyor, b.ates_yaniyor],
+		"yakit": [a.ates_yakit, b.ates_yakit],
+		"odun": [a.odun, b.odun],
+		"ates_sondu": [a.ates_sondu_gece, b.ates_sondu_gece],
+		"bugun_odun": [a._bugun_odun, b._bugun_odun],
 	}
 	var temiz := true
 	for ad in alanlar:

@@ -95,10 +95,11 @@ kapalı. Bağlanacaklar ve önkoşulları:
 
 | Kaynak | Önkoşul | Şimdi yapılabilir mi |
 |---|---|---|
-| Çökmüş/yaralıyken geceyi yalnız bırakma | `mesafe_m` (var) | **EVET** |
-| Tehlikede bırakma | köpek | hayır |
-| Geceleyin ateşi söndürme | yakıt sistemi | hayır |
-| Sözü tutmama | "bekle" mekaniği | hayır |
+| Çökmüş/yaralıyken geceyi yalnız bırakma | `mesafe_m` | **BAĞLANDI** |
+| Tehlikede bırakma | köpek | **BAĞLANDI** (denedi/denemedi ayrımıyla) |
+| Geceleyin ateşi söndürme | yakıt sistemi | **BAĞLANDI** (K-070) |
+| Elinde varken vermeme | — | **BAĞLANDI** |
+| Sözü tutmama | "bekle" mekaniği | hayır — tek kalan |
 
 ### AÇIK BORÇ — kıyafet (2026-09-25)
 
@@ -138,8 +139,11 @@ gerekiyor (`varlik/ses/` altında 48 CC0 ses var, aralarında yok).
   bozulmadı (2.20 / 4.28 / 8.28 m).
 - **Animasyon bağlandı (K-069)** — dur / yürü / otur / çöküş. Rig birebir aynı
   çıktı, retarget gerekmedi. 11 test, 82 negatif kontrol.
-- Sıradaki: yakıt sistemi → `IHMAL_ATESI_SONDURME`, "bekle" sözü →
-  `IHMAL_SOZ_TUTMAMA` (ihmal kanalının kalan 2/5'i).
+- **Ateş ve yakıt bağlandı (K-070)** — ihmalin 5 kaynağından 4'ü artık dünyada.
+  12 test, 91 negatif kontrol.
+- Sıradaki: **köpek** (gece tehdidi). İki şeyi birden açıyor: `Push`/kaçış
+  gerilimi ve "riskli işi onun yerine üstlenmek" güven yolu — ikincisi köpek
+  olmadan BEDELSİZ jest olurdu, o yüzden bekliyor.
 
 ---
 

@@ -25,6 +25,7 @@ kos() {  # kos <test-adi> → çıkış kodu
 		davranis) $GODOT --headless --path . --script res://testler/davranis.gd >/dev/null 2>&1 ;;
 		cagri)   $GODOT --headless --path . --script res://testler/cagri.gd >/dev/null 2>&1 ;;
 		animasyon) $GODOT --headless --path . --script res://testler/animasyon.gd >/dev/null 2>&1 ;;
+		ates)    $GODOT --headless --path . --script res://testler/ates.gd >/dev/null 2>&1 ;;
 	esac
 	return $?
 }
@@ -342,6 +343,40 @@ if sabotaj betik/ai/davranis.gd '/^static func durus_animasyonu/,/^	return "yuru
 	dene animasyon "sabotaj: dip moralde oturmuyor" 1; geri betik/ai/davranis.gd
 fi
 dene animasyon "geri yüklendi" 0
+
+# ============ ates (K-070) ============
+echo "negatif-kontrol · ates"
+dene ates "temiz kopya" 0
+
+# Gündüz de yanarsa günlük odun geceye yetmez ve ihmal ADALETSİZ olur.
+if sabotaj betik/sim/dunya.gd '/func _atesi_yak_tuket/,/ates_yakit -= dt/s/^	if not gece_mi():$/	if false:/'; then
+	dene ates "sabotaj: ateş gündüz de yakıt tüketiyor" 1; geri betik/sim/dunya.gd
+fi
+# Mandal olmazsa tek bir gece moral tabanını sıfırlar.
+if sabotaj betik/sim/dunya.gd 's/^	if not _ates_ihmali_bu_gece:$/	if true:/'; then
+	dene ates "sabotaj: ihmal her karede yazılıyor (mandal yok)" 1; geri betik/sim/dunya.gd
+fi
+# Hiç yanmamış ateş sönmüş sayılırsa ilk gece borçla başlanır.
+if sabotaj betik/sim/dunya.gd '/func _atesi_yak_tuket/,/^	if not gece_mi/s/^	if not ates_yaniyor:$/	if false:/'; then
+	dene ates "sabotaj: hiç yakılmamış ateş sönmüş sayılıyor" 1; geri betik/sim/dunya.gd
+fi
+# Kıtlık ihmali üretirse ceza oyuncunun değil dünyanın olur.
+if sabotaj betik/veri/ayarlar.gd 's/^const GUNLUK_ODUN_BULUNUR := 4/const GUNLUK_ODUN_BULUNUR := 1/'; then
+	dene ates "sabotaj: odun geceye yetmiyor (adaletsiz ihmal)" 1; geri betik/veri/ayarlar.gd
+fi
+# Ocak geceyi tek başına çıkarırsa "gece kalkma" mekaniği ölür.
+if sabotaj betik/veri/ayarlar.gd 's/^const ATES_YAKIT_TAVANI := 1\.0/const ATES_YAKIT_TAVANI := 2.0/'; then
+	dene ates "sabotaj: dolu ocak geceyi tek başına çıkarıyor" 1; geri betik/veri/ayarlar.gd
+fi
+# Arkadaş güvenden bağımsız beslerse güvenin maddi karşılığı kalmaz.
+if sabotaj betik/sim/dunya.gd 's/^			and guven.deger > A.GUVEN_DUSUK_UST:$/			and true:/'; then
+	dene ates "sabotaj: arkadaş düşük güvende de ateşi besliyor" 1; geri betik/sim/dunya.gd
+fi
+# İlk gece ateşsiz geçmeli (K-063).
+if sabotaj betik/veri/ayarlar.gd 's/^const ATES_ILK_GUN := 2$/const ATES_ILK_GUN := 1/'; then
+	dene ates "sabotaj: ateş ilk gece yakılabiliyor" 1; geri betik/veri/ayarlar.gd
+fi
+dene ates "geri yüklendi" 0
 
 echo "GENEL TOPLAM: $gecti geçti, $kalan kaldı"
 [ "$kalan" -eq 0 ] && exit 0 || exit 1

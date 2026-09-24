@@ -55,6 +55,25 @@ const ESIK_OLUM := 1.00
 # bolluk olsaydı kimse acıkmaz, fedakârlık diye bir şey olmazdı.
 const GUNLUK_YIYECEK_BULUNUR := 2
 
+# --- Ateş ve yakıt (K-070) ---
+# Ateş YALNIZCA geceleyin yakıt tüketir. Gündüz kor hâlinde durur. Sebep
+# oyunsal: ateşin bedeli geceye ait, ve gece yakıt beslemek "ışığın kenarına
+# gitmek" demek (tasarım §dilim). Gündüz de yansaydı günlük odun tavanı
+# yalnızca gündüzü karşılamaya yeter, gece hiç kurulamazdı.
+const ATES_GECE_YAKIT_HIZI := 5.0   # gün başına; gece 0.25 gün → 1.25 yakıt ister
+const ODUN_KATKISI := 0.5           # bir kütük ne kadar doldurur
+const ATES_YAKIT_TAVANI := 1.0      # ocak bundan fazlasını almaz
+const ATES_YAKIT_ESIGI := 0.35      # altında beslenmesi gerekir
+const GUNLUK_ODUN_BULUNUR := 4      # gece 1.25 ister (3 kütük); 4 bulunur
+
+# TAVAN KASITLI OLARAK GECENİN ALTINDA: dolu bir ocak (1.00) geceyi
+# çıkarmaz (1.25 gerekir). Yani ateş EN AZ İKİ KEZ beslenmeli ve en az bir
+# kez gecenin ortasında kalkmak gerekir. Oyunun bu mekanikten istediği şey
+# tam olarak o kalkış.
+
+# İlk gece ateşsiz geçer (K-063): ateş 2. günün hediyesi değil, bedeli.
+const ATES_ILK_GUN := 2
+
 # Bir porsiyon ne kadar kapatır
 const YIYECEK_DOYURUR := 0.45
 const SU_KANDIRIR := 0.60

@@ -29,6 +29,10 @@ static func topla(d) -> Dictionary:
 		"gun": d.gun, "t": d.t,
 		"yiyecek": d.yiyecek, "kap_dolu": d.kap_dolu, "mesafe_m": d.mesafe_m,
 		"ates_yaniyor": d.ates_yaniyor,
+		"ates_yakit": d.ates_yakit, "odun": d.odun,
+		"ates_sondu_gece": d.ates_sondu_gece,
+		"_bugun_odun": d._bugun_odun,
+		"_ates_ihmali_bu_gece": d._ates_ihmali_bu_gece,
 		"oyuncu_atesin_isiginda": d.oyuncu_atesin_isiginda,
 		"arkadas_atesin_isiginda": d.arkadas_atesin_isiginda,
 		"arkadas_gitti": d.arkadas_gitti, "arkadas_oldu": d.arkadas_oldu,
@@ -55,6 +59,10 @@ static func yukle(d, veri: Dictionary) -> bool:
 	d.yiyecek = int(veri["yiyecek"]); d.kap_dolu = bool(veri["kap_dolu"])
 	d.mesafe_m = float(veri["mesafe_m"])
 	d.ates_yaniyor = bool(veri["ates_yaniyor"])
+	d.ates_yakit = float(veri["ates_yakit"]); d.odun = int(veri["odun"])
+	d.ates_sondu_gece = int(veri["ates_sondu_gece"])
+	d._bugun_odun = int(veri["_bugun_odun"])
+	d._ates_ihmali_bu_gece = bool(veri["_ates_ihmali_bu_gece"])
 	d.oyuncu_atesin_isiginda = bool(veri["oyuncu_atesin_isiginda"])
 	d.arkadas_atesin_isiginda = bool(veri["arkadas_atesin_isiginda"])
 	d.arkadas_gitti = bool(veri["arkadas_gitti"]); d.arkadas_oldu = bool(veri["arkadas_oldu"])

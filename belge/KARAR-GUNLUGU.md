@@ -2349,3 +2349,76 @@ Kamera kilitli, aynı sahne, farklı durum:
 Yüzüstü yatan çöküş, **ölümle aynı görünebilir**. Tasarım çöküşün günlerce
 sürmesini ve oyuncunun defalarca müdahale şansı olmasını istiyor; canlı ile ölü
 arasında görünür bir fark gerekiyor (nefes gibi küçük bir devinim). Panoda madde.
+
+
+---
+
+## K-070 · Ateş: ihmalin dördüncü kaynağı, ve adaletin sayısı
+
+**Tarih:** 2026-09-25.
+
+`IHMAL_ATESI_SONDURME` (0.10) bir yıldır `ayarlar.gd`'de duruyordu ama dünyada
+karşılığı yoktu. Şimdi var: **ateş yakıt ister, söner, ve söndüğü gece ihmal
+yazılır.**
+
+| Sayı | Değer | Neden |
+|---|---|---|
+| Gece yakıt hızı | 5.0 / gün | gece 0.25 gün → **1.25 yakıt** ister |
+| Bir kütük | 0.50 | gece **3 kütük** demek |
+| Ocak tavanı | **1.00** | geceden KÜÇÜK — tek besleme yetmez |
+| Günlük odun | 4 | 2.00 verir; gece 1.25 ister |
+
+**Ocak tavanının geceden küçük olması mekaniğin sebebi.** Dolu ocak geceyi
+çıkarsaydı oyuncu akşam iki kütük atıp uyur, ateş bir dekora dönüşürdü.
+Tavan küçük olunca gecenin ortasında kalkmak ZORUNLU oluyor — ve tasarımın
+"yakıt toplamak ışığın kenarına gitmek demektir" cümlesi bir cümle olmaktan
+çıkıp bir ana dönüşüyor. Ölçüldü: dolu ocakla başlayan gece **2 besleme**
+istiyor.
+
+**Ateş GÜNDÜZ yakıt tüketmez.** Kor hâlinde durur. Gündüz de yansaydı günlük
+odun tavanı yalnızca gündüzü karşılamaya yeterdi ve gece hiç kurulamazdı —
+yani ihmal oyuncunun değil **dünyanın** suçu olurdu.
+
+### Adalet, yapıyla sağlandı
+
+Bu mekaniğin asıl riski cezanın adaletsiz olmasıydı. K-055'te kullanıcı açıkça
+"ölüm bir kazaya değil, bir birikime bağlı" demişti. Üç şart teste bağlandı:
+
+1. **Bir günde toplanan odun, bir gecenin istediğinden ÇOK olmalı** (2.00 >
+   1.25). Aksi hâlde oyuncu elinden geleni yapsa bile ateş söner.
+   Ölçüldü: ateşe bakan oyuncu 6 günde **0 gece** ateşsiz kalıyor.
+2. **Hiç yanmamış ateş sönmüş sayılmaz.** İlk gece ateşsiz geçiyor (K-063);
+   o gece ihmal yazılsaydı oyun daha başlamadan borç yüklerdi. Ölçüldü:
+   1. gece ihmal 0.000.
+3. **Bir gecede bir kez.** Oyuncu ateşi yeniden yakıp bir daha söndürse bile
+   ihmal tek sefer yazılır. Ölçüldü: aynı gecede **3 sönme → 0.100 ihmal**.
+
+### Güvenin maddi karşılığı burada da var
+
+Arkadaş ateşi besler — **ama güveni dipteyse beslemez.** Aynı sebeple yiyecek
+katkısı da yapmıyor (K-056): güvenmediği biri için emek harcamaz. Sonuç şu
+sarmal: güven düşükken ateşi ayakta tutmak tamamen oyuncunun işi oluyor, ve
+tam o noktada ihmal birikmeye başlıyor. Ölçüldü: yüksek güvende besliyor,
+düşük güvende beslemiyor.
+
+### Bulunan hatalar
+
+**a) İlk senaryom yanlıştı, kod doğruydu.** "Hiç odun toplamayan oyuncunun
+ateşi söner" diye test yazdım ve düştü — ama ateş hiç yakılmadığı için
+sönemezdi de. İhmal "ateşi yakmamak" değil, **yaktığın ateşi söndürmek**.
+Hiç ateş yakmamanın cezası gece tehdidinden gelir, ihmalden değil.
+
+**b) Mandal sabotajı yakalanmadı.** "Bir gecede bir kez" mandalını kaldıran
+negatif kontrol testi düşürmedi: ateş söndükten sonra fonksiyon zaten erken
+dönüyor, mandal o yolda hiç çalışmıyor. Mandalın gerçekten gerektiği tek an
+oyuncunun ateşi **yeniden yakıp bir daha söndürmesi** — o senaryo testte
+yoktu. Eklendi, sabotaj artık yakalanıyor. §5.9'un tam dersi: negatif kontrol
+düşmüyorsa test bir şey ölçmüyordur.
+
+### Bekleyen: riskli işi onun yerine üstlenmek
+
+Tasarım güveni yükseltmenin üçüncü yolunu "o karanlığa yakıt toplamaya
+giderken senin gitmen" diye tanımlıyor. Bağlanmadı — ve sebebi ilkesel:
+**köpek henüz yok.** Karanlığa gitmenin bir riski olmadan bu jest BEDELSİZ
+olur, ve bedelsiz jestin güveni yükseltmesi §2'nin doğrudan ihlalidir. Köpek
+gelince bağlanacak.

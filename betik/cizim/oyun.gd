@@ -84,14 +84,7 @@ func _unhandled_input(_event: InputEvent) -> void:
 		if sim.cagir() and _soz:
 			_soz.soyle("soz.hey")
 	elif Input.is_action_just_pressed("etkiles"):
-		if not sim.kap_dolu:
-			_bekleyen_eylem = "doldur"
-		elif sim.oyuncu.susuzluk >= A.ESIK_HISSEDILIR:
-			_bekleyen_eylem = "ic"
-		elif sim.oyuncu.aclik >= A.ESIK_HISSEDILIR and sim.yiyecek > 0:
-			_bekleyen_eylem = "ye"
-		else:
-			_bekleyen_eylem = "topla"
+		_bekleyen_eylem = _baglama_gore()
 
 func _oyun_bitti() -> void:
 	# Ölüm kesinleştiği an yuva SİLİNİR ve oyun biter (K-006). Geri dönüş yok.
@@ -108,3 +101,31 @@ func _mesafe_m() -> float:
 	var fark: Vector3 = _arkadas.global_position - oy.global_position
 	fark.y = 0.0
 	return fark.length()
+
+
+func _baglama_gore() -> String:
+	# E BAĞLAMA GÖRE davranır (tasarım §dört tuş). Bağlam ŞU AN simülasyon
+	# durumundan çıkıyor; DOĞRU yeri baktığın nesne olacak — gri kutuda henüz
+	# ateş, dere ve yığın yok. O nesneler girince bu merdiven silinir ve
+	# yerini "neye bakıyorsun" alır (pano: açık borç). Sıralama keyfî değil,
+	# ACİLİYETE göre:
+	#
+	#   gece + ateş sönmüş  → ateşi yak   (gecenin en acil işi)
+	#   gece + yakıt azalmış → yakıt at
+	#   gündüz              → odun, sonra su, sonra yiyecek
+	if sim.gece_mi():
+		if not sim.ates_yaniyor and sim.odun > 0 and sim.gun >= A.ATES_ILK_GUN:
+			return "ates_yak"
+		if sim.ates_yaniyor and sim.ates_yakit < A.ATES_YAKIT_ESIGI and sim.odun > 0:
+			return "yakit_at"
+	if not sim.ates_yaniyor and sim.odun > 0 and sim.gun >= A.ATES_ILK_GUN:
+		return "ates_yak"
+	if not sim.kap_dolu:
+		return "doldur"
+	if sim.oyuncu.susuzluk >= A.ESIK_HISSEDILIR:
+		return "ic"
+	if sim.oyuncu.aclik >= A.ESIK_HISSEDILIR and sim.yiyecek > 0:
+		return "ye"
+	if sim.odun < A.GUNLUK_ODUN_BULUNUR and not sim.gece_mi():
+		return "odun_topla"
+	return "topla"

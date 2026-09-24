@@ -30,6 +30,8 @@ var yiyecek := 2                # oyuncunun taşıdığı porsiyon
 var kap_dolu := true            # TEK kap — bir dolum bir kişilik (K-056)
 var mesafe_m := 3.0
 var ates_yaniyor := false
+var ates_yakit := 0.0           # 0..1; YALNIZCA geceleyin tükenir
+var odun := 0                   # toplanmış yakıt
 var oyuncu_atesin_isiginda := false
 var arkadas_atesin_isiginda := false
 var arkadas_gitti := false
@@ -43,6 +45,9 @@ var alinan_firsat := 0
 var ihanet_sayisi := 0
 var _firsat_acik := false
 var _bugun_toplandi := 0
+var _bugun_odun := 0
+var _ates_ihmali_bu_gece := false
+var ates_sondu_gece := 0        # ölçüm: kaç gece ateşsiz kaldı
 var arkadas_zorla_aldi := 0
 var gunluk: Array = []
 var duyumlar: Array = []
@@ -110,6 +115,8 @@ func adim(dt: float, politika: Callable) -> void:
 		duyumlar.append("gün %d: %s" % [gun, "açsın" if d == "aclik" else "susadın"])
 	arkadas.ilerle(dt, uyuyor)
 
+	_atesi_yak_tuket(dt)
+
 	# Fırsat mandalı: bir epizot bir kez sayılır, her karede değil.
 	var simdi := firsat_var_mi()
 	if simdi and not _firsat_acik:
@@ -173,6 +180,21 @@ func _eylemi_uygula(eylem: String) -> void:
 			if not gece_mi() and _bugun_toplandi < A.GUNLUK_YIYECEK_BULUNUR:
 				yiyecek += 1
 				_bugun_toplandi += 1
+		"odun_topla":
+			# Gündüz ve günlük sınır içinde — yiyecekle aynı kıtlık kalıbı.
+			if not gece_mi() and _bugun_odun < A.GUNLUK_ODUN_BULUNUR:
+				odun += 1
+				_bugun_odun += 1
+		"yakit_at":
+			if odun > 0 and ates_yaniyor:
+				odun -= 1
+				ates_yakit = minf(ates_yakit + A.ODUN_KATKISI, A.ATES_YAKIT_TAVANI)
+		"ates_yak":
+			# İlk gece ateşsiz geçer (K-063). Ateş 2. günün bedeli.
+			if not ates_yaniyor and odun > 0 and gun >= A.ATES_ILK_GUN:
+				odun -= 1
+				ates_yaniyor = true
+				ates_yakit = A.ODUN_KATKISI
 		"doldur":
 			kap_dolu = true
 		"uzaklas":
@@ -197,6 +219,15 @@ func _arkadasin_kendi_isi(dt: float) -> void:
 	# Su dere kampta olduğu için ikisi için de bedava (K-056).
 	if arkadas.susuzluk >= A.ESIK_HISSEDILIR:
 		arkadas.susuzluk = maxf(arkadas.susuzluk - dt * 2.0, 0.0)
+
+	# Ateşi besler — ama güveni dipteyse BESLEMEZ. Aynı sebeple katkı da
+	# yapmıyor (_arkadasin_katkisi): güvenmediği biri için emek harcamaz.
+	# Böylece "ateşi söndürme" ihmali güvenle birleşiyor: güven düşükken
+	# ateşi ayakta tutmak tamamen oyuncunun işi oluyor.
+	if ates_yaniyor and ates_yakit < A.ATES_YAKIT_ESIGI and odun > 0 \
+			and guven.deger > A.GUVEN_DUSUK_UST:
+		odun -= 1
+		ates_yakit = minf(ates_yakit + A.ODUN_KATKISI, A.ATES_YAKIT_TAVANI)
 
 	# Yiyecek: havuzdan yer. Çok açsa ve güven dipteyse SORMADAN alır (K-026).
 	if arkadas.aclik >= A.ESIK_AGIR and yiyecek > 0:
@@ -224,6 +255,8 @@ func _gun_bitti() -> void:
 	})
 	guven.gun_dondu()
 	_bugun_toplandi = 0
+	_bugun_odun = 0
+	_ates_ihmali_bu_gece = false
 	_arkadasin_katkisi()
 	t = 0.0
 	gun += 1
@@ -233,3 +266,29 @@ func _gun_bitti() -> void:
 		bitti = true; bitis_sebebi = "hikâye bitti"
 	elif gun > A.GUVENLIK_TAVANI_GUN:
 		bitti = true; bitis_sebebi = "güvenlik tavanı"
+
+
+func _atesi_yak_tuket(dt: float) -> void:
+	# ATEŞİN SÖNMESİ İHMALDİR — ama yalnızca GECELEYİN ve yalnızca ateş
+	# gerçekten yanıyorken (K-070). Üç ayrım kasıtlı:
+	#
+	# 1) Gündüz tüketim YOK. Ocak kor hâlinde durur. Gündüz de yansaydı
+	#    günlük odun tavanı geceye hiç yetmezdi ve ihmal ADALETSİZ olurdu:
+	#    oyuncu elinden geleni yapsa bile ateş sönerdi.
+	# 2) Hiç yanmamış ateş sönmüş sayılmaz. İlk gece ateşsiz geçiyor (K-063);
+	#    o gece için ihmal yazılsaydı oyun daha başlamadan borç yüklerdi.
+	# 3) Bir gecede BİR KEZ sayılır. Mandal olmasaydı her kare ihmal eklerdi
+	#    ve tek bir gece moral tabanını sıfırlardı.
+	if not ates_yaniyor:
+		return
+	if not gece_mi():
+		return
+	ates_yakit -= dt * A.ATES_GECE_YAKIT_HIZI
+	if ates_yakit > 0.0:
+		return
+	ates_yakit = 0.0
+	ates_yaniyor = false
+	ates_sondu_gece += 1
+	if not _ates_ihmali_bu_gece:
+		_ates_ihmali_bu_gece = true
+		guven.ihmal_ekle(A.IHMAL_ATESI_SONDURME)
