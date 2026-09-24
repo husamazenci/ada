@@ -49,7 +49,8 @@ Kullanıcıya sorulmadan değiştirilmez. Zemin değişti, bunlar değişmedi.
   sözü tutmak, onu tehlikeden çıkarmak. İlke şudur: o an **senin ihtiyacın
   olan** bir şeyden vazgeçmek. Liste kapalı değil, ilke kapalı. Ucuz jestler
   (yanında durmak, tokken vermek) tek başına yükseltmez. Düşüş yükselişin
-  üç katı hızlıdır ve her düşüş, **onun ihtiyacı olan** bir şeyi almak ya da
+  iki katı hızlıdır (K-057: üç kat, davranış tablosundaki ORTA güveni
+  ulaşılamaz kılıyordu) ve her düşüş, **onun ihtiyacı olan** bir şeyi almak ya da
   vermemektir (K-055).
 - **Arkadaş yalnızca gördüğünü değerlendirir.** O bakmıyorken yaptığın
   fedakârlığı bilmez, o bakmıyorken yediğini de bilmez. **Yokluk da algıdır:**

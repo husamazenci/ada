@@ -12,11 +12,13 @@
 
 **Issız bir adada hayatta kal — ve yanındakini kaybetme.**
 
-Tarayıcıda çalışan, birinci şahıs, 3B, tek oyunculu hayatta kalma oyunu.
+Masaüstünde çalışan (Godot 4.7), birinci şahıs, 3B, tek oyunculu
+hayatta kalma oyunu.
 Uçak düştü, sen kurtuldun, bir kişi daha kurtuldu. Oyunun bütün ağırlığı o
 ikinci kişide. Elle kayıt yok, kalıcı ölüm.
 
-Bu ikinci denemedir. Birinci denemeden çıkarılan dersler bu belgeye ve
+Bu **üçüncü** denemedir. İlk ikisi tarayıcıda, Three.js ile yapıldı ve
+ikisi de aynı yerde takıldı (K-054). Çıkarılan dersler bu belgeye ve
 `AGENTS.md`'ye işlendi; onlardan sapılmaz.
 
 ## 2. Oyunun kalbi: arkadaş
@@ -33,7 +35,7 @@ yardımsever. Bir karar bu iki özgürlükten birini kısıtlıyorsa yanlış ka
 
 ## 3. Uzunluk, ana kavis ve son
 
-**Karar (2026-09-17, K-005):** Oyun yaklaşık **4 saat**. Son **tek kişilik
+**Karar (K-005, K-055 ile güncellendi):** Oyun **120 dakika** (6 gün × 20 dk). Son **tek kişilik
 sal**. **Fırtına** sonun kendisi değil; salın birkaç gün önce gelen büyük sınav.
 
 ### Zaman: melez *(karar, K-052)*
@@ -49,20 +51,21 @@ takvimde yalnızca güvenlik tavanı vardır (20. gün).
 Gün/gece ve hayatta kalma zamana bağlı kalır: açlık, ateş, köpek, fırtına.
 Aşağıdaki gün numaraları artık bir takvim değil, **hedef tempodur**.
 
-### Takvim *(hedef tempo — K-052 ile kapı olmaktan çıktı)*
+### Takvim *(hedef tempo — K-052 ile kapı olmaktan çıktı, K-055 ile 6 güne indi)*
 
-Gün ≈ 20 dk (gündüz ~13, alacakaranlık ~2, gece ~5) × 12 oyun günü ≈ 4 saat.
+Gün ≈ 20 dk (gündüz ~13, alacakaranlık ~2, gece ~5) × **6 oyun günü ≈ 120 dk.**
 
-| Oyun günü | Ne olur |
-|---|---|
-| 1–2 | Yalnızca doğa: deniz, hava, açlık |
-| 3+ | Hayvanlar; arkadaşın kırılganlığı |
-| 5+ | **Yazılmış sahneler yoğunlaşır:** köpek, yara, kıtlık (bkz. `HIKAYE-OMURGASI.md`) |
-| ~8. gece | **Fırtına.** Barınak; arkadaşın kendi kararıyla seni barınağa çekip çekmemesi — güveni sözsüz ölçebileceğin an |
-| ~10 | Fırtınanın kıyıya attığı **tek kişilik can salı** |
-| ~12 | Sal biriyle birlikte gider ya da gelgit onu alır; oyun o günün batımında biter |
+| Gün | Kimliği | Ne olur |
+|---|---|---|
+| 1 | Uyanış | Kumsal, enkaz, tek kap. Ateşsiz ilk gece |
+| 2 | Ateş ve yer | İlk ateş; açıklık (dere + ağaç) seçilir; barınak iskeleti |
+| 3 | Ayrılık ve köpek | Yakın kaynak biter, biri uzağa gider. Gece köpek gelir |
+| 4 | Yaralı gün ve fırtına | Yaralı/yorgun geçen gün; gece **fırtına** |
+| 5 | Çöküş ve sal | Arkadaş çöker; **tek kişilik can salı** kıyıya vurur |
+| 6 | Seçim | Son gece; gelgit sabahı sal gider — biriyle ya da boş |
 
 Fırtına salı getiren olaydır: sebep–sonuç hiçbir şey anlatmadan kurulur.
+Gün numaraları **kapı değil, en erken gündür** (K-052).
 
 ### Son: tek kişilik
 
@@ -240,7 +243,8 @@ Kullanıcıya sorulmadan değiştirilmez.
   sözü tutmak, onu tehlikeden çıkarmak. İlke şudur: o an **senin ihtiyacın
   olan** bir şeyden vazgeçmek. Liste kapalı değil, ilke kapalı. Ucuz jestler
   (yanında durmak, tokken vermek) tek başına yükseltmez. Düşüş yükselişin
-  üç katı hızlıdır ve her düşüş, **onun ihtiyacı olan** bir şeyi almak ya da
+  iki katı hızlıdır (K-057: üç kat, davranış tablosundaki ORTA güveni
+  ulaşılamaz kılıyordu) ve her düşüş, **onun ihtiyacı olan** bir şeyi almak ya da
   vermemektir (K-055).
 - **Arkadaş yalnızca gördüğünü değerlendirir.** O bakmıyorken yaptığın
   fedakârlığı bilmez, o bakmıyorken yediğini de bilmez. **Yokluk da algıdır:**
