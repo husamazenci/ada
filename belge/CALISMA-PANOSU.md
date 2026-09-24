@@ -152,7 +152,21 @@ DOKUNMA:  `betik/sim/` `betik/ai/` `betik/veri/` `testler/` `belge/` `AGENTS.md`
 
 ## 5. ChatGPT kuyruğu
 
-## [ ] Arkadaşın animasyon durum makinesi — sahip: gpt (Sol-6)
+## [x] Arkadaşın animasyon durum makinesi — sahip: gpt (Sol-6) · **İNCELENDİ**
+
+SONUÇ:    `belge/ANIMASYON-SPEKTI.md`. Üç bağlantı doğrulandı. Asıl mimari
+          karar DOĞRU: dokuz hücre için dokuz durum kurulmuyor; güven →
+          mesafe/yönelim/bakış, moral → tempo/duruş/duraklama. Root motion
+          yok, gerekçesiyle. Bizim görmediğimiz bir riski yakalamış: dip
+          moralde oturmak "düşük güven" diye okunabilir.
+EKSİK:    (1) İhtiyaç bakışı yok — aç arkadaş yiyeceğe, susamış kaba bakmalı
+          (K-056); bu olmadan oyuncu NEYİ vereceğini bilemez. (2) Çöküş
+          ilerlemesi yok — `Oturmuş` ile `Ölüm` arasındaki iki günlük görünür
+          vazgeçiş eksik (K-055/D1).
+KARAR BEKLİYOR: gece algı yarıçapı 5,4 m, düşük güvende arkadaş 7–10 m'de →
+          gece jestleri hiç kaydedilmiyor. Kasıtlı sertlik mi, kapan mı?
+
+## [ ] (sıradaki) Animasyon spektinin iki eksiği — sahip: gpt
 
 DOSYA:    **yeni** `belge/ANIMASYON-SPEKTI.md` (kod yok, tasarım belgesi)
 SORUN:    Oyunun kabul kriteri "arkadaşın üç güven seviyesi EKRANDA ayırt
