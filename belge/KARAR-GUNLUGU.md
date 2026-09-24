@@ -1753,3 +1753,41 @@ sistemi, kontrol devri ve iskelet animasyonu demektir.
   iki fedakârlığı siliyor.
 - İki belgedeki değişmez blok birlikte güncellendi; `degismez-esitlik.sh`
   eşitliği doğruladı. 26 negatif kontrolün 26'sı geçiyor.
+
+## K-058 · 2026-09-24 · Ateş ışığı algı istisnası; kabul testinin hafif sürümü
+
+### Nasıl bulundu
+
+Animasyon spekti (ChatGPT) ile `betik/veri/ayarlar.gd` çapraz kontrol edildi.
+Spekt düşük güvende arkadaşı **7–10 m**'de konumlandırıyordu; koddaki gece
+algı yarıçapı ise **5.4 m** (12 × 0.45). Sonuç: güveni en çok kazanman gereken
+anda, gece yaptığın **hiçbir jest kaydedilmiyordu** — kanal tamamen kapalıydı.
+İki belge ayrı ayrı tutarlıydı; çelişki ancak yan yana konunca göründü.
+
+### Karar (kullanıcı)
+
+**Ateşin aydınlattığı çemberde algı GÜNDÜZ gibi çalışır.** `ATES_ISIK_YARICAPI_M
+= 6.0`. Şart: ateş yanıyor olmalı ve **İKİSİ de** çemberin içinde olmalı.
+
+- Ateş başında geçen normal kamp gecesi artık okunur: jestler kaydedilir.
+- Düşük güvende arkadaş çemberin DIŞINDA durur (7–10 m), yani ona gece
+  ulaşmak hâlâ **yanına gitmeyi** gerektirir. Kasıtlı sertlik olan kısım bu;
+  kapan olan kısım kalktı.
+- Ateş sönerse istisna da söner — ateşi beslemenin ilişkisel bir bedeli daha
+  oluyor.
+
+**Ölçüldü:** `testler/algi.gd`, yedi durumun yedisi doğru; üç negatif kontrol
+(istisnayı kaldır · arkadaşın ışıkta olmasını arama · gece görüşünü daraltma)
+üçü de yakalanıyor. Bir değişmez daha sınanıyor: ateş ışığı gece görüşünü
+gündüz menziline çıkarır, **ötesine değil**.
+
+### Kabul testi: hafif sürüm (kullanıcı kararı)
+
+Spekt "dokuz birleşim × beş izleyici" = 45 izleme istiyordu. Tek kişilik
+üretimde bu test hiç yapılmaz, yani kural kâğıtta kalırdı.
+
+- **Geliştirme boyunca:** moral yüksek sabitlenir, üç güven seviyesi, **üç
+  izleyici**, üçte iki doğru bilme ölçütü.
+- **Yayından önce bir kez:** dokuz hücre, beş izleyici, beşte dört ölçütü.
+
+İlkeden vazgeçilmedi; sıklığı gerçekçi hale getirildi.

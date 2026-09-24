@@ -224,7 +224,19 @@ gitmen gerekir") ya da kazara kurulmuş bir kapan. **Kullanıcı kararı gerekiy
 Kasıtlı sayılırsa ateş ışığı bir istisna olmalı: ateşin aydınlattığı yarıçap
 içinde algı gündüz gibi çalışsın.
 
-## Pratik itiraz: kabul testi çok ağır
+## Kabul testi: HAFİF SÜRÜM (kullanıcı kararı, K-058)
+
+Spektin önerdiği "dokuz birleşim × beş izleyici" = 45 izleme; tek kişilik
+üretimde bu test hiç yapılmaz, yani kural kâğıtta kalır. Karar:
+
+- **Geliştirme boyunca:** moral YÜKSEK sabitlenir, yalnızca üç güven seviyesi
+  kaydedilir, **üç izleyici**. Üçten ikisi doğru bilmeli.
+- **Yayından önce bir kez:** dokuz hücrenin tamamı, beş izleyici, dörtte dört
+  ölçütü — spektin özgün hâli.
+
+İlkeden vazgeçilmiyor, sıklığı gerçekçi hale getiriliyor.
+
+## (özgün itiraz, kayıt için)
 
 "Dokuz birleşimin her biri için beş izleyici" = 45 izleme. Tek kişilik
 üretimde bu test hiç yapılmaz, yani kural kâğıtta kalır.
