@@ -64,4 +64,12 @@ const IHMAL_GUNLUK_GERILEME := 0.15       # bakım gösterilirse yavaşça geril
 
 # --- Algı ---
 const GORUS_MESAFESI_M := 12.0    # arkadaş bunun ötesindekini değerlendirmez
-const GECE_GORUS_CARPANI := 0.45  # karanlıkta daralır; ateş ışığı ayrı hesap
+const GECE_GORUS_CARPANI := 0.45  # karanlıkta daralır
+
+# ATEŞ IŞIĞI İSTİSNASI (K-058, kullanıcı kararı). Gece görüşü 5.4 m'ye
+# daralıyordu; düşük güvende arkadaş 7–10 m'de durduğu için gece yapılan
+# hiçbir jest ona ULAŞMIYORDU — güveni en çok kazanman gereken anda kanal
+# tamamen kapalıydı. Ateşin aydınlattığı çember içinde algı GÜNDÜZ gibi
+# çalışır. Karanlıkta uzaktaki birine ulaşmak hâlâ yanına gitmeyi gerektirir;
+# kasıtlı sertlik olan kısım budur.
+const ATES_ISIK_YARICAPI_M := 6.0

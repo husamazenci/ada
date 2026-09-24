@@ -152,6 +152,36 @@ DOKUNMA:  `betik/sim/` `betik/ai/` `betik/veri/` `testler/` `belge/` `AGENTS.md`
 
 ## 5. ChatGPT kuyruğu
 
+## [x] Arkadaşın animasyon durum makinesi — sahip: gpt (Sol-6) · **İNCELENDİ**
+
+SONUÇ:    `belge/ANIMASYON-SPEKTI.md`. Üç bağlantı doğrulandı. Asıl mimari
+          karar DOĞRU: dokuz hücre için dokuz durum kurulmuyor; güven →
+          mesafe/yönelim/bakış, moral → tempo/duruş/duraklama. Root motion
+          yok, gerekçesiyle. Bizim görmediğimiz bir riski yakalamış: dip
+          moralde oturmak "düşük güven" diye okunabilir.
+EKSİK:    (1) İhtiyaç bakışı yok — aç arkadaş yiyeceğe, susamış kaba bakmalı
+          (K-056); bu olmadan oyuncu NEYİ vereceğini bilemez. (2) Çöküş
+          ilerlemesi yok — `Oturmuş` ile `Ölüm` arasındaki iki günlük görünür
+          vazgeçiş eksik (K-055/D1).
+KARAR BEKLİYOR: gece algı yarıçapı 5,4 m, düşük güvende arkadaş 7–10 m'de →
+          gece jestleri hiç kaydedilmiyor. Kasıtlı sertlik mi, kapan mı?
+
+## [ ] (sıradaki) Animasyon spektinin iki eksiği — sahip: gpt
+
+DOSYA:    **yeni** `belge/ANIMASYON-SPEKTI.md` (kod yok, tasarım belgesi)
+SORUN:    Oyunun kabul kriteri "arkadaşın üç güven seviyesi EKRANDA ayırt
+          edilebilsin". Elimizde Quaternius Universal Animation Library var
+          (CC0, 120+ animasyon, humanoid rig, Godot'da test edilmiş) ama
+          hangi animasyonun hangi güven×moral durumuna karşılık geldiği,
+          geçişlerin ne kadar süreceği ve AnimationTree'nin nasıl kurulacağı
+          hiç tasarlanmadı. Bu tasarlanmadan gövde koda bağlanamaz.
+İSTENEN:  Spesifikasyon (aşağıdaki promptla verildi).
+KABUL:    Her güven×moral hücresi için EKRANDA GÖRÜLEBİLİR bir karşılık;
+          K-056'daki illüzyon kırıcıların her birine somut karşı önlem;
+          3 dakikalık kayıtta seviyenin ayırt edilmesini sağlayacak üç
+          gözlenebilir işaret.
+DOKUNMA:  Depodaki hiçbir kod dosyası.
+
 ## [x] CC0 varlık araştırması — sahip: gpt · **ÖLÇÜLDÜ (Claude, 2026-09-24)**
 
 SONUÇ:    `belge/VARLIK-KAYNAKLARI.md` yazıldı. 18 URL çağrıldı, 18'i yaşıyor;

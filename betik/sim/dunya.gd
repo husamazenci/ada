@@ -18,6 +18,9 @@ var guven: Gv = Gv.new()
 var yiyecek := 2                # oyuncunun taşıdığı porsiyon
 var kap_dolu := true            # TEK kap — bir dolum bir kişilik (K-056)
 var mesafe_m := 3.0
+var ates_yaniyor := false
+var oyuncu_atesin_isiginda := false
+var arkadas_atesin_isiginda := false
 var arkadas_gitti := false
 var arkadas_oldu := false
 var bitti := false
@@ -38,9 +41,15 @@ func gece_mi() -> bool:
 func goruyor_mu() -> bool:
 	# Algı dürüstlüğü: arkadaş yalnızca gördüğünü değerlendirir.
 	var menzil := A.GORUS_MESAFESI_M
-	if gece_mi():
+	if gece_mi() and not _ates_isiginda_mi():
 		menzil *= A.GECE_GORUS_CARPANI
 	return mesafe_m <= menzil and not arkadas_gitti and not arkadas.oldu
+
+func _ates_isiginda_mi() -> bool:
+	# İKİSİ de ateşin çemberinde olmalı (K-058). Ateş başında geçen normal
+	# kamp gecesi gündüz gibi okunur; ama düşük güvende arkadaş çemberin
+	# DIŞINDA durur — o zaman yine yanına gitmek gerekir.
+	return ates_yaniyor and oyuncu_atesin_isiginda and arkadas_atesin_isiginda
 
 func firsat_var_mi() -> bool:
 	# Bedelli fırsat: İKİSİ de muhtaç · elde kaynak var · arkadaş GÖRÜYOR.
