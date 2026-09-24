@@ -313,6 +313,7 @@ bunlar `@export var` ile tanımlanır, editör panelinde kaydırıcı olur ve **
 | Dosya | Ne için |
 |---|---|
 | `AGENTS.md` (`CLAUDE.md` → bağ) | Ortak ve kalıcı kurallar |
+| **`belge/OYUN.md`** | **Oyunun tek okumalık anlatımı — yeni gelen ÖNCE bunu okur** |
 | `belge/OYUN-TASARIMI.md` | Tasarımın tek kaynağı; davranış tablosu |
 | `belge/KARAR-GUNLUGU.md` | Kararlar ve hatalar; sebebi ve nasıl bulunduğu |
 | `belge/UCUNCU-DENEME.md` | Zemin değişikliğinin gerekçesi ve kurulum |
