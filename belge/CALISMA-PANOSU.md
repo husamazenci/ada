@@ -87,7 +87,36 @@ değişmezleri) · `sim/ihtiyaclar.gd` · `sim/dunya.gd` (fırsat sayacı) ·
 
 ## 4. Cursor kuyruğu
 
-## [ ] Gri kutu: birinci şahıs kontrol ve sahne — sahip: cursor
+## [x] Gri kutu: birinci şahıs kontrol ve sahne — sahip: cursor · **ÖLÇÜLDÜ (Claude)**
+
+SONUÇ:    Kabul ölçütleri GEÇTİ. Şeride uyulmuş: yalnızca `betik/cizim/oyuncu.gd`,
+          `sahne/dunya.tscn`, `project.godot`'un `[input]` bölümü. 10 `@export`
+          (aralıklı ve gruplu), sekiz girdi eylemi, zemin + iki kapsül + kamera,
+          180 kare koşuda SIFIR hata, `--headless --quit` 0.
+
+## [ ] Işık yukarı bakıyor — sahip: cursor · ÖLÇÜLDÜ, TEK SATIR
+
+DOSYA:    `sahne/dunya.tscn`, yalnızca `[node name="Isik"]` satırındaki transform
+SORUN:    DirectionalLight3D'nin −Z'si YUKARI bakıyor. Ölçüldü:
+          `X dönüşü +50° → ışığın gittiği yön (0.000, +0.766, -0.643)`
+          Yukarı bakan ışık, yukarı bakan zemini aydınlatamaz. Sonuç: sahnede
+          yönlü ışık katkısı SIFIR, her şey ortam ışığıyla düz duruyor.
+          Kadraj ölçümü (1280×720, Metal, M2):
+          | | kapsül üst | kapsül alt | zemin | gradyan |
+          |---|---|---|---|---|
+          | mevcut (+50°) | 92.1 | 92.1 | 47.6 | **0.0** |
+          | −50° | 200.8 | 166.8 | 109.6 | 46.4 |
+          Gölge sistemi suçlu DEĞİL: yukarı bakan ışığın gölge haritası her
+          şeyi gölgede bıraktığı için öyle görünüyordu. Yön düzelince gölge
+          de doğru çalışıyor (doğrulandı, gölge açıkken).
+İSTENEN:  Işığın X dönüşü −50° olsun (−Z'nin Y bileşeni NEGATİF olmalı).
+          §5.3 gereği transform'un yanına yorum: Godot'nun `Transform3D`
+          serileştirmesi SATIR önceliklidir; ışığın yönü −Z SÜTUNUdur.
+KABUL:    `godot --path . --script araclar/kadraj.gd` ile alınan kadrajda
+          kapsülün dikey gradyanı > 30 ve ÜSTÜ altından PARLAK olacak
+          (şu an üst 92.1 = alt 92.1, yani gradyan 0).
+DOKUNMA:  `betik/sim/` `betik/ai/` `betik/veri/` `testler/` `araclar/` `belge/`
+          `AGENTS.md`; `betik/cizim/oyuncu.gd` bu madde için gerekmiyor.
 
 DOSYA:    `sahne/dunya.tscn` (yeni içerik), `betik/cizim/oyuncu.gd` (yeni),
           `project.godot` **yalnızca `[input]` bölümü**
