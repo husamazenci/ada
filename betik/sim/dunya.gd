@@ -20,6 +20,8 @@ func _init() -> void:
 	# Guven.olebilir_mi() üzerinden gelir: görünür çöküş + müdahale penceresi
 	# + en erken 6. gün. Oyuncuda bu yol açıktır.
 	arkadas.ihtiyactan_olebilir = false
+	# 1. gün gün batımında başlar (K-063).
+	t = A.GUN1_BASLANGIC_T
 
 var yiyecek := 2                # oyuncunun taşıdığı porsiyon
 var kap_dolu := true            # TEK kap — bir dolum bir kişilik (K-056)

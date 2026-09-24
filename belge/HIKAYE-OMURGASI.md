@@ -118,33 +118,57 @@ Kısa ve sert bir açılış; oyun 2. günde normal uzunluğuna kavuşur.
   (ateşin/odun yığınının yanında mı, ayrı mı uyuduğun).
 - *Koşulsuz iz:* `oyun-basladi`.
 
-**Gün 2 · Ateş ve yer.** *(yazılmış metin — 2026-09-24)*
-- Sabah **metalin taşa vurma sesiyle** uyanırsın: **o çoktan çalışıyor.**
-  Dün akşam açılmayan kapıya, bulduğu bir aletle geri dönmüştür. Gövdeden
-  kopmuş dar bir metal parçayı kapının altına sokmaya çalışır. Seni görünce
-  geri çekilip parçayı sana uzatır.
-- **[SAHNE 2 · Ateş]** Metali sen yerleştirirsin, o eğilmiş kenarı tutar.
-  Kapı önce kıpırdamaz, sonra kısa ve sert bir sesle açılır. İkiniz de geri
-  çekilir, içeriden bir ses gelip gelmeyeceğini beklersiniz. **Gelmez.**
-  - İçeride: sarkan kayışlar, yerinden kopmuş koltuk, bir acil durum kutusu.
-    Kutudan **ateş başlatıcısı**; yerde **ezilmiş metal kap** ve **sayfaları
-    kuru kalmış boş defter**.
-  - **Arkadaş kutuyu alır; sen kabı ve defteri taşırsın.** Başlatıcı ONDADIR —
-    ateşin yanması ona bağlıdır, ve bu güvenin ilk maddi karşılığıdır.
-  - Su sesi sizi dereye çıkarır. Yakınında rüzgârı kısmen kesen bir açıklık:
-    **ev olacak yer.** Dün gece toplanan odunlar buraya taşınır.
-  - Arkadaş başlatıcıyı dener. Kıvılcım düşer, ıslak yapraklar söner. Bir kez
-    daha dener. Sonra elindekini **sana uzatır.**
-  - Kuru koltuk dolgusundan lif ayırıp odunların altına koyarsın. Kıvılcım bu
-    kez tutar. Sen üflerken **o rüzgârı elleriyle keser.** Duman, sonra alev.
-  - *Varyant:* güven yoksa başlatıcıyı sana uzatmaz; kendi ateşini kendine
-    kurar.
-  - **Akşam:** ateşin karşı tarafına oturur. Bir süre seni izlemez. Sonra
-    elindeki kuru dalı **senin ulaşabileceğin bir yere bırakır.** İlk kez sana
-    yardım ettiğinden emin olursun; bunun güven mi yoksa yalnızca ateşin
-    yanmasını istemesi mi olduğunu bilemezsin. *Oyunun tezi bu belirsizliktir.*
-  - *Koşulsuz iz:* `ates-sahnesi-gecti` — ateş yanmasa bile düşer.
-    *Koşullu:* `ates-yakildi`, `defter-alindi`.
+**Gün 2 · Ateş, yer ve ilk paylaşım.** *(yazılmış metin — 2026-09-24, düzeltilmiş)*
+
+- Sabah **metalin metale sürtünme sesiyle** uyanırsın. Arkadaş enkaz kapısının
+  önündedir: gövdeden kopmuş dar bir parçayı kapının altına sokmaya çalışır.
+  Seni görünce parçayı **sana uzatır**; dün gece açamadığınız yere işaret eder.
+  > **AÇIK ÇATIŞMA (karar bekliyor):** işaret etme. K-063 ile jestin **bir
+  > kez** (1. gün çağırma) olması kararlaştırıldı; bu ikincisi olur. Öneri:
+  > işaret kalksın — zaten kapının önünde, parçayı uzatması iletişimin kendisi.
+  > Eylem işaretten güçlüdür ve kural bozulmaz.
+- **[SAHNE 2 · Ateş]** Sen parçaya yüklenirken o kapının eğilmiş kenarını
+  çeker. **İlk denemede yalnızca gürültü çıkar.** İkincisinde kapı bir karış
+  açılır. **İkiniz de durup içeriden bir ses beklersiniz**, sonra birlikte
+  yeniden zorlarsınız.
+- **İçeride:** koltuklar ve çantalar birbirine girmiştir. **İçeride kimse
+  seslenmez.**
+  - Acil durum kutusunda **ateş başlatıcısı**. **Arkadaş onu alır**; sen
+    **boş metal kap**, **kuru kalmış koltuk dolgusu** ve **küçük bir defter**
+    çıkarırsın. *(Dolgu artık çakmak otunun kaynağı — ateşin tutuşması bir
+    buluşa bağlanıyor, şansa değil.)*
+  - **Gövdenin ilerisi çökmüştür; bugün geçilemez.** *(Açık dünya kancası —
+    hangi gün açılacağı KARAR BEKLİYOR.)*
+- Enkazdan uzaklaşırken **ağaçların arasından akan suyu** duyarsınız. Derenin
+  yakınındaki açıklığa dün geceki odunları taşırsınız.
+- **Ateş.** Arkadaş başlatıcıyı dener; kıvılcım düşer, nemli yapraklar
+  tutuşmaz. **Yerini değiştirip bir daha dener** — sonra aleti sana uzatır.
+  Sen kuru lifleri odunların altına koyarsın. Kıvılcım liflerde kaldığında
+  **o hemen eğilip rüzgârı keser.** Birlikte üflersiniz. Alev birkaç kez
+  sönmeye yaklaşır, sonra oduna geçer.
+  *Varyant:* güven yoksa aleti sana uzatmaz; kendi ateşini kendine kurar.
+- **Öğleden sonra · balık.** Kıyı boyunca yürürsünüz. Kayalar arasında sığ bir
+  havuzda küçük bir balık kalmıştır. Sen çıkışını taşla kapatmaya çalışırken
+  **o iki eliyle yakalanacağı yerde bekler** — sözsüz iş bölümü. **Balık ilk
+  seferinde ikinizin arasından kaçar.** Yüzünde çok kısa bir ifade belirir;
+  gülümseme mi, yorgunluk mu, anlayamazsın. İkinci denemede yakalarsınız.
+  > **UYGULAMA NOTU:** yüz animasyonu YOK (stilize, yüz ayrıntısı yok).
+  > Bu an **bedenle** kurulmalı: yarım saniyelik duraklama, omuz düşmesi,
+  > başın yana eğilmesi. Okunamazlığı korunur, yüz gerekmez.
+- **İLK BEDELLİ PAYLAŞIM.** Balık iki kişiye yetecek kadar büyük görünmez.
+  Pişince bölersin. **Büyük parçayı arkadaşına uzattığında hemen almaz.
+  Senin elindeki küçük parçaya bakar, sonra kendisininkinden bir lokma ayırıp
+  önüne bırakır.** Ne teşekkür eder ne de gözlerini uzun süre üzerinde tutar.
+  Biraz sonra, **sen istemeden ateşe bir dal daha ekler.**
+  *Günün ilişki sorusu: paylaşıyor muyuz? Ve cevabı tek taraflı değil —
+  karşılık geliyor. Bu, arkadaşın MADDİ katkısının (K-062) anlatıdaki ilk
+  görünümüdür.*
+- **Gece bu kez aydınlıktır.** Açlığınız geçmemiştir, ama ateş yanar.
+  **Arkadaş ilk gecedekinden biraz daha yakına oturur.** *(Mesafe = güven
+  kanalı, §4 davranış tablosu — ilk kez ekranda.)*
+- **Deftere derenin yerini ve balığı bulduğun kayalık kıyıyı çizersin.**
+- *Koşulsuz iz:* `ates-sahnesi-gecti` — ateş yanmasa bile düşer.
+  *Koşullu:* `ates-yakildi`, `defter-alindi`, `balik-paylasildi`.
 
 ### Perde II — Sınav
 

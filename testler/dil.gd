@@ -12,6 +12,7 @@ extends SceneTree
 const CSV := "res://varlik/metin/metinler.csv"
 const DILLER: Array[String] = ["tr", "en"]
 const Df := preload("res://betik/veri/defter.gd")
+const Sz := preload("res://betik/veri/sozler.gd")
 
 func _initialize() -> void:
 	var f := FileAccess.open(CSV, FileAccess.READ)
@@ -52,6 +53,9 @@ func _initialize() -> void:
 	for g in Df.GIRDILER:
 		if g["tur"] != "cizim":
 			kod_anahtarlari.append(g["anahtar"])
+	kod_anahtarlari.append_array(Sz.anahtarlar())
+	for h in Sz.dogrula():
+		hata.append("söz değişmezi: " + h)
 	for a in kod_anahtarlari:
 		if a not in anahtarlar:
 			hata.append("KOD '%s' bildiriyor ama CSV'de yok — ekrana ham anahtar basılır" % a)

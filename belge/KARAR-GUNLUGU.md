@@ -1974,3 +1974,38 @@ artık yalnızca baskı üretir, baskı morali iter, moral ancak İHMAL varsa
 
 `testler/moral-tabani.gd` bunu denetliyor (açlık 1.0 + susuzluk 1.0 → ölmemeli)
 ve bir negatif kontrol bayrağı kaldırınca testin düştüğünü doğruluyor.
+
+## K-063 · 2026-09-24 · Süre 107 dk; jest bir kez; oyuncu mırıldanır, kelime yazıyla belirir
+
+### Üç kullanıcı kararı
+
+**1. Toplam süre 107 dakika yazılı olsun.** 1. gün tam gün batımında başlar
+(`GUN1_BASLANGIC_T = 0.65`), oynanan kısmı ~7 dk. 7 + (5 × 20) = 107.
+Kısa ve sert bir açılış kasıtlıdır; 120 hedefi buna göre düzeltildi.
+
+**2. İşaret jesti BİR KEZ olur:** 1. gün, arkadaş çağırırken. Sebep, animasyon
+spektinin kendi kuralı: *"NPC işaret etmez; tek anlamlı, tekrar eden mesaj
+jestleri kullanılmaz"* — mesaj jestleri arkadaşı bir arayüze çevirir. Bir
+kereye özgü, yazılmış bir sahne anı bu kuralı bozmaz; alışkanlık hâline gelen
+bir jest bozar.
+
+**3. Oyuncu konuşur ama KELİME DUYULMAZ.** Duyulan şey boğuk, anlaşılmayan
+mırıltıdır; ekranda beliren yazı onun YAKLAŞIK karşılığıdır. Ayrım önemli:
+seslendirilmiş diyalog olsaydı sahne bir konuşma denemesi olurdu; mırıltı +
+yazı olunca bir **yalnızlık anı** oluyor. Cevap gelmez, seçenek çıkmaz,
+diyalog açılmaz.
+
+### Sınır inşa değişmezidir
+
+`betik/veri/sozler.gd`: sözler kapalı listeden gelir, türü yalnızca **çağrı**
+ya da **soru** olabilir. **"Bildirim" diye bir tür YOKTUR** — yani "seni
+bırakmam" gibi bir satır yazılamaz, çünkü yazılacak yeri yok. Sebep tasarım
+pusulası: oyuncunun arkadaşa karşı tutumunu oyun belirleyemez. `EN_COK = 6`;
+fazlası diyalog sistemine dönüşür. Dil testi hem sözleri hem değişmezi
+denetliyor.
+
+### Not: dil testi bir kaymayı yakaladı
+
+CSV'ye üç söz eklendikten sonra yeniden içe aktarılmamıştı; test altı satırda
+"çeviri çözülmedi, ham anahtar döndü" dedi. Yani boru hattının bayatlaması
+sessiz kalmıyor — `--import` unutulursa test düşüyor.
