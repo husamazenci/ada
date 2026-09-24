@@ -33,6 +33,21 @@ func bedelli_jest() -> bool:
 func ihanet() -> void:
 	deger = maxf(deger - A.GUVEN_DUSUS, 0.0)
 
+func tehlikede_birakti(gordu_mu: bool, denedi_mi: bool) -> bool:
+	# K-064 (kullanıcı kararı): araya girmeye ÇALIŞIP yetişememek, korkup geri
+	# çekilmekle AYNI ŞEY DEĞİLDİR. Güven yalnızca arkadaşın "bilerek yalnız
+	# bırakıldım" diye algıladığı durumda düşer.
+	#
+	# Moral zaten yaralanmadan düşer — bu ayrı kanaldır ve buradan geçmez.
+	# Bu, ihmal kanalının dünyaya bağlanan İKİNCİ kaynağıdır (K-061 borcu).
+	if not gordu_mu:
+		return false          # görmediğini değerlendirmez (algı dürüstlüğü)
+	if denedi_mi:
+		return false          # denedi ve yetişemedi: ihanet sayılmaz
+	ihanet()
+	ihmal_ekle(A.IHMAL_TEHLIKEDE_BIRAKMA)
+	return true
+
 func ihmal_ekle(miktar: float) -> void:
 	ihmal = minf(ihmal + miktar, 1.0)
 

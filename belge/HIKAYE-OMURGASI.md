@@ -122,11 +122,9 @@ Kısa ve sert bir açılış; oyun 2. günde normal uzunluğuna kavuşur.
 
 - Sabah **metalin metale sürtünme sesiyle** uyanırsın. Arkadaş enkaz kapısının
   önündedir: gövdeden kopmuş dar bir parçayı kapının altına sokmaya çalışır.
-  Seni görünce parçayı **sana uzatır**; dün gece açamadığınız yere işaret eder.
-  > **AÇIK ÇATIŞMA (karar bekliyor):** işaret etme. K-063 ile jestin **bir
-  > kez** (1. gün çağırma) olması kararlaştırıldı; bu ikincisi olur. Öneri:
-  > işaret kalksın — zaten kapının önünde, parçayı uzatması iletişimin kendisi.
-  > Eylem işaretten güçlüdür ve kural bozulmaz.
+  Seni görünce parçayı **sana uzatır.** *(İşaret etmez — K-063: jest bütün
+  oyunda bir kezdir, o da 1. gündeki çağrıdır. Zaten kapının önünde ve parçayı
+  uzatıyor; eylem işaretten güçlü.)*
 - **[SAHNE 2 · Ateş]** Sen parçaya yüklenirken o kapının eğilmiş kenarını
   çeker. **İlk denemede yalnızca gürültü çıkar.** İkincisinde kapı bir karış
   açılır. **İkiniz de durup içeriden bir ses beklersiniz**, sonra birlikte
@@ -137,8 +135,9 @@ Kısa ve sert bir açılış; oyun 2. günde normal uzunluğuna kavuşur.
     **boş metal kap**, **kuru kalmış koltuk dolgusu** ve **küçük bir defter**
     çıkarırsın. *(Dolgu artık çakmak otunun kaynağı — ateşin tutuşması bir
     buluşa bağlanıyor, şansa değil.)*
-  - **Gövdenin ilerisi çökmüştür; bugün geçilemez.** *(Açık dünya kancası —
-    hangi gün açılacağı KARAR BEKLİYOR.)*
+  - **Gövdenin ilerisi çökmüştür; bugün geçilemez.** *(Karar: **4. günde
+    açılır** ve orada barınağın çatısını kapatacak malzeme vardır — yani
+    fırtınadan önceki son fırsat. "Kim gidecek" sorusunun sebebi budur.)*
 - Enkazdan uzaklaşırken **ağaçların arasından akan suyu** duyarsınız. Derenin
   yakınındaki açıklığa dün geceki odunları taşırsınız.
 - **Ateş.** Arkadaş başlatıcıyı dener; kıvılcım düşer, nemli yapraklar
@@ -152,9 +151,9 @@ Kısa ve sert bir açılış; oyun 2. günde normal uzunluğuna kavuşur.
   **o iki eliyle yakalanacağı yerde bekler** — sözsüz iş bölümü. **Balık ilk
   seferinde ikinizin arasından kaçar.** Yüzünde çok kısa bir ifade belirir;
   gülümseme mi, yorgunluk mu, anlayamazsın. İkinci denemede yakalarsınız.
-  > **UYGULAMA NOTU:** yüz animasyonu YOK (stilize, yüz ayrıntısı yok).
-  > Bu an **bedenle** kurulmalı: yarım saniyelik duraklama, omuz düşmesi,
-  > başın yana eğilmesi. Okunamazlığı korunur, yüz gerekmez.
+  *(Karar: bu an **bedenle** kurulur — yüz animasyonu yok. Yarım saniyelik
+  duraklama, omuz düşmesi, başın yana eğilmesi. Beden yüzden daha okunamaz
+  kalır, yani belirsizlik bedenle DAHA iyi çalışır.)*
 - **İLK BEDELLİ PAYLAŞIM.** Balık iki kişiye yetecek kadar büyük görünmez.
   Pişince bölersin. **Büyük parçayı arkadaşına uzattığında hemen almaz.
   Senin elindeki küçük parçaya bakar, sonra kendisininkinden bir lokma ayırıp
@@ -172,16 +171,54 @@ Kısa ve sert bir açılış; oyun 2. günde normal uzunluğuna kavuşur.
 
 ### Perde II — Sınav
 
-**Gün 3 · Ayrılık ve köpek.**
-- Yakın kaynaklar biter. Birinin uzağa gitmesi gerekir — gidiş-dönüş günün
-  yarısı, ve yolda su yok: kap dolu gitmelidir. **Tek kap, iki insan.**
-- **[SAHNE 3 · Kim gidecek]** Arkadaş kenarda bekler: gitmeye hazır ama senin
-  ne yapacağına bakıyor. Gidersen: dönüşte seni bekliyor mu? Göndersen:
-  yaralı/boş döner mi? *Varyant:* düşük güvende hiç gitmez.
-- **[SAHNE 4 · Köpek]** Gece, ateş zayıfken köpek ışığın kenarına gelir.
-  Üç sonuç: sen onu korursun · o seni korur · kimse kimseyi korumaz.
-  **Ölüm YOK** (değişmez kural). *Koşullu iz:* `yara-kimde` (hiç kimse de
-  olabilir), `korudu-mu`.
+**Gün 3 · Barınak ve köpek.** *(yazılmış metin — 2026-09-24)*
+
+- **Sabah:** ateşin altında yalnız köz kalmıştır. Gece rüzgâr birkaç kez yön
+  değiştirmiş; ikiniz de ateşe yakın durmanıza rağmen doğru dürüst
+  uyuyamamışsınızdır.
+- **[SAHNE 3 · Barınak]** Arkadaş açıklığın arkasındaki **büyük kayayı**
+  inceler; rüzgâr orada daha az vurur. Kıyıya sürüklenmiş dallar ve uçaktan
+  sökülen **hafif bir panel** taşınır.
+  - Sen paneli kayaya dayarken **o altına taş dizer.** Sert bir rüzgâr paneli
+    elinden alacak gibi olur; **iki eliyle yakalar ve sen bağlayana kadar
+    tutar.** *Koşullu iz:* `barinak-kim-tuttu`.
+  - Altında oturulacak kadar yer açılır. **Üstü hâlâ açıktır.** Yağmurda
+    dayanıp dayanmayacağı belli değildir.
+  - *Koşulsuz iz:* `barinak-kuruldu`.
+  > **Bu eksiklik KASITLIDIR** (kullanıcı kararı). 4. günün fırtınası böylece
+  > gökten inen yeni bir felaket değil, **3. günde fark edilen bir zayıflığın
+  > sınanması** olur. Sebep–sonuç hiçbir şey anlatmadan kurulur.
+- **Öğleden sonra:** kayalık kıyının daha uzak kısmına gidilir; gelgit
+  havuzlarında **iki balık**. Dönüşte yük paylaşılır — sen kabı ve balıkları,
+  o barınak için bulduğu son dalları taşır.
+- **Güneş alçalırken: uyarı.** Uzaktan bir **uluma.** Arkadaş elindeki dalı
+  bırakır. Kayalar arasında yankılandığı için yön anlaşılmaz. Bir süre hiçbir
+  şey olmaz. Sonra **aynı ses, daha yakın.** Arkadaş balıklara bakar, onları
+  ateşe yaklaştırır. Sen köze odun koyarsın.
+  *Saldırı uyarısız gelmez: uluma → arkadaşın tepkisi → ışığın sınırındaki
+  siluet. Oyuncunun hazırlanmak için üç fırsatı var.*
+- **[SAHNE 4 · Köpek]** Gece ateş küçüldüğünde kayalar arasında hareket.
+  **Yabanileşmiş bir köpek** ışığın sınırında durur; kaburgaları seçilir.
+  Yaklaşmaz — **burnunu kaldırıp yiyeceğin kokusunu alır.**
+  *(Kurt değil: okyanus ortasındaki küçük bir adada kurdun varlığı ayrıca
+  açıklama gerektirir. Saldırının sebebi de açık — yiyecek.)*
+  - **Arkadaş balıkları almak için eğildiğinde köpek ileri atılır.** Geri
+    çekilmeye çalışır ama **ayağı taşların arasına takılır.**
+
+  | | **Araya girersen** | **Girmezsen** |
+  |---|---|---|
+  | Olan | Aranıza geçersin, dişleri koluna geçer. Köpek sıçrayınca **arkadaş yanan bir dal çekip önüne tutar.** Hayvan bir kez daha yaklaşır, sonra çekilir | Köpek **bacağına** saldırır. Kurtulmaya çalışırken **bir balık düşer**; köpek kapıp kaçar |
+  | Bedeli | **Kolun kanar.** Ertesi gün o kolla yük taşımak ve koşmak zor | **Sen sağlamsın**, ama arkadaş yaralı ve **yiyecek eksildi** |
+  | Sonrası | Önce yarana, sonra yüzüne bakar. Seni barınağın altına oturtur, **gece boyunca ateşle kendisi ilgilenir** | Önce bacağına, sonra sana bakar. Bir şey söylemez. Barınağın altına oturur, **ateşe odun atmak için bir daha kalkmaz.** Nöbet sana kalır |
+
+  > **Araya girmek otomatik "doğru seçim" DEĞİLDİR** (kullanıcı kararı):
+  > bir yolda sen sakat kalırsın, öbüründe o yaralanır ve yiyecek gider.
+  - *Koşulsuz iz:* `kopek-gecti` — ne olursa olsun düşer, biri her hâlükârda
+    yaralanır (zincir bu yüzden kırılmaz).
+    *Koşullu:* `yara-kimde`, `araya-girdi`, `denedi-yetisemedi`.
+- **Sonrası:** ada yeniden sessizleşir. Barınağın gevşek paneli rüzgârda arada
+  bir kayaya vurur. **Biriniz uyurken diğeriniz ateşi besler ve ışığın bittiği
+  yeri izler.**
 
 **Gün 4 · Yaralı gün ve fırtına.**
 - Yaralı olan yavaşlar ve koşamaz; diğeri iki kişilik çalışır: su, ateş,

@@ -2009,3 +2009,49 @@ denetliyor.
 CSV'ye üç söz eklendikten sonra yeniden içe aktarılmamıştı; test altı satırda
 "çeviri çözülmedi, ham anahtar döndü" dedi. Yani boru hattının bayatlaması
 sessiz kalmıyor — `--import` unutulursa test düşüyor.
+
+## K-064 · 2026-09-24 · Üçüncü gün: barınak, köpek — ve "denedi ama yetişemedi"
+
+### Kullanıcı kararları
+
+- **İşaret jesti kalktı** (2. gün). Zaten kapının önünde ve parçayı uzatıyor;
+  eylem işaretten güçlü. K-063'ün "bir kez" kuralı korunuyor.
+- **Yüz ifadesi bedenle kurulur.** Yüz animasyonu yok. Yarım saniyelik
+  duraklama, omuz düşmesi, başın yana eğilmesi. *Beden yüzden daha okunamaz
+  kalır — yani belirsizlik bedenle DAHA iyi çalışıyor.*
+- **Çöken gövde 4. günde açılır** ve içinde barınağın çatısını kapatacak
+  malzeme vardır: fırtınadan önceki son fırsat, ve "kim gidecek" sorusunun
+  sebebi.
+- **Yabanileşmiş köpek, kurt değil.** Okyanus ortasındaki küçük bir adada
+  kurdun varlığı ayrıca açıklama gerektirir. Saldırının sebebi de açık:
+  yiyeceğin kokusu; arkadaş stoğu korurken hedef olur.
+
+### Barınağın eksikliği KASITLI
+
+Barınak 3. günde kurulur ama **üstü açık kalır.** Böylece 4. günün fırtınası
+gökten inen yeni bir felaket değil, **bir gün önce fark edilen zayıflığın
+sınanması** olur. Sebep–sonuç hiçbir şey anlatmadan kuruluyor — K-041'in tam
+istediği şey.
+
+### Zincir yeniden düzenlendi
+
+`barinak` yeni bir sahne oldu (3. gün), `kim-gidecek` 4. güne taşındı ve artık
+bir SEBEBİ var: biriniz yaralı, çöken gövde açıldı, çatı malzemesi orada,
+fırtına geliyor. **10 sahne, cutscene hâlâ 3.** Hiç katılmayan oyuncuda 10/10
+açılıyor.
+
+### "Denedi ama yetişemedi" — koda geçti
+
+Kullanıcının üçüncü tasarım notu: *"Oyuncu müdahale etmeye çalışıp
+yetişemediyse, bunu korkup geri çekilmekle aynı saymamalıyız."*
+
+`Guven.tehlikede_birakti(gordu_mu, denedi_mi)`:
+- görmediyse → ceza yok (algı dürüstlüğü)
+- gördü ve **denedi** → ceza yok
+- gördü ve **denemedi** → ihanet + ihmal
+
+Ölçüldü: denedi 0.35 · denemedi 0.23 · görmedi 0.35 (başlangıç 0.35).
+Moral yaralanmadan zaten düşer; bu ayrı kanaldır ve buradan geçmez.
+
+**Bu, ihmal kanalının dünyaya bağlanan İKİNCİ kaynağıdır** (K-061 borcunun
+1/4'ü kapandı). Kalan üçü: gece yalnız bırakma, ateşi söndürme, sözü tutmama.

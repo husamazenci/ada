@@ -130,6 +130,12 @@ fi
 if sabotaj betik/sim/dunya.gd 's/	arkadas.ihtiyactan_olebilir = false/	pass/'; then
 	dene moral "sabotaj: arkadaş açlıktan ölebiliyor (ikinci ölüm yolu)" 1; geri betik/sim/dunya.gd
 fi
+if sabotaj betik/ai/guven.gd 's/	if denedi_mi:/	if false:/'; then
+	dene moral "sabotaj: denedi-yetişemedi de cezalandırılıyor" 1; geri betik/ai/guven.gd
+fi
+if sabotaj betik/ai/guven.gd 's/	if not gordu_mu:/	if false:/'; then
+	dene moral "sabotaj: görmediği için de cezalandırıyor" 1; geri betik/ai/guven.gd
+fi
 dene moral "geri yüklendi" 0
 rm -f /tmp/_sab.yedek /tmp/_g.yedek
 

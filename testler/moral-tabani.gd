@@ -83,6 +83,23 @@ func _initialize() -> void:
 		hata.append("İHLAL: arkadaş açlık/susuzluktan ÖLDÜ — ani ölüm yolu hâlâ açık")
 	print("arkadaş açlık 1.00 · susuzluk 1.00 → öldü mü: %s (hayır olmalı)" % w.arkadas.oldu)
 
+	# 7 · "Denedi ama yetişemedi" ihanet SAYILMAZ (K-064).
+	var d1 := Gv.new(); var d2 := Gv.new(); var d3 := Gv.new()
+	var bas := d1.deger
+	d1.tehlikede_birakti(true, true)     # gördü, denedi → ceza yok
+	d2.tehlikede_birakti(true, false)    # gördü, denemedi → ceza
+	d3.tehlikede_birakti(false, false)   # görmedi → ceza yok
+	print("tehlikede bırakma → denedi %.2f · denemedi %.2f · görmedi %.2f (başlangıç %.2f)" % [
+		d1.deger, d2.deger, d3.deger, bas])
+	if d1.deger < bas:
+		hata.append("İHLAL: denediği hâlde yetişemeyen oyuncu cezalandırıldı")
+	if d2.deger >= bas:
+		hata.append("bilerek bırakma cezalandırılmadı — ayrım hiç çalışmıyor")
+	if d3.deger < bas:
+		hata.append("İHLAL: görmediği bir şey için cezalandırdı (algı dürüstlüğü)")
+	if d2.ihmal <= 0.0:
+		hata.append("bilerek bırakma ihmal üretmedi — ikinci kaynak bağlanmamış")
+
 	print("")
 	if hata.is_empty():
 		print("GEÇTİ — A2 değişmezi tutuyor: arkadaş koşullardan ölemiyor.")
