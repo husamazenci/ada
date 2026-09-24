@@ -20,6 +20,8 @@ kos() {  # kos <test-adi> → çıkış kodu
 		zincir)  $GODOT --headless --path . --script res://testler/zincir.gd >/dev/null 2>&1 ;;
 		algi)    $GODOT --headless --path . --script res://testler/algi.gd >/dev/null 2>&1 ;;
 		defter)  $GODOT --headless --path . --script res://testler/defter.gd >/dev/null 2>&1 ;;
+		dil)     $GODOT --headless --path . --script res://testler/dil.gd >/dev/null 2>&1 ;;
+		kayit)   $GODOT --headless --path . --script res://testler/kayit.gd >/dev/null 2>&1 ;;
 	esac
 	return $?
 }
@@ -186,6 +188,40 @@ if sabotaj betik/veri/defter.gd 's/"iz": "firtina-gecti"/"iz": "barinak-hasarli"
 	dene defter "sabotaj: hafıza KOŞULLU ize bağlandı" 1; geri betik/veri/defter.gd
 fi
 dene defter "geri yüklendi" 0
+
+# ============ dil (K-010) ============
+echo "negatif-kontrol · dil"
+dene dil "temiz kopya" 0
+
+if sabotaj varlik/metin/metinler.csv 's/^defter.is.ates,Ateş.,Fire.$/defter.is.ates,Ateş.,/'; then
+	dene dil "sabotaj: bir anahtarın İngilizcesi silindi" 1; geri varlik/metin/metinler.csv
+fi
+if sabotaj varlik/metin/metinler.csv '/^defter.hafiza.kopek,/d'; then
+	dene dil "sabotaj: kodun bildirdiği anahtar CSV'den silindi" 1; geri varlik/metin/metinler.csv
+fi
+dene dil "geri yüklendi" 0
+
+# ============ kayit (K-006) ============
+echo "negatif-kontrol · kayit"
+dene kayit "temiz kopya" 0
+
+# ASIL SINAV: kayıttan bir alan DÜŞERSE gidiş-dönüş ayrışmalı.
+if sabotaj betik/sim/kayit.gd 's/"_gun_icinde_yukselis": d.guven._gun_icinde_yukselis,/"_gun_icinde_yukselis": 0,/'; then
+	dene kayit "sabotaj: günlük jest tavanı kaydedilmiyor" 1; geri betik/sim/kayit.gd
+fi
+if sabotaj betik/sim/kayit.gd 's/"_aclik_soylendi": i._aclik_soylendi,/"_aclik_soylendi": false,/'; then
+	dene kayit "sabotaj: eşik cümlesi durumu kaydedilmiyor" 1; geri betik/sim/kayit.gd
+fi
+if sabotaj betik/sim/kayit.gd 's/"_cokus_suresi_gun": d.guven._cokus_suresi_gun,/"_cokus_suresi_gun": 0.0,/'; then
+	dene kayit "sabotaj: çöküş süresi kaydedilmiyor" 1; geri betik/sim/kayit.gd
+fi
+if sabotaj betik/sim/kayit.gd 's/int(veri\["surum"\]) != SURUM/false/'; then
+	dene kayit "sabotaj: kip denetimi kaldırıldı (eski yuva kabul edilir)" 1; geri betik/sim/kayit.gd
+fi
+if sabotaj betik/sim/kayit.gd 's/^	if FileAccess.file_exists(YUVA):$/	if false:/'; then
+	dene kayit "sabotaj: ölünce yuva silinmiyor" 1; geri betik/sim/kayit.gd
+fi
+dene kayit "geri yüklendi" 0
 
 echo "GENEL TOPLAM: $gecti geçti, $kalan kaldı"
 [ "$kalan" -eq 0 ] && exit 0 || exit 1

@@ -1858,3 +1858,63 @@ tekrar eden cutscene'ler atlanır; kontrolü bırakmayan an daha çok izlenir.
   geceyi yanında geçirme" şartına bağlıyor; koddaki ihmal geriletmesi şu an
   herhangi bir bedelli jestle tetikleniyor, yani daha gevşek. Gövde
   bağlanırken §9'un üç şartına çekilecek.
+
+## K-061 · 2026-09-24 · İki dil ve tek yuvalı kayıt kuruldu; bir son kapalı çıktı
+
+### İki dil (K-010 borcu kapandı)
+
+`varlik/metin/metinler.csv` → Godot'nun CSV yerelleştirmesi. 22 anahtar, Türkçe
+ve İngilizce. `.translation` dosyaları ondan üretilir ve git'e girmez (Godot'nun
+resmî yoksayma listesi); kaynak CSV'dir.
+
+`testler/dil.gd` üç şeyi birden denetler: her anahtarın iki dilde de karşılığı
+var mı · **kodun bildirdiği her anahtar CSV'de var mı** · boru hattı gerçekten
+çözüyor mu (çeviri anahtarın kendisini döndürmemeli). Ortadaki asıl risktir:
+`defter.gd` bir anahtar bildirir, CSV'de yoktur, oyun ekrana ham anahtarı basar
+ve bu ancak o sahneye gelindiğinde fark edilir.
+
+### Tek yuvalı kayıt (K-006 borcu kapandı)
+
+`betik/sim/kayit.gd`. Serileştirme dosya işleminden ayrı: `topla`/`yukle`
+yalnızca Sözlükle çalışır, böylece test dosya sistemine dokunmadan koşar.
+Özel alanlar (`_` ile başlayanlar) DA kaydedilir — atlanırsa oyun yüklendikten
+sonra sessizce başka türlü akar. Kipi uymayan yuva atılır.
+
+### Test tasarımı: gidiş-dönüş, ve kapsamın yalanı
+
+Test şöyle kurgulandı: koştur → kaydet → TERTEMİZ dünyaya yükle → ikisini de
+aynı politikayla devam ettir → karşılaştır. Tek alan unutulsa ayrışırlar.
+
+**İlk hâli yetersizdi ve bunu negatif kontrol gösterdi.** Tek senaryoyla
+(400 adım, fedakâr politika) koşuyordu; iki sabotaj KAÇTI:
+`_aclik_soylendi` ve `_cokus_suresi_gun` yanlış kaydedilince hiçbir şey
+değişmiyordu. Sebep: o kayıt anında ikisi de zaten varsayılan değerindeydi.
+**Bir alanı sınamak için onu AYIRT EDİCİ bir duruma sokmak gerekir.**
+
+Düzeltme: test üç senaryoya çıkarıldı — sıradan akış · oyuncu AÇ iken (eşik
+cümlesi söylenmişken) · çöküş sürerken. Üçüncüsü `çöküş 1.192` ile kaydediyor.
+Sabotajlar artık yakalanıyor: **50/50**.
+
+Raporda ikinci bir hata daha vardı: kayıt anının değerlerini değil, 300 adım
+SONRASINI basıyordum; çöküş değeri 0 görünüyordu. Ölçülen an ile raporlanan an
+farklıydı (§5.8).
+
+### BULGU: arkadaşın ölümü şu an oynanışla ULAŞILAMAZ
+
+Çöküş senaryosunu kurarken çıktı. `ayarlar.gd`'de **beş** ihmal kaynağı
+tanımlı; `dunya.gd`'de bağlı olan **bir** tane (`IHMAL_VERMEME`).
+
+| Kaynak | Bağlı mı | Neden |
+|---|---|---|
+| Gözünün önünde yiyip vermeme | ✅ | — |
+| Çökmüş/yaralıyken geceyi yalnız bırakma | ❌ | `mesafe_m` var — **şimdi bağlanabilir** |
+| Tehlikede bırakma | ❌ | Köpek henüz yok |
+| Geceleyin ateşi söndürme | ❌ | Yakıt sistemi henüz yok |
+| Sözü tutmama | ❌ | "Bekle" mekaniği henüz yok |
+
+Tek kaynak 0.08 birikiyor; çöküşün başlaması için ihmal ~0.65 gerekiyor, yani
+dokuz ihanet. Altı günlük bencil koşuda dört ihanet oluyor. **Sonuç: moral
+ölümü — oyunun en ağır sonu — şu an hiçbir oynanışla tetiklenemiyor.**
+
+Bu bir hata değil, henüz yazılmamış bağ; ama yazılmazsa değişmez kural
+("arkadaş kalıcı olarak ölebilir") kâğıtta kalır. Panoya borç olarak geçti.

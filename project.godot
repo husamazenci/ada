@@ -68,3 +68,11 @@ cagir={
 ; "Cannot export for universal or arm64 if ETC2 ASTC texture format is disabled"
 ; Bu satır olmadan oyunun çalıştırılabilir sürümü hiç üretilemez.
 textures/vram_compression/import_etc2_astc=true
+
+[internationalization]
+
+; İki dil (K-010). Kaynak varlik/metin/metinler.csv; .translation dosyaları
+; ondan ÜRETİLİR ve git'e girmez (Godot'nun resmî yoksayma listesi).
+; Koda görünür metin yazılmaz — her satır buradan gelir.
+locale/translations=PackedStringArray("res://varlik/metin/metinler.en.translation", "res://varlik/metin/metinler.tr.translation")
+locale/fallback="tr"
