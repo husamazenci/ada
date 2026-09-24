@@ -104,7 +104,10 @@ SONUÇ:    Kabul ölçütleri GEÇTİ. Şeride uyulmuş: yalnızca `betik/cizim/
           (aralıklı ve gruplu), sekiz girdi eylemi, zemin + iki kapsül + kamera,
           180 kare koşuda SIFIR hata, `--headless --quit` 0.
 
-## [ ] Işık yukarı bakıyor — sahip: cursor · ÖLÇÜLDÜ, TEK SATIR
+## [ ] Işık yukarı bakıyor — sahip: cursor · **VERİLDİ 2026-09-24**
+
+**ÖNCE:** `git merge main` — kabul ölçütü `araclar/kadraj.gd`'yi kullanıyor ve
+o araç `main`'de. Birleştirmeden ölçüm yapılamaz.
 
 DOSYA:    `sahne/dunya.tscn`, yalnızca `[node name="Isik"]` satırındaki transform
 SORUN:    DirectionalLight3D'nin −Z'si YUKARI bakıyor. Ölçüldü:
@@ -166,7 +169,17 @@ EKSİK:    (1) İhtiyaç bakışı yok — aç arkadaş yiyeceğe, susamış kab
 KARAR BEKLİYOR: gece algı yarıçapı 5,4 m, düşük güvende arkadaş 7–10 m'de →
           gece jestleri hiç kaydedilmiyor. Kasıtlı sertlik mi, kapan mı?
 
-## [ ] (sıradaki) Animasyon spektinin iki eksiği — sahip: gpt
+## [ ] Animasyon spektinin iki eksiği — sahip: gpt (Sol-6) · **VERİLDİ 2026-09-24**
+
+DOSYA:    `belge/ANIMASYON-SPEKTI.md`'ye eklenecek iki bölüm (kod yok)
+SORUN:    Spekt iki değişmez kuralı karşılamıyor. (1) Bakış hedefleri yalnızca
+          "oyuncu" ve "çevre"; ihtiyaç bakışı yok — oyuncu NEYİ vereceğini
+          bilemiyor (K-056). (2) `Oturmuş` ile `Ölüm` arasındaki iki günlük
+          görünür vazgeçiş yok; doğrudan geçiş ölümü "kötü şans" gösterir
+          (K-055/D1).
+KABUL:    Her iki bölüm de davranış tablosuyla ve illüzyon kırıcılar listesiyle
+          çelişmemeli; "mesaj jesti" üretmemeli.
+DOKUNMA:  Kod dosyaları.
 
 DOSYA:    **yeni** `belge/ANIMASYON-SPEKTI.md` (kod yok, tasarım belgesi)
 SORUN:    Oyunun kabul kriteri "arkadaşın üç güven seviyesi EKRANDA ayırt
