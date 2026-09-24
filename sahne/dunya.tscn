@@ -4,6 +4,7 @@
 [ext_resource type="Script" path="res://betik/cizim/arkadas.gd" id="2_arkadas"]
 [ext_resource type="Script" path="res://betik/cizim/oyun.gd" id="3_oyun"]
 [ext_resource type="Script" path="res://betik/cizim/damga-katmani.gd" id="4_damga"]
+[ext_resource type="Script" path="res://betik/cizim/soz-katmani.gd" id="5_soz"]
 
 [sub_resource type="Environment" id="Environment_gri"]
 background_mode = 1
@@ -95,6 +96,9 @@ shape = SubResource("CapsuleShape3D_govde")
 [node name="Govde" type="MeshInstance3D" parent="Arkadas"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.875, 0)
 mesh = SubResource("CapsuleMesh_arkadas")
+
+[node name="Soz" type="CanvasLayer" parent="."]
+script = ExtResource("5_soz")
 
 [node name="Damga" type="CanvasLayer" parent="."]
 script = ExtResource("4_damga")

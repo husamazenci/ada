@@ -94,3 +94,11 @@ const GECE_GORUS_CARPANI := 0.45  # karanlıkta daralır
 # çalışır. Karanlıkta uzaktaki birine ulaşmak hâlâ yanına gitmeyi gerektirir;
 # kasıtlı sertlik olan kısım budur.
 const ATES_ISIK_YARICAPI_M := 6.0
+
+# ÇAĞRI MENZİLİ (K-068). Bağırmak görmekten UZAĞA gider ve karanlık onu
+# daraltmaz — gece seslenmek tam da bunun için vardır. Sayı keyfî değil:
+# düşük güvende arkadaş 7–10 m'de durur, bu yüzden menzil o bandın çok
+# üstünde olmak ZORUNDA. Aksi hâlde "gelmedi" ile "duymadı" ekranda aynı
+# görünür ve oyunun en yüksek sesli işareti bir menzil hatasına dönüşür.
+# testler/cagri.gd bu şartı her güven seviyesi için ayrı ayrı denetler.
+const CAGRI_MENZILI_M := 25.0

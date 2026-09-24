@@ -23,6 +23,7 @@ kos() {  # kos <test-adi> → çıkış kodu
 		dil)     $GODOT --headless --path . --script res://testler/dil.gd >/dev/null 2>&1 ;;
 		kayit)   $GODOT --headless --path . --script res://testler/kayit.gd >/dev/null 2>&1 ;;
 		davranis) $GODOT --headless --path . --script res://testler/davranis.gd >/dev/null 2>&1 ;;
+		cagri)   $GODOT --headless --path . --script res://testler/cagri.gd >/dev/null 2>&1 ;;
 	esac
 	return $?
 }
@@ -252,9 +253,6 @@ dene davranis "temiz kopya" 0
 # ASIL SINAV: iki kanal birbirine taşarsa yakalanmalı. Spekt bunu "dip moralin
 # oturması izleyiciyi sistematik olarak 'düşük güven' yanıtına götürür" diye
 # uyarmıştı; sayısal karşılığı budur.
-if sabotaj betik/ai/davranis.gd 's/^	if moral < A.MORAL_ORTA_ALT:\n		return 0.0/	if moral < A.MORAL_ORTA_ALT:\n		return 0.0/'; then
-	geri betik/ai/davranis.gd
-fi
 if sabotaj betik/ai/davranis.gd 's/		return Vector2(1.5, 2.5)/		return Vector2(1.5, 4.0)/'; then
 	dene davranis "sabotaj: yüksek ve orta mesafe bandı çakıştı" 1; geri betik/ai/davranis.gd
 fi
@@ -265,6 +263,52 @@ if sabotaj betik/ai/davranis.gd 's/^	return 0.0$/	return 1.0/'; then
 	dene davranis "sabotaj: düşük güvende göz teması kuruluyor" 1; geri betik/ai/davranis.gd
 fi
 dene davranis "geri yüklendi" 0
+
+# ============ cagri (K-068) ============
+echo "negatif-kontrol · cagri"
+dene cagri "temiz kopya" 0
+
+# Oyunun en yüksek sesli işareti: düşük güvende GELMEMEK.
+if sabotaj betik/ai/davranis.gd 's/		return Vector2(-1.0, -1.0)     # gelmez/		return Vector2(1.0, 2.0)/'; then
+	dene cagri "sabotaj: düşük güvende de geliyor" 1; geri betik/ai/davranis.gd
+fi
+# Cevapsızlık en yavaş cevaptan kısa olursa orta güven "gelmiyor" diye okunur.
+if sabotaj betik/ai/davranis.gd 's/\.y + 1\.0$/.y - 1.0/'; then
+	dene cagri "sabotaj: sessizlik en yavaş cevaptan kısa" 1; geri betik/ai/davranis.gd
+fi
+# Cevap mesafesi güveni okumayı bırakırsa mesafe kanalı çöker.
+if sabotaj betik/ai/davranis.gd 's/^	return mesafe_bandi_m(guven)\.x$/	return 1.5/'; then
+	dene cagri "sabotaj: çağrı herkesi aynı noktaya getiriyor" 1; geri betik/ai/davranis.gd
+fi
+# Menzil düşük güven bandının altına inerse "gelmedi" ile "duymadı" karışır.
+if sabotaj betik/veri/ayarlar.gd 's/^const CAGRI_MENZILI_M := 25\.0$/const CAGRI_MENZILI_M := 8.0/'; then
+	dene cagri "sabotaj: çağrı menzili duruş mesafesinin altında" 1; geri betik/veri/ayarlar.gd
+fi
+# En sinsi hata: her basış sayacı sıfırlarsa sabırsız oyuncu asla cevap alamaz.
+if sabotaj betik/ai/cagri.gd 's/^	if _soguma_sn > 0\.0 or mesgul_mu():$/	if false:/'; then
+	dene cagri "sabotaj: tekrar basmak bekleyen çağrıyı sıfırlıyor" 1; geri betik/ai/cagri.gd
+fi
+# Çağırmak ucuz jesttir; güveni yükseltemez (§2).
+if sabotaj betik/sim/dunya.gd 's|^	return cagri\.cagir(guven\.deger, duyar_mi())$|	guven.bedelli_jest(); return cagri.cagir(guven.deger, duyar_mi())|'; then
+	dene cagri "sabotaj: çağırmak güveni yükseltiyor" 1; geri betik/sim/dunya.gd
+fi
+# Cevap penceresi kapanmazsa tek çağrı mesafeyi kalıcı değiştirir.
+if sabotaj betik/ai/cagri.gd '/GELIYOR, GELMEDI:/,+1s/durum = YOK/durum = GELIYOR/'; then
+	dene cagri "sabotaj: cevap penceresi hiç kapanmıyor" 1; geri betik/ai/cagri.gd
+fi
+# Moral kanalı: çökmüş beden çağrıya kalkmamalı.
+if sabotaj betik/sim/dunya.gd 's/^	cagri\.ilerle(dt_sn, not Dv\.oturuyor_mu(guven\.moral))$/	cagri.ilerle(dt_sn, true)/'; then
+	dene cagri "sabotaj: çökmüş beden çağrıya yürüyor" 1; geri betik/sim/dunya.gd
+fi
+# Menzil hatası "küsme" diye okunmamalı — ayrı sayılır.
+if sabotaj betik/ai/cagri.gd 's/^		duyulmayan += 1$/		yanitsiz += 1/'; then
+	dene cagri "sabotaj: duyulmayan çağrı reddetme sayılıyor" 1; geri betik/ai/cagri.gd
+fi
+# Askıya alma dünyayı sürdürür, ANI değil: dünkü bağırış yüklenmemeli.
+if sabotaj betik/sim/kayit.gd '/^static func yukle/,/^static func _kisi/s/^	return true$/	d.cagri.durum = 2; return true/'; then
+	dene cagri "sabotaj: yüklenen oyunda dünkü çağrı bekliyor" 1; geri betik/sim/kayit.gd
+fi
+dene cagri "geri yüklendi" 0
 
 echo "GENEL TOPLAM: $gecti geçti, $kalan kaldı"
 [ "$kalan" -eq 0 ] && exit 0 || exit 1

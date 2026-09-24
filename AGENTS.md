@@ -308,7 +308,9 @@ bunlar `@export var` ile tanımlanır, editör panelinde kaydırıcı olur ve **
 | İki dil | `godot --headless --path . --script res://testler/dil.gd` |
 | Kayıt gidiş-dönüş | `godot --headless --path . --script res://testler/kayit.gd` |
 | Altı günlük koşu | `godot --headless --path . --script res://testler/alti-gun.gd` |
+| Çağırma (K-068) | `godot --headless --path . --script res://testler/cagri.gd` |
 | Kadraj (görüntü + ölçüm) | `godot --path . --script araclar/kadraj.gd` — görünür pencere |
+| Çağrı sondası (ekranda) | `godot --path . --script araclar/cagri-sondasi.gd` — görünür pencere |
 | Negatif kontroller (hepsi) | `./testler/negatif-kontrol.sh` — ~3 dk |
 
 Çıkış kodu **0** geçti · **1** başarısız · **2** çalıştırılamadı.

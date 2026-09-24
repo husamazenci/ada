@@ -8,12 +8,15 @@ extends RefCounted
 const A := preload("res://betik/veri/ayarlar.gd")
 const Ih := preload("res://betik/sim/ihtiyaclar.gd")
 const Gv := preload("res://betik/ai/guven.gd")
+const Cg := preload("res://betik/ai/cagri.gd")
+const Dv := preload("res://betik/ai/davranis.gd")
 
 var gun := 1
 var t := 0.0                    # gün içinde 0..1
 var oyuncu: Ih = Ih.new()
 var arkadas: Ih = Ih.new()
 var guven: Gv = Gv.new()
+var cagri: Cg = Cg.new()
 
 func _init() -> void:
 	# Arkadaşın ihtiyaçtan ölme yolu KAPALIDIR (K-062). Ölümü yalnızca
@@ -59,6 +62,25 @@ func _ates_isiginda_mi() -> bool:
 	# kamp gecesi gündüz gibi okunur; ama düşük güvende arkadaş çemberin
 	# DIŞINDA durur — o zaman yine yanına gitmek gerekir.
 	return ates_yaniyor and oyuncu_atesin_isiginda and arkadas_atesin_isiginda
+
+func duyar_mi() -> bool:
+	# ÇAĞRI ALGISI — GÖRMEKTEN AYRI (K-068). Bağırmak daha uzağa gider ve
+	# karanlık onu daraltmaz; gece seslenmek tam da bunun için vardır.
+	# Menzil düşük güven bandının (7–10 m) çok üstündedir, böylece "gelmedi"
+	# hiçbir zaman "duymadı" olamaz.
+	return mesafe_m <= A.CAGRI_MENZILI_M and not arkadas_gitti and not arkadas.oldu
+
+func cagir() -> bool:
+	# Oyuncu seslendi. GÜVENE DOKUNMAZ — ne yükseltir ne düşürür (K-068).
+	return cagri.cagir(guven.deger, duyar_mi())
+
+func cagri_ilerle(dt_sn: float) -> void:
+	# GERÇEK saniye ile ilerler, gün kesriyle değil: tepki gecikmesi bedene
+	# ait, dünya saatine değil. Zaman çarpanı arttığında hızlanmamalı.
+	if arkadas_gitti or arkadas.oldu or bitti:
+		cagri.kes()
+		return
+	cagri.ilerle(dt_sn, not Dv.oturuyor_mu(guven.moral))
 
 func firsat_var_mi() -> bool:
 	# Bedelli fırsat: İKİSİ de muhtaç · elde kaynak var · arkadaş GÖRÜYOR.

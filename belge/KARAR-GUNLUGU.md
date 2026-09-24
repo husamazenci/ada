@@ -2201,3 +2201,84 @@ Metin on üç kısıtın tamamını tuttu. Özellikle:
 - **Güç, güvenin yerine geçmez:** *"Ayağa kalkamayacak kadar güçsüzse bunu
   yapamaz; güvensizlik ona kaybettiği gücü geri vermez."* — iki eksenin
   (güven / moral) birbirine karışmadığının en net cümlesi.
+
+
+---
+
+## K-068 · Çağırma: oyuncunun elindeki tek ölçüm aleti
+
+**Tarih:** 2026-09-24 · **Karar:** Claude, tasarım pusulasından türetildi.
+
+Ekranda ilişki barı yok (§2). O hâlde oyuncu güveni nereden okuyacak? Şimdiye
+kadarki cevap "davranıştan" idi ama davranış PASİFTİ: arkadaş bir yerde durur,
+oyuncu bakar. Oyuncunun **soru sorabileceği** bir kanal yoktu.
+
+Çağırma o kanal. **Q** = seslen. Cevabı arkadaşın bedeni verir:
+
+| Güven | Ekranda ne oluyor | Ölçüldü (sahnede) |
+|---|---|---|
+| yüksek | hemen döner ve gelir | 1.05 sn · 2.20 m → 1.72 m |
+| orta | gecikir, gelir, mesafesini korur | 4.85 sn · 4.28 m → 3.72 m |
+| düşük | **gelmez** | hiç · 8.28 m → 8.28 m (kıpırdamadı) |
+
+Düşük güvendeki sessizlik oyunun en yüksek sesli işareti. Bu yüzden asıl iş
+onu **taklit edilemez** kılmaktı — "gelmedi" başka hiçbir sebeple olmamalı.
+Kapatılan taklit yolları:
+
+1. **"Duymadı" olamaz.** Çağrı menzili görüşten ayrı ve ondan uzak
+   (`CAGRI_MENZILI_M = 25 m`), karanlık onu daraltmaz. Düşük güvende arkadaş
+   7–10 m'de durduğu için menzil o bandın çok üstünde olmak zorunda; test bunu
+   her seviye için ayrı denetler. Aksi hâlde bir menzil hatası "arkadaş
+   küsmüş" diye okunurdu.
+2. **Tuş takırtısı olamaz.** Bekleyen çağrı varken yeni çağrı sayacı
+   SIFIRLAMAZ. Sıfırlasaydı sabırsız oyuncu asla cevap alamaz, bunu "düşük
+   güven" sanardı — oyunun en önemli işaretini bir tuşa hızlı basmak taklit
+   ederdi.
+3. **"Henüz yolda" olamaz.** Cevapsızlık süresi en yavaş cevaptan uzun, ve
+   bağımsız sayı değil ondan TÜREV (`cagri_sessizlik_sn`). Ayrı yazılsaydı
+   K-060'taki gibi er geç kayardı.
+4. **Bekleme sırasında fikir değiştirme olamaz.** Karar çağrı anında bir kez
+   verilir. Her karede yeniden verilseydi gecikme güveni değil "son karenin
+   güvenini" anlatırdı.
+
+**Çağırmak güvene DOKUNMAZ** — ne yükseltir ne düşürür. Yükseltmemesi §2'nin
+kuralı (ucuz jest). Düşürmemesi ise şu: güveni okumanın tek yolu güvene mal
+olsaydı oyuncu bakmaktan cezalandırılır, bir daha bakmazdı.
+
+**Mesafe güveni okumayı sürdürüyor.** Cevap veren arkadaş kendi bandının YAKIN
+kenarına gelir, bandını terk etmez. Çağrı herkesi 1,5 m'ye getirseydi mesafe
+artık güveni değil "en son ne zaman seslendin"i okurdu.
+
+**İki kanal ayrık kaldı.** Güven nereye gideceğini söyler, moral gidip
+gidemeyeceğini. Yüksek güven + dip moral: gelmeye karar eder, çöken beden
+kalkamaz. Bu bir karışma değil, oyunun en acı anı.
+
+**Kaydedilmez.** Askıya alma dünyayı sürdürür, ANI değil; dünkü bağırışa hâlâ
+yürüyen bir arkadaşla uyanmak yanlış olurdu.
+
+### Bu iş sırasında bulunan üç hata
+
+**a) Kendi testim sarmalı hiç geçmiyordu.** "Çökmüş beden çağrıya yürüyor"
+sabotajı uygulandı ve test YİNE GEÇTİ — çünkü saf makineyi doğrudan
+çağırıyordum, `Dunya.cagri_ilerle`'yi hiç kullanmıyordum. Kural doğruydu,
+**dünyaya bağlı olduğu doğrulanmamıştı.** Sarmalın içinden koşan ikinci bir
+madde eklendi (§5.8).
+
+**b) Negatif kontrolde ölü bir sabotaj vardı.** `davranis` bölümündeki bir sed
+kalıbı satırlar arası `\n` içeriyordu; BSD sed desen uzayında satır sonu
+görmez, yani o sabotaj hiçbir zaman uygulanmıyordu — üstelik ardından `dene`
+de yoktu, uygulansa bile bir şey ölçmüyordu. Silindi.
+
+**c) Sondanın üç kadrajı BAYT BAYT AYNI çıktı.** Sayılar doğruydu (2.20 /
+4.28 / 8.28), görüntü yalandı: `_process` çizimden önce koşuyor, okunan doku
+bir önceki karenin dokusu, ve sonda gerçek zamandan çok daha hızlı aktığı için
+üç yakalama da aynı kareye denk geldi. `RenderingServer.force_draw()` ile
+düzeltildi. §5.8'in tam örneği: **ölçtüğümü sandığım şey ölçmek istediğim şey
+değildi.**
+
+### Açık kalan
+
+Mırıltı sesi yok — kullanıcının kararı "kelime duyulmasın, karakterin boğuk
+mırıltısı duyulsun, yazı ekranda görünsün" idi. Yazı katmanı çalışıyor
+(`betik/cizim/soz-katmani.gd`); ses için CC0 bir mırıltı gerekiyor. Uydurma
+bir yer tutucu koymaktansa sessiz bırakıldı; panoda madde var.

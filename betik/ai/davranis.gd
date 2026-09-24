@@ -54,6 +54,31 @@ static func cagriya_tepki_sn(guven: float) -> Vector2:
 		return Vector2(-1.0, -1.0)     # gelmez
 	return Vector2(2.0, 5.0)
 
+static func cagriya_gelir_mi(guven: float) -> bool:
+	return cagriya_tepki_sn(guven).x >= 0.0
+
+static func cagri_hedef_mesafe_m(guven: float) -> float:
+	# Cevap veren arkadaş KENDİ bandının YAKIN kenarına gelir — bandını
+	# TERK ETMEZ. Sebep iki kanal kuralı: mesafe güveni okur. Çağrı herkesi
+	# 1,5 m'ye getirseydi mesafe artık güveni değil "en son ne zaman
+	# seslendin"i okurdu ve kabul kriteri çökerdi.
+	return mesafe_bandi_m(guven).x
+
+static func cagri_sessizlik_sn() -> float:
+	# Cevapsızlık EN YAVAŞ cevaptan uzun sürmeli. Kısa olursa oyuncu orta
+	# güvende de "gelmiyor" diye okur — oysa gelecektir, daha yoldadır.
+	# Bağımsız sayı DEĞİL, türev; ayrı yazılsaydı er geç kayardı (K-060'ın
+	# aynı dersi).
+	return cagriya_tepki_sn((A.GUVEN_DUSUK_UST + A.GUVEN_YUKSEK_ALT) * 0.5).y + 1.0
+
+## Cevabın ne kadar sürdüğü: bu süre boyunca yakın kenarda durur, sonra
+## kendi bandına döner. Sonsuz olsaydı tek bir çağrı mesafeyi kalıcı
+## değiştirir, mesafe güveni okumayı bırakırdı.
+const CAGRI_YANIT_SN := 8.0
+## İki çağrı arası en az bekleme. Oyuncuyu kısıtlamak için değil: arka arkaya
+## basılan tuş sürekli mırıltıya dönüşüyor ve sahne komikleşiyor.
+const CAGRI_BEKLEME_SN := 1.0
+
 # --- MORAL KANALI ---
 
 static func tempo_carpani(moral: float) -> float:

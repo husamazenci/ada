@@ -22,10 +22,15 @@ var sim
 var _bekleyen_eylem := "bekle"
 var _kayit_sayaci := 0.0
 var _arkadas: Node3D
+var _soz: CanvasLayer
 
 func _ready() -> void:
 	sim = D.new()
 	_arkadas = get_node_or_null(^"Arkadas")
+	_soz = get_node_or_null(^"Soz")
+	# Çağrı gecikmesi bandın İÇİNDE rastgele seçilir. Saf makine belirlenimci
+	# başlar ki test aynı sayıyı görsün; tohumu OYUN atar, test atmaz.
+	sim.cagri.rastgele.randomize()
 	# Kaldığı yerden devam (K-006). Kipi uymayan yuva atılır ve yeni oyun başlar.
 	if K.yuva_var_mi() and K.oku(sim):
 		print("[ada] askıya alınmış oyun yüklendi — gün %d" % sim.gun)
@@ -35,12 +40,25 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if sim.bitti:
 		return
+	# Sahnedeki GERÇEK mesafe simülasyona geri yazılır. Yoksa algı yalan söyler:
+	# arkadaş ekranda 8 m'de dururken sim onu 3 m'de sanıyordu, yani gece görüş
+	# daralması, ateş ışığı istisnası ve çağrı menzili hiç bağlamıyordu.
+	if _arkadas:
+		sim.mesafe_m = _mesafe_m()
+
 	var dt: float = (delta * zaman_carpani) / gun_suresi_sn
 	sim.adim(dt, func(_d): return _eylemi_al())
+
+	# Çağrı GERÇEK saniyeyle ilerler, gün kesriyle değil: bir sese dönme süresi
+	# bedene ait, dünya saatine değil. Zaman çarpanı ×50 olduğunda arkadaşın
+	# refleksi 50 kat hızlanmamalı — ölçtüğümüz şey ölçmek istediğimiz şey
+	# olmalı (§5.8).
+	sim.cagri_ilerle(delta)
 
 	if _arkadas:
 		_arkadas.guven = sim.guven.deger
 		_arkadas.moral = sim.guven.moral
+		_arkadas.cagriya_cevap_veriyor = sim.cagri.yanit_veriyor_mu()
 
 	_kayit_sayaci += delta
 	if _kayit_sayaci >= kayit_araligi_sn:
@@ -59,6 +77,12 @@ func _unhandled_input(_event: InputEvent) -> void:
 	# E = KENDİNE · F = ONA. Oyunun bütün ahlaki seçimi bu iki tuş arasında.
 	if Input.is_action_just_pressed("ver"):
 		_bekleyen_eylem = "ver_su" if sim.arkadas.en_acil() == "su" else "ver_yiyecek"
+	elif Input.is_action_just_pressed("cagir"):
+		# Q = SESLEN. Güvene DOKUNMAZ (K-068): ucuz jest yükseltmez, ve
+		# güveni okumanın tek yolu güvene mal olsaydı oyuncu bakmaktan
+		# cezalandırılırdı. Cevabı arkadaşın bedeni verir — ya da vermez.
+		if sim.cagir() and _soz:
+			_soz.soyle("soz.hey")
 	elif Input.is_action_just_pressed("etkiles"):
 		if not sim.kap_dolu:
 			_bekleyen_eylem = "doldur"
@@ -73,5 +97,14 @@ func _oyun_bitti() -> void:
 	# Ölüm kesinleştiği an yuva SİLİNİR ve oyun biter (K-006). Geri dönüş yok.
 	if sim.oyuncu.oldu:
 		K.sil()
-	print("[ada] oyun bitti: %s · güven %.2f · moral %.2f" % [
-		sim.bitis_sebebi, sim.guven.deger, sim.guven.moral])
+	print("[ada] oyun bitti: %s · güven %.2f · moral %.2f · %s" % [
+		sim.bitis_sebebi, sim.guven.deger, sim.guven.moral, sim.cagri.ozet()])
+
+func _mesafe_m() -> float:
+	var o := get_node_or_null(^"Oyuncu")
+	if o == null or _arkadas == null:
+		return sim.mesafe_m
+	var oy: Node3D = o
+	var fark: Vector3 = _arkadas.global_position - oy.global_position
+	fark.y = 0.0
+	return fark.length()

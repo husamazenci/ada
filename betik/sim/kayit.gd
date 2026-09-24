@@ -10,6 +10,12 @@ extends RefCounted
 # koşabilmesi — ve asıl sebep şu: unutulan bir alan ancak deterministik
 # karşılaştırmayla yakalanır, gözle değil.
 #
+# ÇAĞRI DURUMU BİLEREK KAYDEDİLMEZ (K-068). Askıya alma dünyayı sürdürür,
+# ANI değil. Oyundan çıkıp ertesi gün dönen oyuncunun karşısında dünkü bağırışa
+# hâlâ yürüyen bir arkadaş bulması yanlış olurdu; yeni bir Dunya zaten temiz bir
+# Cagri ile doğar. Unutulmuş alan DEĞİL, verilmiş karardır — testler/cagri.gd
+# yükleme sonrası makinenin boş olduğunu denetler.
+#
 # ÖZEL ALANLAR (_ ile başlayanlar) DA kaydedilir. Onlar "iç durum" diye
 # atlanırsa oyun yüklendikten sonra sessizce başka türlü akar: eşik cümlesi
 # ikinci kez belirir, günlük jest tavanı sıfırlanır, çöküş süresi geri sayar.

@@ -73,6 +73,27 @@ Oyunun bütün ahlaki seçimi tek tuş aralığına iner.
 Aynı nesne, aynı an, iki tuş: **E kendine, F ona.** Menü yok, çark yok,
 envanter ekranı yok.
 
+### Q: oyuncunun elindeki tek soru *(K-068)*
+
+Ekranda ilişki barı olmadığı için oyuncunun güveni okuyacağı aktif bir kanal
+gerekiyordu. Q ona seslenir — karakterin boğuk mırıltısı duyulur, yaklaşık
+karşılığı bir satır olarak belirir ve söner. **Arkadaş cevap vermez; cevabı
+bedeniyle verir:**
+
+| Güven | Ne olur | Sahnede ölçüldü |
+|---|---|---|
+| yüksek | hemen döner ve gelir | 1,05 sn sonra 2,20 m → 1,72 m |
+| orta | gecikir, gelir, mesafesini korur | 4,85 sn sonra 4,28 m → 3,72 m |
+| düşük | **gelmez** | hiç · 8,28 m'de kıpırdamaz |
+
+Düşük güvendeki sessizlik oyunun en yüksek sesli işaretidir. Çağırmak güveni
+ne yükseltir ne düşürür: yükseltseydi ucuz jest olurdu, düşürseydi oyuncu
+bakmaktan cezalandırılırdı. Cevap veren arkadaş kendi mesafe bandının yakın
+kenarına gelir — bandını terk etmez, yoksa mesafe güveni okumayı bırakırdı.
+
+Yüksek güven + dip moral özel bir an: gelmeye karar eder, çöken beden
+kalkamaz.
+
 ### İki ihtiyaç, birbirinin tersi
 
 **Yiyecek uzakta ve az.** Günde iki porsiyon bulunur; iki kişi ~1,8 porsiyon

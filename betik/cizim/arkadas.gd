@@ -28,6 +28,10 @@ const D := preload("res://betik/ai/davranis.gd")
 var guven: float = 0.35
 var moral: float = 0.70
 
+# Köprü yazar (betik/cizim/oyun.gd), burası yalnızca uygular. Karar saf
+# katmandadır (betik/ai/cagri.gd): "cevap veriyor mu" sorusunu sahne sormaz.
+var cagriya_cevap_veriyor := false
+
 var _oyuncu: Node3D
 var _govde: Node3D
 var _govde_y0: float = 0.0
@@ -53,8 +57,9 @@ func _physics_process(delta: float) -> void:
 		bana = Vector3.FORWARD
 		uzaklik = 0.01
 
-	# GÜVEN KANALI: hedef mesafe
-	var hedef := D.hedef_mesafe_m(guven)
+	# GÜVEN KANALI: hedef mesafe. Çağrıya cevap verirken kendi bandının YAKIN
+	# kenarına gelir — bandını terk etmez, yoksa mesafe güveni okumayı bırakır.
+	var hedef := D.cagri_hedef_mesafe_m(guven) if cagriya_cevap_veriyor else D.hedef_mesafe_m(guven)
 	var fark := uzaklik - hedef
 	var yon := bana.normalized()
 
@@ -73,7 +78,10 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 	# GÜVEN KANALI: yönelim. +1 oyuncuya dönük · 0 yan · −1 sırtı dönük.
-	var y := D.yonelim(guven)
+	# Cevap verirken oyuncuya döner. Bu bir jest DEĞİL, fizik: sana doğru
+	# yürüyen biri sana bakar. Düşük güven zaten cevap vermediği için o
+	# seviyede bu dal hiç açılmaz — üç seviye ekranda ayrık kalır.
+	var y := 1.0 if cagriya_cevap_veriyor else D.yonelim(guven)
 	var bakis := -yon if y > 0.5 else (yon if y < -0.5 else yon.cross(Vector3.UP))
 	var hedef_aci := atan2(bakis.x, bakis.z)
 	rotation.y = rotate_toward(rotation.y, hedef_aci, donme_hizi_rad_s * delta)
