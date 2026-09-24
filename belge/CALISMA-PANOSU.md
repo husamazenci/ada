@@ -152,6 +152,22 @@ DOKUNMA:  `betik/sim/` `betik/ai/` `betik/veri/` `testler/` `belge/` `AGENTS.md`
 
 ## 5. ChatGPT kuyruğu
 
+## [ ] Arkadaşın animasyon durum makinesi — sahip: gpt (Sol-6)
+
+DOSYA:    **yeni** `belge/ANIMASYON-SPEKTI.md` (kod yok, tasarım belgesi)
+SORUN:    Oyunun kabul kriteri "arkadaşın üç güven seviyesi EKRANDA ayırt
+          edilebilsin". Elimizde Quaternius Universal Animation Library var
+          (CC0, 120+ animasyon, humanoid rig, Godot'da test edilmiş) ama
+          hangi animasyonun hangi güven×moral durumuna karşılık geldiği,
+          geçişlerin ne kadar süreceği ve AnimationTree'nin nasıl kurulacağı
+          hiç tasarlanmadı. Bu tasarlanmadan gövde koda bağlanamaz.
+İSTENEN:  Spesifikasyon (aşağıdaki promptla verildi).
+KABUL:    Her güven×moral hücresi için EKRANDA GÖRÜLEBİLİR bir karşılık;
+          K-056'daki illüzyon kırıcıların her birine somut karşı önlem;
+          3 dakikalık kayıtta seviyenin ayırt edilmesini sağlayacak üç
+          gözlenebilir işaret.
+DOKUNMA:  Depodaki hiçbir kod dosyası.
+
 ## [x] CC0 varlık araştırması — sahip: gpt · **ÖLÇÜLDÜ (Claude, 2026-09-24)**
 
 SONUÇ:    `belge/VARLIK-KAYNAKLARI.md` yazıldı. 18 URL çağrıldı, 18'i yaşıyor;
