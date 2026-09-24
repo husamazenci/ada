@@ -154,8 +154,24 @@ kenarında taç/boy 0.5–0.8; genç ağaç 3–12 m). (K-035, K-053)
   Godot sayaçlarıyla yeniden taban çizgisi alınarak** konur — ikinci denemenin
   sayıları (150 / 250k) Three.js dönemine aitti, taşınmaz.
 - **Bütçe ölçümü tören değildir:** geliştirme derlemesinde kare süresi ve çizim
-  sayacı **sürekli açık** bir HUD'da durur. İkinci denemede ölçüm 3,5 dakika
-  sürüyor ve şarj + sessiz makine istiyordu; sonuç: üç dal ölçülmeden birleşti.
+  sayacı **sürekli açık** bir HUD'da durur (`betik/cizim/damga-katmani.gd`).
+  İkinci denemede ölçüm 3,5 dakika sürüyor ve şarj + sessiz makine istiyordu;
+  sonuç: üç dal ölçülmeden birleşti.
+- **HUD hüküm VERMEZ, hükmü `araclar/butce.gd` verir.** İki sebep ölçüldü
+  (2026-09-24, M2 / Metal / Godot 4.7.2): (a) vsync açıkken duvar saati ekran
+  yenilemesine kilitlenir ve her şey 16.7 ms çıkar — araç vsync'i KAPATIR;
+  (b) `viewport_get_measured_render_time_gpu` bu makinede 960 kare boyunca
+  **0.000** döndü, yani GPU yükü ölçülemiyor. HUD bu yüzden GPU yazmaz ve
+  kırmızıya yalnızca TAKILMA (en kötü kare > 20 ms) ile döner.
+- **Taban çizgisi (2026-09-24, gri kutu sahnesi, vsync kapalı, 1449 kare):**
+  ortalama **6.90 ms** · p95 **6.94 ms** · en kötü 7.51 ms ·
+  **17 çizim çağrısı** · **45 758 üçgen** · 119 nesne.
+  Sahnede zemin kutusu, oyuncu kapsülü ve tek karakter (14 318 üçgen) var.
+  Üçgen sayacı bütün geçişleri toplar — gölge geçişi karakteri ikinci kez
+  sayar; bu yüzden 14k model 45k'ya çıkıyor.
+  **Sayısal SINIR henüz konmadı ve kasıtlı:** ada, ağaç, ateş ve barınak
+  girmemiş bir sahneden çıkarılan sınır anlamsız olur. Sınır dikey dilimin
+  gerçek içeriği girdiğinde bu tabandan türetilir.
 - **Oyun iki dilli: Türkçe ve İngilizce** (K-010). Ekranda görünen her metin
   Godot'nun CSV yerelleştirmesinden gelir; koda görünür metin yazılmaz. Bir test
   her anahtarın iki dilde de var olduğunu denetler.
@@ -311,6 +327,7 @@ bunlar `@export var` ile tanımlanır, editör panelinde kaydırıcı olur ve **
 | Çağırma (K-068) | `godot --headless --path . --script res://testler/cagri.gd` |
 | Kadraj (görüntü + ölçüm) | `godot --path . --script araclar/kadraj.gd` — görünür pencere |
 | Çağrı sondası (ekranda) | `godot --path . --script araclar/cagri-sondasi.gd` — görünür pencere |
+| Performans bütçesi | `godot --path . --script araclar/butce.gd` — görünür pencere, ~12 s |
 | Negatif kontroller (hepsi) | `./testler/negatif-kontrol.sh` — ~3 dk |
 
 Çıkış kodu **0** geçti · **1** başarısız · **2** çalıştırılamadı.
