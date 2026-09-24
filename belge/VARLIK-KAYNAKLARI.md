@@ -163,8 +163,43 @@ Oyunun kullandığı altı klip: `Idle` · `Walk` · `Sitting_Enter` ·
 `Hit_Chest`/`Hit_Head` (köpek), `Idle_Torch` (ateş başı), `Crouch_*` (yaralı),
 `Interact`, `PickUp_Table`.
 
+### Ultimate Animated Animals (Quaternius) · CC0 · indirildi 2026-09-25
+
+| | |
+|---|---|
+| Kaynak | Quaternius — Ultimate Animated Animals (July 2021) |
+| Lisans | CC0 1.0 (`LISANS.txt` pakette) |
+| Depodaki yer | `varlik/hayvan/Husky.gltf` + `Husky.bin` |
+| Seçilen | **Husky** — 1 920 üçgen, 49 kemik, 12 animasyon, doku YOK (malzeme rengi) |
+
+**Kurt değil HUSKY, ve bu tasarım kararının gereği.** Pakette Wolf da var ama
+kullanıcı kararı açık: *"'köpek' ve 'kurt' aynı sahnede karışmasın"* — okyanus
+ortasındaki küçük bir adada kurdun varlığı ayrıca açıklama isterdi. Husky evcil
+bir ırk: adada bulunması açıklama gerektirmez (insanla gelmiştir), ve
+yabanileşmiş hâli tehlikelidir. Pakette ShibaInu de var; husky seçildi çünkü
+tehdit olarak okunacak bir gövdesi var.
+
+**Klipler tasarıma birebir oturuyor:** `Idle_2_HeadLow` (ışığın sınırında,
+burun havada), `Walk` (çemberin çevresinde dolanma), `Gallop` (atılma),
+`Attack` (ısırma), `Eating` (balığı kapma), `Idle_HitReact1/2` (yanan dala
+tepki). `Death` kullanılmıyor — köpek ölmüyor.
+
+**İki değişiklik yapıldı:**
+
+1. **Ölçek içe aktarmada gömüldü** (`nodes/root_scale=0.235`). Model 3.19
+   birim boyunda geliyordu; gerçek bir husky ayaktayken başı ~0.75 m'de.
+   Ölçüldü: insanın (1.81 m) yanına konunca köpek **0.74 m** ve sırtı diz
+   hizasında. Sahnede tek tek ayarlansaydı biri unutulurdu.
+2. **Gömülü tampon ayrıldı.** Satıcı 3 MB'lık veriyi base64 olarak JSON'un
+   içine koymuştu — `.gitattributes` `.gltf`'i okunabilir kalsın diye LFS
+   dışında tutuyor, gömülü base64 o gerekçeyi boşa çıkarıyordu. Artık
+   `.gltf` 640 KB okunur JSON, `Husky.bin` 1.4 MB LFS'te.
+
 ### Satıcı klasörleri depoya girmez
 
-İkisi de `.gitignore` ve `.gdignore` altında: git'e girmiyorlar, Godot da
-taramıyor. Kullanılan dosyalar `varlik/karakter/temel/` ve
-`varlik/karakter/animasyon/` altına kopyalandı.
+Üçü de `.gitignore` ve `.gdignore` altında: git'e girmiyorlar, Godot da
+taramıyor. Kullanılan dosyalar `varlik/karakter/temel/`,
+`varlik/karakter/animasyon/` ve `varlik/hayvan/` altına kopyalandı.
+
+**Hayvan paketi `varlik/doga/` altına indirilmişti; `varlik/hayvan/` açıldı.**
+`doga/` bitki örtüsü ve kaya için — canlı olan ayrı durmalı.
