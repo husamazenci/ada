@@ -8,6 +8,7 @@ extends CharacterBody3D
 # His sayıları @export: kullanıcı oyun çalışırken ayarlar (AGENTS.md §6.2).
 
 const D := preload("res://betik/ai/davranis.gd")
+const An := preload("res://betik/veri/animasyonlar.gd")
 
 @export_group("Kime")
 @export var oyuncu_yolu: NodePath = ^"../Oyuncu"
@@ -17,14 +18,6 @@ const D := preload("res://betik/ai/davranis.gd")
 @export_range(0.5, 20.0, 0.1) var ivme_ms2: float = 6.0
 @export_range(0.5, 12.0, 0.1) var donme_hizi_rad_s: float = 3.0
 @export_range(0.05, 1.5, 0.05) var mesafe_olu_bant_m: float = 0.4
-## 0 = alçalma yok. Kapsül döneminde 0.55'ti: kapsülün duruşu olmadığı için
-## "oturmak" ancak alçalmakla gösterilebiliyordu. Gerçek gövdede ÖLÇÜLDÜ ve
-## kötüydü — bacaklar zemine gömülüyor, "oturan" değil "batan" biri okunuyordu.
-## Dip moral artık omurga eğimiyle (30°) ve durmakla okunuyor; gerçek oturma
-## pozu animasyon kütüphanesiyle gelecek.
-@export_range(0.0, 1.2, 0.01) var oturma_dusumu_m: float = 0.0
-@export_range(0.5, 8.0, 0.1) var oturma_hizi_ms: float = 2.0
-@export_range(0.5, 12.0, 0.1) var egim_hizi_rad_s: float = 2.5
 ## Modelin baktığı yön Godot'nun −Z'sinden sapıyorsa buradan düzeltilir.
 @export_range(-180.0, 180.0, 1.0) var model_yon_duzeltme_derece: float = 0.0
 
@@ -42,22 +35,22 @@ var cagriya_cevap_veriyor := false
 
 var _oyuncu: Node3D
 var _govde: Node3D
-var _govde_y0: float = 0.0
 var _iskelet: Skeleton3D
-var _omurga: Array[int] = []
-var _egim_su_an := 0.0
+var _oynatici: AnimationPlayer
+var _durum := ""            # oynayan OYUN durumu (klip adı değil)
+var _gecis := ""            # bitmesini beklediğimiz tek seferlik klip
 
 func _ready() -> void:
 	_oyuncu = get_node_or_null(oyuncu_yolu)
 	_govde = get_node_or_null(^"Govde")
 	if _govde:
-		_govde_y0 = _govde.position.y
 		_iskelet = _govde.find_child("Skeleton3D", true, false)
-	if _iskelet:
-		for ad in ["spine_01", "spine_02", "spine_03"]:
-			var i := _iskelet.find_bone(ad)
-			if i >= 0:
-				_omurga.append(i)
+	if _govde:
+		_oynatici = _govde.get_node_or_null(^"Animasyon")
+	if _oynatici:
+		_oynatici.animation_finished.connect(_klip_bitti)
+	else:
+		push_error("[ada] Arkadas/Govde/Animasyon yok — arkadaş T-pozunda kalır")
 
 func _physics_process(delta: float) -> void:
 	if guven_zorla >= 0.0:
@@ -103,29 +96,61 @@ func _physics_process(delta: float) -> void:
 	var hedef_aci := atan2(bakis.x, bakis.z)
 	rotation.y = rotate_toward(rotation.y, hedef_aci, donme_hizi_rad_s * delta)
 
-	# MORAL KANALI: duruş — İKİ parça.
+	# MORAL KANALI: duruş artık ANİMASYONDAN geliyor.
+	# Elle omurga bükme ve gövdeyi alçaltma kaldırıldı: ikisi de kapsül
+	# döneminin yer tutucularıydı ve klip gelince onunla çakışırlardı
+	# (set_bone_pose_rotation pozu DEĞİŞTİRİR, üstüne eklemez).
 	if _govde:
 		_govde.rotation.y = deg_to_rad(model_yon_duzeltme_derece)
+	_animasyonu_surdur(Vector2(velocity.x, velocity.z).length())
 
-		# 2) ALÇALMA (dip moralde oturma). Animasyon kütüphanesi gelene kadar
-		#    yer tutucu. TEK BAŞINA "yere gömülmüş" diye okunuyordu; 30°'lik
-		#    eğimle birlikte "çökmüş" diye okunuyor. Gerçek çözüm Quaternius
-		#    Universal Animation Library'deki oturma klibi (pano: açık borç).
-		var hedef_y := _govde_y0 - (oturma_dusumu_m if D.oturuyor_mu(moral) else 0.0)
-		_govde.position.y = move_toward(_govde.position.y, hedef_y, oturma_hizi_ms * delta)
+func _animasyonu_surdur(hiz_ms: float) -> void:
+	if _oynatici == null:
+		return
+	# Hangi klip oynayacağına SAF katman karar verir (Davranis), burası
+	# yalnızca uygular — ve geçişleri yönetir.
+	var istenen := D.durus_animasyonu(moral, hiz_ms)
+	if not _gecis.is_empty():
+		return                      # tek seferlik klip bitene kadar karışma
+	if istenen == _durum:
+		# Yürüyüş temposu moralden gelir: orta moralde ×0.70 hızla yürür.
+		# Klibi yavaşlatmak ŞART — yoksa ayaklar yerde kayar.
+		if _durum == "yuru":
+			_oynatici.speed_scale = maxf(D.tempo_carpani(moral), 0.1)
+		return
 
-	# 1) ÖNE EĞİM (0° / 12° / 30°) — OMURGA KEMİĞİNDEN, gövde kökünden değil.
-	#    Önce kökü döndürdüm: pivot AYAKLARDA kaldığı için "öne düşen ağaç"
-	#    gibi göründü, üstelik alçalmayla birlikte bacaklar zemine gömüldü.
-	#    Ölçüldü: omurga kemiği yerel X'te dönünce baş aşağı ve öne gidiyor —
-	#    yani doğru pivot bel. Açı üç omurga kemiğine PAYLAŞTIRILIR; tek
-	#    kemiğe verilince bel kırılıyor gibi duruyor.
-	#
-	#    UYARI: set_bone_pose_rotation pozu DEĞİŞTİRİR, üstüne eklemez.
-	#    AnimationTree geldiğinde bu bir SkeletonModifier3D'ye taşınmalı,
-	#    yoksa animasyonla çakışır (pano: açık borç).
-	if _iskelet and not _omurga.is_empty():
-		var pay := deg_to_rad(D.duruş_egimi_derece(moral)) / float(_omurga.size())
-		_egim_su_an = move_toward(_egim_su_an, pay, egim_hizi_rad_s * delta)
-		for i in _omurga:
-			_iskelet.set_bone_pose_rotation(i, Quaternion(Vector3.RIGHT, _egim_su_an))
+	# Oturmaya GİRİŞ ve ÇIKIŞ ayrı kliplerdir. Doğrudan oturma döngüsüne
+	# atlansaydı arkadaş ayakta dururken bir karede yere ışınlanırdı.
+	if istenen == "otur" and _durum != "otur_giris":
+		_oynat("otur_giris", 0.15)
+		return
+	# Oturmaktan ÇÖKMEYE giderken ayağa KALKMAZ. İlk yazışımda kalkıyordu:
+	# moral 0.20'den 0.05'e düşen arkadaş önce doğruluyor, sonra yığılıyordu.
+	# Çöküş zaten bir düşüştür; öncesine bir toparlanma koymak onu komik
+	# yapıyor ve oyunun en ağır anını bozuyor.
+	if _durum in ["otur", "otur_giris"] and istenen not in ["otur", "cokus"]:
+		_oynat("otur_cikis", 0.15)
+		return
+	_oynat(istenen, 0.25)
+
+func _oynat(oyun_durumu: String, harman_sn: float) -> void:
+	var klip: String = An.KLIPLER.get(oyun_durumu, "")
+	if klip.is_empty() or not _oynatici.has_animation(klip):
+		push_error("[ada] klip yok: %s (%s)" % [oyun_durumu, klip])
+		return
+	_durum = oyun_durumu
+	_oynatici.speed_scale = 1.0
+	_oynatici.play(klip, harman_sn)
+	if oyun_durumu not in An.DONGULU:
+		_gecis = oyun_durumu
+
+func _klip_bitti(_ad: StringName) -> void:
+	# Tek seferlik klip bitti. Çöküş YERİNDE KALIR — son karede donar.
+	# Döngüye alınsaydı arkadaş sonsuza kadar yığılıp yığılıp dururdu; asıl
+	# sebep ise şu: çöküş bir olay, bir hareket değil.
+	var biten := _gecis
+	_gecis = ""
+	if biten == "otur_giris":
+		_oynat("otur", 0.1)
+	elif biten == "otur_cikis":
+		_animasyonu_surdur(Vector2(velocity.x, velocity.z).length())

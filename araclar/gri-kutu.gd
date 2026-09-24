@@ -25,6 +25,9 @@ const DURUMLAR := [
 	{"ad": "guven-dusuk",        "yer_g": 0.10, "yer_m": 0.80, "g": 0.10, "m": 0.80},
 	{"ad": "yuksek-guven-dip-moral", "yer_g": 0.80, "yer_m": 0.80, "g": 0.80, "m": 0.20},
 	{"ad": "dusuk-guven-dip-moral",  "yer_g": 0.10, "yer_m": 0.80, "g": 0.10, "m": 0.20},
+	# Çöküş kapının parçasıdır: oyuncunun müdahale etmesi gereken an EKRANDA
+	# oturmaktan ayırt edilebilmeli. Ayırt edilemiyorsa o son ulaşılamaz.
+	{"ad": "cokus",                  "yer_g": 0.80, "yer_m": 0.80, "g": 0.80, "m": 0.05},
 ]
 
 func _mesafe() -> float:
@@ -43,7 +46,7 @@ func _process(_d: float) -> bool:
 		_oyuncu = root.find_child("Oyuncu", true, false)
 		if _arkadas == null or _oyuncu == null:
 			printerr("ÇALIŞTIRILAMADI: Arkadas/Oyuncu bulunamadı"); quit(2); return true
-		print("%-24s %-8s %-9s %-11s %s" % ["durum", "mesafe", "duruş", "gövde", "kadraj"])
+		print("%-24s %-8s %-14s %s" % ["durum", "mesafe", "animasyon", "kadraj"])
 	# KAMERAYI KİLİTLE. Kilitsizken kadrajlar arasında ufuk 68 piksel kaydı
 	# (yerçekimiyle oturma + kamera salınımı), ve iki kadrajı piksel piksel
 	# karşılaştırmak anlamsız hâle geldi: farkın çoğu arkadaştan değil zemin
@@ -81,32 +84,31 @@ func _process(_d: float) -> bool:
 	# 2. aşama: gösterim değerleri OTURANA KADAR bekle. Sabit kare sayısı
 	# zamanlamaya duyarlıydı — iki koşu farklı sonuç verdi (bir seferinde
 	# 6.00 m, ötekinde 8.28 m). Koşula bağlanınca belirlenimci oluyor.
-	var govde0 := _arkadas.get_node_or_null(^"Govde")
-	# Taban yüksekliği ve oturma düşümü DÜĞÜMDEN okunur, sabit yazılmaz.
-	# Sabit yazılıydı (0.875 − 0.55, kapsülün sayıları) ve kapsül gerçek
-	# gövdeyle değişince sonda "gösterimde oturmadı" diye ÇALIŞTIRILAMADI
-	# verdi. Ölçüm aracı ölçtüğü şeyin sayılarını kendi tutmamalı.
-	var taban_y: float = _arkadas.get("_govde_y0")
-	var dusum: float = _arkadas.get("oturma_dusumu_m")
-	var hedef_govde_y: float = taban_y - (dusum if D.oturuyor_mu(d["m"]) else 0.0)
-	var govde_oturdu: bool = govde0 == null or absf(govde0.position.y - hedef_govde_y) < 0.005
+	# Gösterim, ANİMASYON DURUMU oturana kadar bekler. Önce gövdenin y'sine
+	# bakıyordu (kapsül dönemi), sonra o sayı sabit yazılıydı ve gerçek gövde
+	# gelince sonda "gösterimde oturmadı" diye çöktü. Artık ölçtüğü şeyin
+	# kendi adına bakıyor: hangi klip oynuyor.
+	var beklenen := D.durus_animasyonu(d["m"], 0.0)
+	# Durum adının doğru olması YETMEZ: tek seferlik klipler (çöküş, oturmaya
+	# giriş) daha oynuyor olabilir. İlk koşuda çöküş kadrajı arkadaşı hâlâ
+	# AYAKTA yakaladı — Death01 2.40 sn sürüyor ve sonda 0.2 sn'de bakıyordu.
+	# "_gecis" boşsa tek seferlik klip bitmiş ve son karede donmuş demektir.
+	var durum_tamam: bool = String(_arkadas.get("_durum")) == beklenen \
+		and String(_arkadas.get("_gecis")).is_empty()
 	var durdu: bool = _arkadas.velocity.length() < 0.02
 	var mesafe_tamam: bool = absf(_mesafe() - D.hedef_mesafe_m(d["g"])) < 0.35 or D.oturuyor_mu(d["m"])
-	if not (govde_oturdu and durdu and mesafe_tamam):
+	if not (durum_tamam and durdu and mesafe_tamam):
 		if _kare > 3000:
-			printerr("ÇALIŞTIRILAMADI: %s gösterimde oturmadı" % d["ad"]); quit(2); return true
+			printerr("ÇALIŞTIRILAMADI: %s gösterimde oturmadı (durum '%s', beklenen '%s')" % [
+				d["ad"], str(_arkadas.get("_durum")), beklenen])
+			quit(2); return true
 		return false
 
 	var olculen := _mesafe()
-	var oturuyor: bool = D.oturuyor_mu(d["m"])
-	var govde := _arkadas.get_node_or_null(^"Govde")
-	var govde_y: float = govde.position.y if govde else -1.0
-	# _process çizimden ÖNCE koşar; zorlamadan okunan doku bir önceki karenin
-	# dokusudur ve sonda gerçek zamandan hızlı aktığı için kadrajlar aynı
-	# kareye denk gelebilir (çağrı sondasında tam bu oldu, §5.8).
+	var durum := String(_arkadas.get("_durum"))
 	RenderingServer.force_draw()
 	root.get_texture().get_image().save_png("res://.scratch/gri-%s.png" % d["ad"])
-	print("%-24s %-8.2f %-9s gövde y %.3f  .scratch/gri-%s.png" % [d["ad"], olculen, "OTURUYOR" if oturuyor else "ayakta", govde_y, d["ad"]])
+	print("%-24s %-8.2f %-14s .scratch/gri-%s.png" % [d["ad"], olculen, durum, d["ad"]])
 
 	_i += 1
 	_kare = 0

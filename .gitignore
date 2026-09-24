@@ -8,3 +8,5 @@ dist/
 # kopyası). Kullandığımız dosyalar varlik/karakter/temel/ altına kopyalandı;
 # kaynak belge/VARLIK-KAYNAKLARI.md'de yazılı.
 varlik/karakter/Universal Base Characters\[Standard\]/
+varlik/karakter/Universal Animation Library\[Standard\]/
+varlik/karakter/*.zip

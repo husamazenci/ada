@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://betik/cizim/damga-katmani.gd" id="4_damga"]
 [ext_resource type="Script" path="res://betik/cizim/soz-katmani.gd" id="5_soz"]
 [ext_resource type="PackedScene" uid="uid://wqc4ncx56k33" path="res://varlik/karakter/temel/Superhero_Male_FullBody.gltf" id="6_govde"]
+[ext_resource type="AnimationLibrary" uid="uid://cxywrxnmaec55" path="res://varlik/karakter/animasyon/UAL1_Standard.glb" id="7_anim"]
 
 [sub_resource type="Environment" id="Environment_gri"]
 background_mode = 1
@@ -84,6 +85,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.875, 0)
 shape = SubResource("CapsuleShape3D_govde")
 
 [node name="Govde" parent="Arkadas" instance=ExtResource("6_govde")]
+
+; Kütüphane adsız ("") eklendi: klipler "Idle" diye çağrılıyor, "lib/Idle"
+; diye değil. İz yolları "Armature/Skeleton3D:kemik" biçiminde, bu yüzden
+; oynatıcının kökü Govde olmalı.
+[node name="Animasyon" type="AnimationPlayer" parent="Arkadas/Govde"]
+root_node = NodePath("..")
+libraries = {
+"": ExtResource("7_anim")
+}
 
 [node name="Soz" type="CanvasLayer" parent="."]
 script = ExtResource("5_soz")

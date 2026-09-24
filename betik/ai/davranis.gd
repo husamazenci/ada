@@ -92,6 +92,24 @@ static func tempo_carpani(moral: float) -> float:
 static func oturuyor_mu(moral: float) -> bool:
 	return moral < A.MORAL_ORTA_ALT
 
+static func cokuyor_mu(moral: float) -> bool:
+	return moral < A.MORAL_COKUS_ESIGI
+
+static func durus_animasyonu(moral: float, hiz_ms: float) -> String:
+	# Hangi klip oynayacağı SAF bir karar. Sahnede değil burada olmasının
+	# sebebi: "dip moralde çöküyor mu" sorusu pencere açmadan sınanabilmeli,
+	# ve ekranda gördüğümüz o sınanan şeyin kendisi olmalı (§5.2).
+	#
+	# Moral kanalı BEDENİ seçer; hız yalnızca dur/yürü ayrımını yapar — ve hız
+	# zaten tempo_carpani üzerinden yine moralden geliyor. Güven buraya hiç
+	# karışmaz: güven MESAFEYİ belirler, mesafe de hızı dolaylı etkiler ama
+	# hangi klibin oynadığını değil.
+	if cokuyor_mu(moral):
+		return "cokus"
+	if oturuyor_mu(moral):
+		return "otur"
+	return "yuru" if hiz_ms > 0.05 else "dur"
+
 static func duruş_egimi_derece(moral: float) -> float:
 	# Omuz/baş düşmesi. Dip moralde spektin çöküş tablosuna devredilir.
 	if moral >= 0.66:

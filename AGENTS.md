@@ -325,6 +325,7 @@ bunlar `@export var` ile tanımlanır, editör panelinde kaydırıcı olur ve **
 | Kayıt gidiş-dönüş | `godot --headless --path . --script res://testler/kayit.gd` |
 | Altı günlük koşu | `godot --headless --path . --script res://testler/alti-gun.gd` |
 | Çağırma (K-068) | `godot --headless --path . --script res://testler/cagri.gd` |
+| Animasyon kütüphanesi | `godot --headless --path . --script res://testler/animasyon.gd` |
 | Kadraj (görüntü + ölçüm) | `godot --path . --script araclar/kadraj.gd` — görünür pencere |
 | Çağrı sondası (ekranda) | `godot --path . --script araclar/cagri-sondasi.gd` — görünür pencere |
 | Performans bütçesi | `godot --path . --script araclar/butce.gd` — görünür pencere, ~12 s |

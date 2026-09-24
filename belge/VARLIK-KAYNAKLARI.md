@@ -133,8 +133,38 @@ yüzeyin fotoğraf olduğu anlaşılıyorsa yanlıştır.**
 **"Superhero" isim, kostüm değil:** model iç çamaşırlı bir TEMEL gövde.
 Hayatta kalma oyunu için **kıyafet gerekiyor** — ayrı bir CC0 paket işi.
 
-### Eksik: Universal Animation Library (Quaternius) · CC0
+### Universal Animation Library (Quaternius) · CC0 · indirildi 2026-09-25
 
-Bu pakette **animasyon yok** (0 klip). Aynı rigi kullanan Universal Animation
-Library indirilmeden arkadaş T-pozunda duruyor. Gereken en az dört klip:
-**dur · yürü · otur · çök.**
+| | |
+|---|---|
+| Kaynak | Quaternius — Universal Animation Library [Standard] |
+| Lisans | CC0 1.0 (`LISANS.txt` pakette) |
+| Depodaki yer | `varlik/karakter/animasyon/UAL1_Standard.glb` (7.6 MB) |
+| İçerik | **43 klip**, 65 kemik |
+| Rig uyumu | Gövdeyle **birebir**: aynı 65 kemik, aynı adlar, **aynı sıra** |
+
+**Kök hareketsiz sürüm alındı.** Pakette iki GLB var: `UAL1_Standard` (kök
+hareketi kapalı) ve `UAL1_Standard_RM` (kök hareketi klibe gömülü). Hareketi
+`betik/cizim/arkadas.gd` sürüyor — mesafe güvenden, tempo moralden geliyor —
+bu yüzden kök hareketli sürüm iki kanalı da ezerdi.
+
+**AnimationLibrary olarak içe aktarılıyor, sahne olarak değil.** Sahne olsaydı
+7.6 MB'lık `Mannequin` ağı da gelirdi; gövdemiz ayrı. `.import` dosyasında
+`importer="animation_library"`.
+
+**Godot klip adlarını DEĞİŞTİRİR:** `_Loop` ekini kırpar ve onu döngü işareti
+olarak kullanır (`Idle_Loop` → `Idle`, döngü açık). Koddaki kapalı liste
+(`betik/veri/animasyonlar.gd`) Godot'nun verdiği adları tutar.
+
+Oyunun kullandığı altı klip: `Idle` · `Walk` · `Sitting_Enter` ·
+`Sitting_Idle` · `Sitting_Exit` · `Death01`.
+
+**İleride hazır bekleyenler:** `Push` (sal), `Fixing_Kneeling` (barınak),
+`Hit_Chest`/`Hit_Head` (köpek), `Idle_Torch` (ateş başı), `Crouch_*` (yaralı),
+`Interact`, `PickUp_Table`.
+
+### Satıcı klasörleri depoya girmez
+
+İkisi de `.gitignore` ve `.gdignore` altında: git'e girmiyorlar, Godot da
+taramıyor. Kullanılan dosyalar `varlik/karakter/temel/` ve
+`varlik/karakter/animasyon/` altına kopyalandı.

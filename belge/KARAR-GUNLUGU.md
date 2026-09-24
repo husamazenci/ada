@@ -2282,3 +2282,70 @@ Mırıltı sesi yok — kullanıcının kararı "kelime duyulmasın, karakterin 
 mırıltısı duyulsun, yazı ekranda görünsün" idi. Yazı katmanı çalışıyor
 (`betik/cizim/soz-katmani.gd`); ses için CC0 bir mırıltı gerekiyor. Uydurma
 bir yer tutucu koymaktansa sessiz bırakıldı; panoda madde var.
+
+
+---
+
+## K-069 · Animasyon: beden artık moralden okunuyor
+
+**Tarih:** 2026-09-25 · Quaternius **Universal Animation Library** (CC0).
+
+Rigler **birebir aynı** çıktı — 65 kemik, aynı adlar, **aynı sıra**. Retarget
+yok, Mixamo yok. 43 klipten altısı bağlandı:
+
+| Oyun durumu | Klip | Ne zaman |
+|---|---|---|
+| `dur` | `Idle` | moral ≥ 0.34, duruyor |
+| `yuru` | `Walk` | moral ≥ 0.34, hareket ediyor (tempo çarpanıyla yavaşlar) |
+| `otur_giris` → `otur` | `Sitting_Enter` → `Sitting_Idle` | moral < 0.34 |
+| `otur_cikis` | `Sitting_Exit` | oturmaktan kalkarken |
+| `cokus` | `Death01`, **son karede donar** | moral < 0.12 |
+
+**Hangi klibin oynayacağı SAF bir karar** (`Davranis.durus_animasyonu`), sahnenin
+değil. Sebep §5.2: "dip moralde çöküyor mu" sorusu pencere açmadan sınanabilmeli
+ve ekranda gördüğümüz o sınanan şeyin kendisi olmalı. Güven bu fonksiyona hiç
+girmiyor — iki kanal ayrık kalıyor.
+
+**Kök hareketi KAPALI sürüm seçildi** (`UAL1_Standard`, `_RM` değil). Hareketi
+`arkadas.gd` sürüyor: mesafe bandı güvenden, tempo moralden geliyor. Kök
+hareketli klip o iki kanalı da ezerdi.
+
+### Dört hata, dördü de ölçümle bulundu
+
+**a) Klip adlarının yarısı yanlıştı — ve kapalı liste ilk koşuda yakaladı.**
+GLB'nin içinde klipler `Idle_Loop`, `Walk_Loop`, `Sitting_Idle_Loop` diye
+geçiyor; Godot'nun içe aktarıcısı **`_Loop` ekini kırpıyor** ve onu döngü
+işareti olarak kullanıyor. Altı klipten üçü bulunamadı. Klip adları koda
+serpilmiş stringler olsaydı bu hata ancak o sahneye gelindiğinde, **sessiz bir
+"animasyon oynamıyor"** olarak görünecekti — konsolda tek satır çıkmadan.
+
+**b) Oturan arkadaş çökmeden önce ayağa kalkıyordu.** Moral 0.20'den 0.05'e
+düşünce önce `Sitting_Exit` oynuyor, sonra yığılıyordu. Çöküş zaten bir
+düşüştür; öncesine bir toparlanma koymak oyunun en ağır anını komik yapıyor.
+
+**c) Elle yaptığım duruş yer tutucuları animasyonla çakışacaktı.**
+`set_bone_pose_rotation` pozu **değiştirir**, üstüne eklemez. Omurga eğimi ve
+gövde alçaltma kaldırıldı — ikisi de kapsül döneminin çözümüydü.
+
+**d) Gri kutu sondası çöküşü animasyonun ORTASINDA yakalıyordu.** Durum adının
+"cokus" olması yetmiyor: `Death01` 2.40 sn sürüyor ve sonda 0.2 sn'de bakıyordu,
+kadrajda arkadaş hâlâ ayaktaydı. Artık tek seferlik klip bitene kadar bekliyor.
+
+### Ölçülen kapı
+
+Kamera kilitli, aynı sahne, farklı durum:
+
+| Karşılaştırma | Fark |
+|---|---|
+| dur ↔ otur (**aynı mesafe**, 2.22 m) | 41 765 piksel |
+| otur ↔ çöküş (**aynı mesafe**) | 41 445 piksel |
+| 2.22 m ↔ 4.30 m (**aynı beden**) | 35 209 piksel |
+| 4.30 m ↔ 8.30 m (**aynı beden**) | 8 397 piksel |
+
+İki kanal ekranda ayrı ayrı okunuyor: mesafe güveni, beden morali.
+
+### Açık kalan
+
+Yüzüstü yatan çöküş, **ölümle aynı görünebilir**. Tasarım çöküşün günlerce
+sürmesini ve oyuncunun defalarca müdahale şansı olmasını istiyor; canlı ile ölü
+arasında görünür bir fark gerekiyor (nefes gibi küçük bir devinim). Panoda madde.

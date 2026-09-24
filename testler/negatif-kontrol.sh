@@ -24,6 +24,7 @@ kos() {  # kos <test-adi> → çıkış kodu
 		kayit)   $GODOT --headless --path . --script res://testler/kayit.gd >/dev/null 2>&1 ;;
 		davranis) $GODOT --headless --path . --script res://testler/davranis.gd >/dev/null 2>&1 ;;
 		cagri)   $GODOT --headless --path . --script res://testler/cagri.gd >/dev/null 2>&1 ;;
+		animasyon) $GODOT --headless --path . --script res://testler/animasyon.gd >/dev/null 2>&1 ;;
 	esac
 	return $?
 }
@@ -309,6 +310,38 @@ if sabotaj betik/sim/kayit.gd '/^static func yukle/,/^static func _kisi/s/^	retu
 	dene cagri "sabotaj: yüklenen oyunda dünkü çağrı bekliyor" 1; geri betik/sim/kayit.gd
 fi
 dene cagri "geri yüklendi" 0
+
+# ============ animasyon ============
+echo "negatif-kontrol · animasyon"
+dene animasyon "temiz kopya" 0
+
+# GERÇEK HATA: Godot içe aktarırken "_Loop" ekini kırpar. Dosyadaki adı
+# yazarsan klip bulunamaz ve arkadaş T-pozunda kalır — konsolda tek satır yok.
+if sabotaj betik/veri/animasyonlar.gd 's/"dur": "Idle",/"dur": "Idle_Loop",/'; then
+	dene animasyon "sabotaj: klip adı kütüphanede yok" 1; geri betik/veri/animasyonlar.gd
+fi
+# Çöküş döngüye alınırsa arkadaş sonsuza kadar yığılıp yığılıp durur.
+if sabotaj betik/veri/animasyonlar.gd 's/^const DONGULU := \["dur", "yuru", "otur"\]$/const DONGULU := ["dur", "yuru", "otur", "cokus"]/'; then
+	dene animasyon "sabotaj: çöküş döngüye alındı" 1; geri betik/veri/animasyonlar.gd
+fi
+# Kök hareketli klip mesafe ve tempo kanallarını ezer.
+if sabotaj betik/veri/animasyonlar.gd 's/^const KOK_HAREKETI_VAR := false$/const KOK_HAREKETI_VAR := true/'; then
+	dene animasyon "sabotaj: kök hareketli sürüm seçildi" 1; geri betik/veri/animasyonlar.gd
+fi
+# Kaynak yoksa ÖLÇEMEDİK demeli — "geçti" değil (K-003).
+if sabotaj betik/veri/animasyonlar.gd 's|animasyon/UAL1_Standard.glb|animasyon/YOK.glb|'; then
+	dene animasyon "sabotaj: kütüphane dosyası yok → ölçemedi" 2; geri betik/veri/animasyonlar.gd
+fi
+# Çöküş eşiği oturmanın üstüne çıkarsa ara duruş kaybolur: arkadaş oturmadan
+# doğrudan çöker ve oyuncunun müdahale penceresi EKRANDA hiç görünmez.
+if sabotaj betik/veri/ayarlar.gd 's/^const MORAL_COKUS_ESIGI := 0\.12$/const MORAL_COKUS_ESIGI := 0.50/'; then
+	dene animasyon "sabotaj: çöküş eşiği oturmanın üstünde" 1; geri betik/veri/ayarlar.gd
+fi
+# Dip moralde oturmuyorsa moral kanalı ekranda okunmaz.
+if sabotaj betik/ai/davranis.gd '/^static func durus_animasyonu/,/^	return "yuru"/s/^		return "otur"$/		return "dur"/'; then
+	dene animasyon "sabotaj: dip moralde oturmuyor" 1; geri betik/ai/davranis.gd
+fi
+dene animasyon "geri yüklendi" 0
 
 echo "GENEL TOPLAM: $gecti geçti, $kalan kaldı"
 [ "$kalan" -eq 0 ] && exit 0 || exit 1

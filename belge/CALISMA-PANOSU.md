@@ -100,21 +100,23 @@ kapalı. Bağlanacaklar ve önkoşulları:
 | Geceleyin ateşi söndürme | yakıt sistemi | hayır |
 | Sözü tutmama | "bekle" mekaniği | hayır |
 
-### AÇIK BORÇ — animasyon kütüphanesi (2026-09-24)
+### AÇIK BORÇ — kıyafet (2026-09-25)
 
-Gövde geldi, animasyon gelmedi. Arkadaş T-pozunda duruyor ve "oturma"
-yer tutucu (omurgayı 30° öne eğmek). **Kullanıcıdan gereken tek şey:**
-Quaternius **Universal Animation Library** (CC0) indirip
-`varlik/karakter/animasyon/` altına koymak — Universal Base Characters ile
-AYNI rigi kullanıyor, retarget yok.
+Animasyon kütüphanesi geldi ve bağlandı (K-069). Kalan: model **iç çamaşırlı
+bir temel gövde**. Hayatta kalma oyunu için CC0 bir giysi paketi gerekiyor.
 
-Geldiğinde yapılacaklar (Claude):
-1. `AnimationLibrary` olarak içe aktarma, klip adlarını doğrulama
-2. `AnimationTree` + `StateMachine`: dur · yürü · otur · çök
-3. Tempo çarpanını (`Davranis.tempo_carpani`) yürüyüş hızına koşma
-4. Omurga eğimini `SkeletonModifier3D`'ye taşıma — şu an
-   `set_bone_pose_rotation` pozu DEĞİŞTİRİYOR, animasyonla çakışır
-5. Kıyafet: model iç çamaşırlı temel gövde; CC0 giysi paketi gerekiyor
+### AÇIK BORÇ — çöküş ile ölüm ekranda ayrışmıyor (2026-09-25)
+
+`Death01` son karesinde arkadaş yüzüstü yatıyor. Tasarım çöküşün **günlerce**
+sürmesini ve oyuncunun defalarca müdahale şansı olmasını istiyor — ama yatan
+çöküş ölümle aynı görünüyor. Canlıyken küçük bir devinim (nefes) gerekiyor,
+yoksa gerçekten öldüğünde ekranda hiçbir şey değişmez.
+
+### AÇIK BORÇ — orta moralin bedeni yok (2026-09-25)
+
+Spektin "omuz/baş düşmesi 12°" maddesi bağlı değil: elle omurga bükme
+animasyonla çakıştığı için kaldırıldı. Doğru yeri bir `SkeletonModifier3D` —
+animasyonun ÜSTÜNE ekler. Şu an orta moral yalnızca tempo (×0.70) ile okunuyor.
 
 ### AÇIK BORÇ — mırıltı sesi (K-068)
 
@@ -134,8 +136,10 @@ gerekiyor (`varlik/ses/` altında 48 CC0 ses var, aralarında yok).
   Sahnede ölçüldü: yüksek 1.05 sn · orta 4.85 sn · düşük gelmiyor.
 - **Gerçek gövde sahnede** — kapsül gitti, 1.81 m insan geldi; mesafeler
   bozulmadı (2.20 / 4.28 / 8.28 m).
-- Sıradaki: animasyon kütüphanesi beklerken bağımsız işler (yakıt sistemi →
-  `IHMAL_ATESI_SONDURME`, "bekle" sözü → `IHMAL_SOZ_TUTMAMA`).
+- **Animasyon bağlandı (K-069)** — dur / yürü / otur / çöküş. Rig birebir aynı
+  çıktı, retarget gerekmedi. 11 test, 82 negatif kontrol.
+- Sıradaki: yakıt sistemi → `IHMAL_ATESI_SONDURME`, "bekle" sözü →
+  `IHMAL_SOZ_TUTMAMA` (ihmal kanalının kalan 2/5'i).
 
 ---
 
