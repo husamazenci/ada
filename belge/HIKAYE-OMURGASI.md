@@ -40,19 +40,23 @@ oyun olur.
 
 ### Zincir
 
-| Sahne | En erken gün | Önkoşul (koşulsuz) | Bıraktığı koşulsuz iz | Koşullu izler |
-|---|---|---|---|---|
-| uyanış | 1 | — | `oyun-basladi` | — |
-| ateş | 2 | `oyun-basladi` | `ates-sahnesi-gecti` | `ates-yakildi` · `ilk-gece-yalniz` |
-| kim gidecek | 3 | `ates-sahnesi-gecti` | `ayrilik-gecti` | `uzaga-giden` · `soz-tutuldu` |
-| köpek | 3 (gece) | `ayrilik-gecti` | `kopek-gecti` | `yara-kimde` · `korudu-mu` |
-| fırtına | 4 (gece) | `kopek-gecti` | `firtina-gecti` | `barinak-hasarli` · `firtinada-birlikte` |
-| kriz | 5 | `firtina-gecti` | `kriz-gecti` | `kriz-siddeti` |
-| sal | 5 | `firtina-gecti` | `sal-dunyada` | — |
-| son gece | 6 | `sal-dunyada` | `son-gece-gecti` | — |
-| ayrılık | 6 | `son-gece-gecti` | `oyun-bitti` | `kim-gitti` |
+<!-- ZINCIR:BASLA — bu tablo betik/veri/sahneler.gd'den ÜRETİLİR.
+     Elle değiştirme; testler/zincir.gd eşitliği denetler. -->
+| Sahne | En erken gün | Önkoşul (koşulsuz) | Bıraktığı koşulsuz iz | Koşullu izler | Cutscene |
+|---|---|---|---|---|---|
+| uyanis | 1 | — | `oyun-basladi` | `ilk-gece-yalniz` | **evet** |
+| ates | 2 | `oyun-basladi` | `ates-sahnesi-gecti` | `ates-yakildi` · `defter-alindi` · `balik-paylasildi` | — |
+| barinak | 3 | `ates-sahnesi-gecti` | `barinak-kuruldu` | `barinak-kim-tuttu` | — |
+| kopek | 3 | `barinak-kuruldu` | `kopek-gecti` | `yara-kimde` · `araya-girdi` · `denedi-yetisemedi` | — |
+| kim-gidecek | 4 | `kopek-gecti` | `ayrilik-gecti` | `uzaga-giden` · `malzeme-getirildi` · `soz-tutuldu` · `nobet-kimde` | — |
+| firtina | 4 | `ayrilik-gecti` | `firtina-gecti` | `barinak-hasarli` · `firtinada-birlikte` | **evet** |
+| kriz | 5 | `firtina-gecti` | `kriz-gecti` | `kriz-siddeti` · `su-verildi` · `yiyecek-verildi` · `gece-yaninda-kalindi` | — |
+| sal | 5 | `firtina-gecti` | `sal-dunyada` | `sal-cekildi` | — |
+| son-gece | 5 | `sal-dunyada` | `son-gece-gecti` | `yanindaydi` · `yalniz-gecti` | — |
+| ayrilik | 6 | `son-gece-gecti` | `oyun-bitti` | `kim-gitti` | **evet** |
+<!-- ZINCIR:BITIR -->
 
-**Dokuz sahne, üç tam cutscene** (kontrolün alındığı): uyanış · fırtınanın
+**On sahne, üç tam cutscene** (kontrolün alındığı): uyanış · fırtınanın
 uyanma anı · kapanış (ayrılık sahnesinin sonunda, seçimden SONRA).
 Cutscene sayısı **kilitlidir** (K-055/D2): dördüncüsü bu sürümde eklenmez.
 
@@ -185,6 +189,7 @@ Kısa ve sert bir açılış; oyun 2. günde normal uzunluğuna kavuşur.
   - Altında oturulacak kadar yer açılır. **Üstü hâlâ açıktır.** Yağmurda
     dayanıp dayanmayacağı belli değildir.
   - *Koşulsuz iz:* `barinak-kuruldu`.
+  - **Deftere:** o gece, barınağın altında, kurduğunuz şeyi çizersin.
   > **Bu eksiklik KASITLIDIR** (kullanıcı kararı). 4. günün fırtınası böylece
   > gökten inen yeni bir felaket değil, **3. günde fark edilen bir zayıflığın
   > sınanması** olur. Sebep–sonuç hiçbir şey anlatmadan kurulur.
@@ -216,11 +221,18 @@ Kısa ve sert bir açılış; oyun 2. günde normal uzunluğuna kavuşur.
   - *Koşulsuz iz:* `kopek-gecti` — ne olursa olsun düşer, biri her hâlükârda
     yaralanır (zincir bu yüzden kırılmaz).
     *Koşullu:* `yara-kimde`, `araya-girdi`, `denedi-yetisemedi`.
+  - **Deftere:** *"Gece bir şey geldi. Ateşin dışında durdu."*
 - **Sonrası:** ada yeniden sessizleşir. Barınağın gevşek paneli rüzgârda arada
   bir kayaya vurur. **Biriniz uyurken diğeriniz ateşi besler ve ışığın bittiği
   yeri izler.**
 
 **Gün 4 · Kim gidecek ve fırtına.** *(yazılmış metin — 2026-09-24)*
+
+> **YARA SÜRESİ (denetimde bulundu):** köpek yarası **iki gün** sürer —
+> 4. gün ağır, 5. gün belirgin biçimde hafifler, 6. günde iz kalır ama engel
+> olmaz. Sebep: 5. günün ağırlığı hastalıktan gelmeli, üst üste binen iki
+> engelden değil. Yaralı olan SEN isen 5. günün su taşıma döngüsü zaten
+> yeterince zordur.
 
 - **Sabah yara görünür.** Köpek seni ısırdıysa kolunu kullanırken duraksarsın,
   yükü öteki ele alırsın. O yaralandıysa barınaktan kalkması uzun sürer,
@@ -285,6 +297,7 @@ Kısa ve sert bir açılış; oyun 2. günde normal uzunluğuna kavuşur.
 
   - *Koşulsuz iz:* `firtina-gecti`.
     *Koşullu:* `barinak-hasarli`, `firtinada-birlikte`.
+  - **Deftere:** *"Fırtına geceyi böldü."*
 - **Sabaha karşı** rüzgâr diner. Ateşin yerinde ıslak kül vardır. Barınağın
   üstü açılmış, kıyıdan gelen yosunlar açıklığa kadar sürüklenmiştir.
   > **Bunlar, o gece nerede olduğunuzdan ve ne yaptığınızdan BAĞIMSIZ olarak
@@ -341,6 +354,8 @@ Kısa ve sert bir açılış; oyun 2. günde normal uzunluğuna kavuşur.
     başını kaldırabilecek durumdaysa turuncu şekli görebilir — **fakat
     göstermez ve bakışını orada tutmaz.**
   - *Koşulsuz iz:* `sal-dunyada`. *Koşullu:* `sal-cekildi`.
+  - **Deftere:** *"Kıyıda bir sal var. Tek kişilik."* — ve çizime kayalık
+    sahanlık eklenir.
 - **Akşam:** ateş ancak sen odun getirdiysen yanar. Kabın dolu olması da senin
   döndüğün anlamına gelir. Yiyecek ile su verdiysen bedeni biraz gevşer;
   yalnızca birini verdiysen bu değişim kısa sürer.
@@ -414,6 +429,24 @@ Kısa ve sert bir açılış; oyun 2. günde normal uzunluğuna kavuşur.
 - **Güneş battığında kamera kıyıdadır. Kurtuluş görüntüsü, kararların özeti ya
   da doğru seçimi açıklayan bir cümle GELMEZ. Ada birkaç saniye daha görünür.
   Oyun biter.**
+
+## 3.1 Defter — altı güne dağılımı
+
+Defter 2. gün bulunur ve **her sahnenin koşulsuz izi düştüğünde** karakter ona
+bir satır ekler. Oyuncu bu yazma anını görür (kontrol kendisindedir) ama
+okumak zorunda değildir.
+
+| Gün | Girdi |
+|---|---|
+| 2 | *"Uyandım. Bir kişi daha var."* (geriye dönük) · *"Çakmaktaşını bana uzattı."* · derenin ve kayalık kıyının çizimi |
+| 3 | Barınağın çizimi · *"Gece bir şey geldi. Ateşin dışında durdu."* |
+| 4 | *"Yakındaki her şeyi topladık."* · *"Fırtına geceyi böldü."* |
+| 5 | *"Sabah kalkmadı."* · *"Kıyıda bir sal var. Tek kişilik."* |
+| 6 | — **hiçbir şey yazılmaz.** Son gün defter açılmaz |
+
+> **Altıncı günün boşluğu kasıtlıdır:** o günü yazacak kimse kalmayabilir, ve
+> yazılsaydı oyun kendi sonunu yorumlamış olurdu. Defterin sustuğu tek gün,
+> oyunun en çok şey söylediği gündür.
 
 ## 4. Ölüm ve başarısızlık
 

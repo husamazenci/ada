@@ -196,11 +196,11 @@ sahnedeki insan farklı.
 | Gün | Kimliği | Ne olur |
 |---|---|---|
 | **1** | Uyanış *(~7 dk)* | Gün batımında kendine gelirsin. Enkazın kapısı sıkışmış, açamazsın. Arkandan biri gelir — konuşmaz, tuhaf biçimde sakindir. Eliyle çağırır, odun toplar, yakmayı dener; yakacak bir şey yoktur. Soğukta uyuyakalırsın |
-| **2** | Ateş ve yer | Kapıyı birlikte açarsınız. İçeride ateş başlatıcısı, bir kap, boş bir defter. Dere ve açıklık bulunur; akşam ilk ateş yanar |
-| **3** | Ayrılık ve köpek | Yakın kaynak biter, birinin uzağa gitmesi gerekir. Gece köpek ışığın kenarına gelir |
-| **4** | Yaralı gün ve fırtına | Yaralı olan yavaşlar, diğeri iki kişilik çalışır. Gece fırtına; barınak yetmez |
-| **5** | Çöküş ve sal | Fırtınadan sonra hastalanır, kalkmaz. Aynı gün tek kişilik sal kıyıya vurur |
-| **6** | Seçim | Gelgit sabahı. Sal bugün gider — biriyle ya da boş |
+| **2** | Ateş ve ilk paylaşım | Kapıyı birlikte açarsınız. İçeride ateş başlatıcısı, bir kap, boş bir defter. Dere ve açıklık bulunur; akşam ilk ateş yanar. Bir balık yakalarsınız — büyük parçayı ona verdiğinde kendi payından bir lokma ayırıp önüne bırakır |
+| **3** | Barınak ve köpek | Kayanın arkasına barınak kurulur ama **üstü açık kalır.** Gece yiyeceğin kokusuna bir köpek gelir. Araya girersen sen yaralanırsın; girmezsen o yaralanır ve yiyecek gider |
+| **4** | Kim gidecek | Yaralı olan yavaştır. Enkazın çöken bölümü açılır; çatı malzemesi oradadır ve yol uzundur. Biriniz gitmeli. Gece fırtına, dün açık bırakılan çatıyı sınar |
+| **5** | Çöküş ve sal | Fırtınadan sonra kalkamaz. Tek kapla su taşırsın; her gidiş onu yalnız bırakır. Aynı gün kıyıya tek kişilik bir sal vurur. Gece ateş başında son kez yan yanasınız |
+| **6** | Seçim | Şafakta ya uyanır, ya uyanmaz, ya da orada değildir. Gelgit gün boyu yükselir. Batımda sal gider — biriyle ya da boş |
 
 Oyuncu bir sahneye gelmezse sahne **sensiz** olur; izi yine dünyada kalır ve
 hikâye ilerler. Hiçbir şey yapmayan bir oyuncuda bile oyun sonuna varır — ama

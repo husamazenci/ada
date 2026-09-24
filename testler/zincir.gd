@@ -47,6 +47,29 @@ func _initialize() -> void:
 	if S.cutscene_sayisi() != 3:
 		hata.append("tam cutscene sayısı %d — KİLİTLİ olan 3 (K-055/D2)" % S.cutscene_sayisi())
 
+	# BELGE ↔ KOD EŞİTLİĞİ. Zinciri kodda değiştirip belgedeki tabloyu
+	# güncellemeyi unutmuştum: tablo hâlâ "dokuz sahne" diyordu, barinak yoktu,
+	# günler eskiydi. Tablo artık koddan ÜRETİLİYOR ve eşitliği burada
+	# denetleniyor — aynı kayma bir daha sessiz kalamaz.
+	var belge := FileAccess.open("res://belge/HIKAYE-OMURGASI.md", FileAccess.READ)
+	if belge == null:
+		printerr("ÇALIŞTIRILAMADI: omurga belgesi okunamadı"); quit(2); return
+	var metin := belge.get_as_text()
+	belge.close()
+	var bas := metin.find("<!-- ZINCIR:BASLA")
+	var son := metin.find("<!-- ZINCIR:BITIR -->")
+	if bas < 0 or son < 0:
+		printerr("ÇALIŞTIRILAMADI: belgede ZINCIR işaretleri yok"); quit(2); return
+	var tablo := metin.substr(bas, son - bas)
+	for sn in S.OMURGA:
+		var satir := "| %s | %d |" % [sn["ad"], int(sn["gun"])]
+		if not tablo.contains(satir):
+			hata.append("BELGE KAYMASI: '%s' sahnesi %d. günde ama tabloda öyle yazmıyor" % [sn["ad"], int(sn["gun"])])
+		if not tablo.contains("`%s`" % sn["iz"]):
+			hata.append("BELGE KAYMASI: '%s' izi tabloda yok" % sn["iz"])
+	if tablo.contains("Dokuz sahne"):
+		hata.append("BELGE KAYMASI: tablo hâlâ 'Dokuz sahne' diyor")
+
 	print("")
 	if hata.is_empty():
 		print("GEÇTİ — zincir kırılmıyor, cutscene sayısı kilitli.")

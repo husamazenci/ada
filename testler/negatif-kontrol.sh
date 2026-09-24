@@ -159,8 +159,11 @@ fi
 if sabotaj betik/veri/sahneler.gd 's/"ad": "ayrilik",     "gun": 6/"ad": "ayrilik",     "gun": 9/'; then
 	dene zincir "sabotaj: son sahne takvim dışına itildi" 1; geri betik/veri/sahneler.gd
 fi
-if sabotaj betik/veri/sahneler.gd 's/"kosullu": \["kriz-siddeti"\], "cutscene": false/"kosullu": ["kriz-siddeti"], "cutscene": true/'; then
+if sabotaj betik/veri/sahneler.gd '/"ad": "barinak"/,+1s/"cutscene": false/"cutscene": true/'; then
 	dene zincir "sabotaj: dördüncü cutscene eklendi (kilit D2)" 1; geri betik/veri/sahneler.gd
+fi
+if sabotaj belge/HIKAYE-OMURGASI.md 's/| barinak | 3 |/| barinak | 9 |/'; then
+	dene zincir "sabotaj: belge tablosu koddan kaydı" 1; geri belge/HIKAYE-OMURGASI.md
 fi
 dene zincir "geri yüklendi" 0
 
