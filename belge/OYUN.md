@@ -195,7 +195,7 @@ sahnedeki insan farklı.
 
 | Gün | Kimliği | Ne olur |
 |---|---|---|
-| **1** | Uyanış | Kumsalda uyanırsın; enkaz orada ama **kapısı sıkışık**. Gece ateşsiz ve uykusuz geçer — karanlıkta odun toplarsınız |
+| **1** | Uyanış *(~7 dk)* | Gün batımında kendine gelirsin. Enkazın kapısı sıkışmış, açamazsın. Arkandan biri gelir — konuşmaz, tuhaf biçimde sakindir. Eliyle çağırır, odun toplar, yakmayı dener; yakacak bir şey yoktur. Soğukta uyuyakalırsın |
 | **2** | Ateş ve yer | Kapıyı birlikte açarsınız. İçeride ateş başlatıcısı, bir kap, boş bir defter. Dere ve açıklık bulunur; akşam ilk ateş yanar |
 | **3** | Ayrılık ve köpek | Yakın kaynak biter, birinin uzağa gitmesi gerekir. Gece köpek ışığın kenarına gelir |
 | **4** | Yaralı gün ve fırtına | Yaralı olan yavaşlar, diğeri iki kişilik çalışır. Gece fırtına; barınak yetmez |

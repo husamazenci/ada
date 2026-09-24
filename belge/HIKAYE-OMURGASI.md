@@ -88,19 +88,39 @@ Her gün ~20 dk: gündüz ~13, alacakaranlık ~2, gece ~5.
 
 ### Perde I — Tanışma
 
-**Gün 1 · Uyanış.** *(kaza günü — kısa)*
-- **[SAHNE 1 · Uyanış]** *(cutscene 1)* Kumsalda yüzükoyun. Kontrol ALINIR:
-  nefes, dalga, hemen yanında enkaz. 30–40 sn, sonra kontrol sende.
-- **Enkaz kumsaldadır** ama kapısı sıkışmıştır; bugün girilemez. Dışarıdan
-  dolaşılır. Arkadaş enkazın öbür ucunda oturuyor — sana bakıyor, konuşmuyor.
-  Yanına gitmek zorunda değilsin.
-- **Gece: ateş YOK ve uyunmaz.** Karanlıkta odun toplanır — yan yana ya da
-  ayrı. Ateş başlatıcısı kapalı kapının ardındadır; bu gecenin ateşsiz
-  olmasının SEBEBİ budur, tasarım kararı değil dünyanın hâli.
-  *Koşullu iz:* `ilk-gece-yalniz`.
+**Gün 1 · Uyanış.** *(yazılmış metin — 2026-09-24)*
+
+**Gün batımında başlar: oynanan kısım ~7 dakika** (alacakaranlık + gece).
+Kısa ve sert bir açılış; oyun 2. günde normal uzunluğuna kavuşur.
+
+- **Önce:** okyanusun ortasında uçak arızalanır ve küçük bir kara parçasına
+  düşer. Baygınsın.
+- **[SAHNE 1 · Uyanış]** *(cutscene 1)* Tam gün batımı. Enkazdan **biraz
+  uzakta** kendine gelirsin; enkazı görürsün. Nerede olduğunu bilmiyorsun.
+  Çevreye gergin ve stresli bir hava hâkim. 30–40 sn, sonra kontrol sende.
+- **Enkaz:** uçak ortadan ikiye ayrılmış, her yeri kırık. İçeri geçişi olan
+  bir kapı var ama **çarpışmadan sıkışmış**; içerisi görünmüyor. Elinle
+  zorlarsın, açılmaz. *Bugün girilemez — ateş başlatıcısı o kapının ardındadır
+  ve bu gecenin ateşsiz olmasının SEBEBİ budur.*
+- **Arkadaşın gelişi.** Sen kapıyla boğuşurken **arkandan biri gelir.** Hiç
+  konuşmaz ama **tuhaf biçimde sakindir** — çevredeki gerginliğin tam tersi.
+  İletişim kurmaz, yalnızca sana bakar. Yanına gider, konuşmayı denersin;
+  cevap vermez.
+  *Karakterini kuran şey bu sakinlik: herkesin panikleyeceği anda o
+  paniklemiyor. Kim olduğu değil, NE olduğu buradan okunmaya başlar.*
+- **Öncülük.** Bir anda döner, yürümeye başlar ve **eliyle gelmeni işaret
+  eder.** Peşinden gidersin. Odun toplamaya başlar; bu sana ne yapılacağını
+  gösterir ve yardım edersin.
+  *K-041'in çekirdeği burada: yönlendirme ekrandan değil ondan geliyor.*
+- **Başarısız ateş.** Odunları kamp ateşi biçiminde dizer ve yakmaya çalışır.
+  **Yakacak hiçbir şey yoktur.** Deneme boşa gider.
+- **Gece:** soğukta uyuyakalırsın. *Koşullu iz:* `ilk-gece-yalniz`
+  (ateşin/odun yığınının yanında mı, ayrı mı uyuduğun).
+- *Koşulsuz iz:* `oyun-basladi`.
 
 **Gün 2 · Ateş ve yer.** *(yazılmış metin — 2026-09-24)*
-- Sabah metalin taşa vurma sesiyle uyanırsın: **o çoktan çalışıyor.** Gövdeden
+- Sabah **metalin taşa vurma sesiyle** uyanırsın: **o çoktan çalışıyor.**
+  Dün akşam açılmayan kapıya, bulduğu bir aletle geri dönmüştür. Gövdeden
   kopmuş dar bir metal parçayı kapının altına sokmaya çalışır. Seni görünce
   geri çekilip parçayı sana uzatır.
 - **[SAHNE 2 · Ateş]** Metali sen yerleştirirsin, o eğilmiş kenarı tutar.
