@@ -2422,3 +2422,88 @@ giderken senin gitmen" diye tanımlıyor. Bağlanmadı — ve sebebi ilkesel:
 **köpek henüz yok.** Karanlığa gitmenin bir riski olmadan bu jest BEDELSİZ
 olur, ve bedelsiz jestin güveni yükseltmesi §2'nin doğrudan ihlalidir. Köpek
 gelince bağlanacak.
+
+
+---
+
+## K-071 · Yaban köpeği: tehdit ölçülebilir hâle geldi
+
+**Tarih:** 2026-09-25. Simülasyon katmanı; görsel varlık henüz yok.
+
+Dilimin tek tehdidi. Kurt değil **yabanileşmiş köpek** (kullanıcı kararı):
+okyanus ortasındaki küçük bir adada kurdun varlığı ayrıca açıklama isterdi,
+ve saldırının sebebi de açık olmalı — yiyecek.
+
+### Uyarısız saldırı yok
+
+Sıra sabit: **uluma → ışığın sınırında siluet → saldırı.** Ölçüldü:
+`uluma@0.0000 · kenarda@0.0156 · saldiri@0.0365` — yani **0.0365 gün ≈ 44
+saniyelik** bir hazırlık penceresi. Bu sıra kasıtlı: bir tehdit ancak
+görülebiliyorsa hazırlık anlamlı olur, ve hazırlığın anlamı yoksa oyunun
+reddettiği "kötü şans ölümü" doğar (K-049).
+
+### Ateş caydırır — yakıt sisteminin karşılığı burada
+
+`KOPEK_CAYDIRAN_YAKIT` **bağımsız sayı değil**, `ATES_YAKIT_ESIGI`'nin
+türevi (× 0.5). Ayrı yazılsaydı er geç kayardı ve şu olurdu: oyuncu ocağı
+eşikte tutar, besleme ile denetim arasındaki kısacık boşlukta saldırı
+tetiklenir, ceza adaletsiz olur. Ölçüldü: **ateşe bakan oyuncu 6 günde
+2 kez köpeği gördü, 2 kez caydırdı, 0 saldırı yedi.**
+
+### Üç sonuç, ve hiçbiri "doğru seçim" değil
+
+| | Kim yaralanır | Güven |
+|---|---|---|
+| Araya girdin (yakın) | **sen** | **yükselir** (bedelli jest) |
+| Denedin, yetişemedin | o | **değişmez** (K-064) |
+| Girmedin | o + bir yiyecek gider | **düşer** + 0.20 ihmal |
+
+Bu, güveni yükseltmenin **üçüncü yolunu** açıyor: "onu tehlikeden çıkarmak"
+(§2). Bedeli gerçek — yaralıyken bir kez daha araya girersen ölürsün.
+
+**Yeni tuş eklenmedi.** Saldırı anında **F** ("ona") araya girmek demek.
+Oyunun ahlaki ekseni zaten "kendine mi, ona mı" ikiliğinde duruyor; saldırı
+anı o ekseni en keskin hâline getiriyor, yeni bir eksen açmıyor.
+
+### Testimdeki dört kusur — hepsi aynı aileden
+
+Negatif kontroller dört sabotajı yakalamadı; dördü de "**ölçtüğümü sandığım
+şey ölçmek istediğim şey değildi**" (§5.8):
+
+1. **"Arkadaş köpekten ölebilsin" sabotajı kaçtı.** Testim
+   `arkadas.yarala()`'yı doğrudan çağırıyordu, yani `Dunya`'nın çözümleme
+   fonksiyonu hiç koşmuyordu. Düzelttim — ve **yine kaçtı**, çünkü her
+   saldırıyı ayrı bir dünyada koşturuyordum ve arkadaş hiçbir zaman İKİNCİ
+   kez yaralanmıyordu. Ölüm yolu tam da orada saklıydı. Artık aynı dünyada,
+   üst üste gecelerde, yarası iyileşmeden sınanıyor.
+   *(Bu hatayı bu projede üçüncü kez yaptım: kural doğru, ama kuralın
+   dünyaya BAĞLI OLDUĞU doğrulanmamış.)*
+
+2. **"Denedi/çekildi ayrımını boz" sabotajı kaçtı.** Senaryoda mesafe 20 m
+   idi; gece görüşü 5.4 m'ye daraldığı için arkadaş zaten hiçbir şey
+   görmüyordu ve `tehlikede_birakti` ayrımı hiç çalışmıyordu. Test ayrımı
+   değil ALGIYI ölçüyordu. Mesafe 4.5 m'ye çekildi: kurtarma menzilinin
+   (3 m) dışında, görüş menzilinin içinde.
+
+3. **"Uyarıyı kaldır" sabotajı kaçtı.** Uyarı süresini SABİTLERİ TOPLAYARAK
+   ölçüyordum; ulumayı sıfırlayan sabotaj "uluma" olayını yine üretiyor
+   (duruma girilirken), yalnızca hemen ardından "kenarda" geliyor. Artık
+   süre olayların ZAMAN DAMGASINDAN ölçülüyor.
+
+4. **"Yara iyileşmesin" sabotajı kaçtı.** Döngü sınırım
+   `YARA_SURESI_GUN + 0.1` idi — sabiti 99'a çıkaran sabotaj sınırı da 99'a
+   çıkarıyordu. **Ölçüm aracı ölçtüğü şeyin sayısını kendi tutmamalı;**
+   sınır artık mutlak (3 gün).
+
+### Bir yan bulgu: ateş testine köpek bulaştı
+
+Ateş testinin "bir gecede bir kez ihmal" ölçümü 0.100 yerine **0.300**
+göstermeye başladı. Sebep: senaryo 3. gecedeydi, ateşsiz gece köpeği de
+çağırıyordu ve o da 0.20 ihmal yazıyordu. Senaryolar 2. geceye alındı
+(§5.7: bir denemede yalnızca bir şey değişir).
+
+### Bekleyen
+
+Görsel varlık yok — köpek şu an yalnızca simülasyonda. Quaternius
+**Ultimate Animated Animal Pack** (CC0, 12 hayvan, 12+ animasyon) aday;
+köpek/kurt içeriği indirilince doğrulanacak.

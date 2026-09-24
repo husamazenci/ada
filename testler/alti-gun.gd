@@ -81,8 +81,20 @@ func _kos(tur: String) -> Dictionary:
 
 func _politika(w, tur: String, adim_no: int) -> String:
 	# Üç oyuncu tipi. Hepsi hayatta kalmaya çalışır; fark YALNIZCA fırsat anında.
+	#
+	# ÜÇÜ DE ATEŞE BAKAR ve bu kasıtlı. Ateş bir ahlak seçimi değil, hayatta
+	# kalma işi — köpek de ateşle caydırıldığı için (K-071) bakmayan oyuncu
+	# her gece saldırıya uğrar ve ölçtüğümüz şey yiyecek ekseni olmaktan
+	# çıkar. Köpek kendi testinde ölçülüyor (testler/kopek.gd); burada tek
+	# değişken paylaşım kalsın (§5.7).
+	if not w.ates_yaniyor and w.odun > 0 and w.gun >= A.ATES_ILK_GUN:
+		return "ates_yak"
+	if w.ates_yaniyor and w.ates_yakit < A.ATES_YAKIT_ESIGI and w.odun > 0:
+		return "yakit_at"
 	if w.gece_mi():
 		return "bekle"
+	if w.odun < A.GUNLUK_ODUN_BULUNUR:
+		return "odun_topla"
 	if not w.kap_dolu:
 		return "doldur"
 

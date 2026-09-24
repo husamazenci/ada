@@ -54,8 +54,12 @@ func _initialize() -> void:
 		hata.append("gündüz yakıt tükendi (%.3f) — gece bütçesi kurulamaz" % g.ates_yakit)
 
 	# ---- 3 · GECE TÜKETİR VE SÖNER, İHMAL BİR KEZ YAZILIR ----
+	# 2. GECEDE ölçülüyor, 3'te değil: köpek 3. geceden itibaren geliyor
+	# (K-071) ve ateşsiz gece onu da çağırıyor, o da 0.20 ihmal yazıyor.
+	# 3. gecede ölçseydim 0.10 yerine 0.30 görürdüm ve "mandal bozuk"
+	# derdim — oysa bozuk olan ölçüm olurdu (§5.7: tek değişken değiştir).
 	var n = D.new()
-	n.gun = 3
+	n.gun = 2
 	n.t = A.ALACAKARANLIK_BITIS + 0.001
 	n.ates_yaniyor = true
 	n.ates_yakit = 0.20
@@ -79,7 +83,7 @@ func _initialize() -> void:
 	# gerçekten gerektiği tek an, oyuncunun ateşi YENİDEN YAKIP bir daha
 	# söndürmesi. Kural: bir gece bir kez.
 	var iki = D.new()
-	iki.gun = 3
+	iki.gun = 2
 	iki.t = A.ALACAKARANLIK_BITIS + 0.001
 	iki.ates_yaniyor = true
 	iki.ates_yakit = 0.05
@@ -150,7 +154,7 @@ func _initialize() -> void:
 
 	# ---- 7 · GECE EN AZ İKİ BESLEME İSTER ----
 	var say = D.new()
-	say.gun = 3
+	say.gun = 2
 	say.t = A.ALACAKARANLIK_BITIS + 0.001
 	say.ates_yaniyor = true
 	say.ates_yakit = A.ATES_YAKIT_TAVANI
@@ -186,7 +190,7 @@ func _initialize() -> void:
 
 func _arkadas_besledi_mi(guven: float) -> bool:
 	var w = D.new()
-	w.gun = 3
+	w.gun = 2
 	w.t = A.ALACAKARANLIK_BITIS + 0.001
 	w.ates_yaniyor = true
 	w.ates_yakit = 0.20        # eşiğin altında

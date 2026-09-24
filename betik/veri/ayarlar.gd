@@ -74,6 +74,32 @@ const GUNLUK_ODUN_BULUNUR := 4      # gece 1.25 ister (3 kütük); 4 bulunur
 # İlk gece ateşsiz geçer (K-063): ateş 2. günün hediyesi değil, bedeli.
 const ATES_ILK_GUN := 2
 
+# --- Yaban köpeği (K-071) ---
+# Kurt DEĞİL, yabanileşmiş köpek (kullanıcı kararı): okyanus ortasındaki küçük
+# bir adada kurdun varlığı ayrıca açıklama isterdi. Saldırının sebebi de açık:
+# yiyecek.
+const KOPEK_ILK_GUN := 3              # yazılmış sahne 3. gecede
+
+# UYARISIZ SALDIRI YOK (tasarım §3. gün): uluma → arkadaşın tepkisi → ışığın
+# sınırındaki siluet. Oyuncunun hazırlanmak için üç fırsatı var.
+const KOPEK_ULUMA_SURESI := 0.015     # gün kesri; 20 dk'lık günde ~18 sn
+const KOPEK_KENAR_SURESI := 0.020     # ışığın sınırında durur ve bakar
+const KOPEK_SALDIRI_PENCERESI := 0.005  # araya girmek için kalan an (~6 sn)
+
+# ATEŞ CAYDIRIR — ve bu sayı ATEŞ EŞİĞİNDEN TÜREV, bağımsız değil (K-060'ın
+# dersi). Ateşe bakan oyuncu ocağı ATES_YAKIT_ESIGI'nin altına düşürmez;
+# caydırma eşiği ondan belirgin biçimde AŞAĞIDA olmazsa, besleme ile denetim
+# arasındaki o kısacık boşlukta saldırı tetiklenir ve ceza adaletsiz olur.
+const KOPEK_CAYDIRAN_YAKIT := ATES_YAKIT_ESIGI * 0.5
+
+# Araya girebilmek için bu kadar yakın olmak gerekir. Uzaktayken basmak
+# "denedi ama yetişemedi"dir ve ihanet SAYILMAZ (K-064).
+const KURTARMA_MESAFESI_M := 3.0
+
+# Köpek yarası iki gün sürer (tasarım denetimi): 4. gün ağır, 5. gün hafifler.
+# Sebep: 5. günün ağırlığı hastalıktan gelmeli, üst üste binen iki engelden değil.
+const YARA_SURESI_GUN := 2.0
+
 # Bir porsiyon ne kadar kapatır
 const YIYECEK_DOYURUR := 0.45
 const SU_KANDIRIR := 0.60

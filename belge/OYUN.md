@@ -66,7 +66,7 @@ Oyunun bütün ahlaki seçimi tek tuş aralığına iner.
 | Tuş | Ne yapar |
 |---|---|
 | **E** | Bağlama göre etkileş. Elinde bir şey varsa **kendine kullan** (ye, iç). Dünyada: al, kabı doldur, ateşe yakıt at, barınağı kur, salı it |
-| **F** | Elindekini **ona ver** |
+| **F** | Elindekini **ona ver** — köpek saldırırken **araya gir** |
 | **Q** | Çağır |
 | **Shift** | Koş |
 
@@ -93,6 +93,31 @@ kenarına gelir — bandını terk etmez, yoksa mesafe güveni okumayı bırakı
 
 Yüksek güven + dip moral özel bir an: gelmeye karar eder, çöken beden
 kalkamaz.
+
+### F: saldırı anında ekseni en keskin hâli *(K-071)*
+
+Gece ateş zayıflarsa yiyeceğin kokusuna bir köpek gelir. **Uyarısız gelmez:**
+önce uzaktan uluma, sonra ışığın sınırında bir siluet, sonra saldırı —
+ölçüldü: hazırlanmak için **44 saniyelik** bir pencere var.
+
+**Ateş caydırır.** Ocağı besleyen oyuncu kenarda duran bir gölge görür ve
+köpek çekilir; ölçüldü: ateşe bakan oyuncu 6 günde **hiç saldırı yemiyor.**
+Ateşin oyundaki karşılığı burada somutlaşıyor.
+
+Saldırı anında F yeni bir anlam kazanır — ve yeni bir tuş gerekmez, çünkü
+oyunun ahlaki ekseni zaten "kendine mi, ona mı" ikiliğinde duruyor:
+
+| | Ne olur | Bedeli |
+|---|---|---|
+| **Araya girersen** (yakınsan) | Dişleri sana geçer, o sağlam kalır | **Sen yaralanırsın.** Güven yükselir — "onu tehlikeden çıkarmak" bedelli jesttir |
+| **Denersen ama yetişemezsen** | O yaralanır | **Güven düşmez.** Denemek çekilmekle aynı şey değildir (K-064) |
+| **Girmezsen** | O yaralanır, köpek bir yiyecek kapıp kaçar | Güven düşer, ihmal yazılır |
+
+Araya girmek otomatik "doğru seçim" **değildir**: yaralıyken bir kez daha
+araya girersen ölürsün. Yara iki gün sürer.
+
+**Arkadaş köpekten ÖLMEZ.** Hayvan onu yaralar, yıpratır, korkutur — ama
+öldürmez. Ölümü yalnızca senin birikmiş davranışından gelir.
 
 ### İki ihtiyaç, birbirinin tersi
 

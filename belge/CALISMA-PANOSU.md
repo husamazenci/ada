@@ -96,7 +96,7 @@ kapalı. Bağlanacaklar ve önkoşulları:
 | Kaynak | Önkoşul | Şimdi yapılabilir mi |
 |---|---|---|
 | Çökmüş/yaralıyken geceyi yalnız bırakma | `mesafe_m` | **BAĞLANDI** |
-| Tehlikede bırakma | köpek | **BAĞLANDI** (denedi/denemedi ayrımıyla) |
+| Tehlikede bırakma | köpek | **BAĞLANDI** — köpek geldi (K-071) |
 | Geceleyin ateşi söndürme | yakıt sistemi | **BAĞLANDI** (K-070) |
 | Elinde varken vermeme | — | **BAĞLANDI** |
 | Sözü tutmama | "bekle" mekaniği | hayır — tek kalan |
@@ -141,9 +141,14 @@ gerekiyor (`varlik/ses/` altında 48 CC0 ses var, aralarında yok).
   çıktı, retarget gerekmedi. 11 test, 82 negatif kontrol.
 - **Ateş ve yakıt bağlandı (K-070)** — ihmalin 5 kaynağından 4'ü artık dünyada.
   12 test, 91 negatif kontrol.
-- Sıradaki: **köpek** (gece tehdidi). İki şeyi birden açıyor: `Push`/kaçış
-  gerilimi ve "riskli işi onun yerine üstlenmek" güven yolu — ikincisi köpek
-  olmadan BEDELSİZ jest olurdu, o yüzden bekliyor.
+- **Köpek simülasyonu kuruldu (K-071)** — uyarı → siluet → saldırı; ateş
+  caydırıyor; üç sonuç (girdin / denedin / girmedin) ayrışıyor. Güveni
+  yükseltmenin ÜÇÜNCÜ yolu ("onu tehlikeden çıkarmak") açıldı.
+  13 test, 102 negatif kontrol.
+- Sıradaki: köpeğin görsel varlığı (Quaternius Ultimate Animated Animal Pack,
+  CC0 — kullanıcı indirecek) ve "bekle" sözü → `IHMAL_SOZ_TUTMAMA`
+  (son ihmal kaynağı; K-063'ün kapalı söz türü listesi yüzünden önce bir
+  tasarım kararı gerekiyor).
 
 ---
 

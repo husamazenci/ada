@@ -28,6 +28,11 @@ func _initialize() -> void:
 	_senaryo("sıradan akış", "fedakar", func(d): return d.gun >= 3, null, hata)
 	_senaryo("oyuncu AÇ iken", "fedakar", func(d): return d.oyuncu._aclik_soylendi, null, hata)
 	_senaryo("ÇÖKÜŞ sürerken", "bencil", func(d): return d.guven._cokus_suresi_gun > 0.0, _cokus_hazirla, hata)
+	# DÖRDÜNCÜ SENARYO: köpek gecesi. Üstteki üçü 3. günün gecesine hiç
+	# ulaşmıyor, yani köpek alanları KAYIT ANINDA hep varsayılan değerinde
+	# kalıyordu — yanlış kaydetmek hiçbir şeyi değiştirmezdi. Bu dosyanın
+	# en üstündeki ders aynen tekrar etti; senaryo eklendi.
+	_senaryo("KÖPEK gecesinde", "fedakar", func(d): return d.kopek.durum != 0, _kopek_hazirla, hata)
 
 	# Kipi uymayan yuva ATILMALI (eski kayıt oyunu bozmasın).
 	var d2 = D.new()
@@ -57,7 +62,7 @@ func _initialize() -> void:
 
 	print("")
 	if hata.is_empty():
-		print("GEÇTİ — üç senaryoda da kayıt eksiksiz; kip denetimi ve silme çalışıyor.")
+		print("GEÇTİ — dört senaryoda da kayıt eksiksiz; kip denetimi ve silme çalışıyor.")
 		quit(0); return
 	for h in hata:
 		printerr("BAŞARISIZ: " + h)
@@ -72,6 +77,14 @@ func _cokus_hazirla(d) -> void:
 	d.guven.ihmal_ekle(0.9)
 	for i in 200:
 		d.guven.ilerle(1.0, ADIM)
+
+func _kopek_hazirla(d) -> void:
+	# 3. günün gecesine doğrudan otur; ateş yok ki köpek caydırılmasın.
+	d.gun = 3
+	d.t = A.ALACAKARANLIK_BITIS + 0.001
+	d.ates_yaniyor = false
+	d.ates_yakit = 0.0
+	d.yiyecek = 2
 
 func _senaryo(ad: String, tur: String, kosul: Callable, hazirlik, hata: Array) -> void:
 	# Koşul sağlanana kadar koştur, KAYDET, temiz dünyaya yükle, ikisini de
@@ -125,6 +138,11 @@ func _esit(a, b, nerede: String, hata: Array) -> bool:
 		"odun": [a.odun, b.odun],
 		"ates_sondu": [a.ates_sondu_gece, b.ates_sondu_gece],
 		"bugun_odun": [a._bugun_odun, b._bugun_odun],
+		"kopek_durum": [a.kopek.durum, b.kopek.durum],
+		"kopek_gece": [a.kopek._bu_gece_geldi, b.kopek._bu_gece_geldi],
+		"kopek_saldiri": [a.kopek.saldiri_sayisi, b.kopek.saldiri_sayisi],
+		"o.yara": [a.oyuncu.yara_kalan_gun, b.oyuncu.yara_kalan_gun],
+		"a.yara": [a.arkadas.yara_kalan_gun, b.arkadas.yara_kalan_gun],
 	}
 	var temiz := true
 	for ad in alanlar:

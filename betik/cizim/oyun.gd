@@ -76,7 +76,14 @@ func _eylemi_al() -> String:
 func _unhandled_input(_event: InputEvent) -> void:
 	# E = KENDİNE · F = ONA. Oyunun bütün ahlaki seçimi bu iki tuş arasında.
 	if Input.is_action_just_pressed("ver"):
-		_bekleyen_eylem = "ver_su" if sim.arkadas.en_acil() == "su" else "ver_yiyecek"
+		# F = ONA. Köpek saldırırken "ona" demek ARAYA GİRMEK demektir —
+		# yeni bir tuş gerekmiyor ve gerekmemeli: oyunun ahlaki ekseni
+		# "kendine mi, ona mı" ikiliğinde duruyor (tasarım §dört tuş).
+		# Saldırı anında o eksen en keskin hâlini alıyor.
+		if sim.kopek.saldiri_penceresi_acik_mi():
+			_bekleyen_eylem = "araya_gir"
+		else:
+			_bekleyen_eylem = "ver_su" if sim.arkadas.en_acil() == "su" else "ver_yiyecek"
 	elif Input.is_action_just_pressed("cagir"):
 		# Q = SESLEN. Güvene DOKUNMAZ (K-068): ucuz jest yükseltmez, ve
 		# güveni okumanın tek yolu güvene mal olsaydı oyuncu bakmaktan

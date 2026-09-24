@@ -31,6 +31,17 @@ static func topla(d) -> Dictionary:
 		"ates_yaniyor": d.ates_yaniyor,
 		"ates_yakit": d.ates_yakit, "odun": d.odun,
 		"ates_sondu_gece": d.ates_sondu_gece,
+		# KÖPEK KAYDEDİLİR (çağrının aksine). Çağrı bir andır, köpek epizodu
+		# bir dünya olayıdır: yarım kalmış bir saldırıya dönmek doğru.
+		# "_bu_gece_geldi" özellikle şart — kaydedilmezse yükleme sonrası
+		# köpek aynı gece İKİNCİ kez gelir.
+		"kopek": {
+			"durum": d.kopek.durum, "_kalan": d.kopek._kalan,
+			"_bu_gece_geldi": d.kopek._bu_gece_geldi,
+			"gorunme": d.kopek.gorunme_sayisi, "saldiri": d.kopek.saldiri_sayisi,
+			"caydirma": d.kopek.caydirma_sayisi,
+		},
+		"_araya_girdi": d._araya_girdi, "kopek_sonucu": d.kopek_sonucu,
 		"_bugun_odun": d._bugun_odun,
 		"_ates_ihmali_bu_gece": d._ates_ihmali_bu_gece,
 		"oyuncu_atesin_isiginda": d.oyuncu_atesin_isiginda,
@@ -61,6 +72,14 @@ static func yukle(d, veri: Dictionary) -> bool:
 	d.ates_yaniyor = bool(veri["ates_yaniyor"])
 	d.ates_yakit = float(veri["ates_yakit"]); d.odun = int(veri["odun"])
 	d.ates_sondu_gece = int(veri["ates_sondu_gece"])
+	var kp: Dictionary = veri["kopek"]
+	d.kopek.durum = int(kp["durum"]); d.kopek._kalan = float(kp["_kalan"])
+	d.kopek._bu_gece_geldi = bool(kp["_bu_gece_geldi"])
+	d.kopek.gorunme_sayisi = int(kp["gorunme"])
+	d.kopek.saldiri_sayisi = int(kp["saldiri"])
+	d.kopek.caydirma_sayisi = int(kp["caydirma"])
+	d._araya_girdi = bool(veri["_araya_girdi"])
+	d.kopek_sonucu = String(veri["kopek_sonucu"])
 	d._bugun_odun = int(veri["_bugun_odun"])
 	d._ates_ihmali_bu_gece = bool(veri["_ates_ihmali_bu_gece"])
 	d.oyuncu_atesin_isiginda = bool(veri["oyuncu_atesin_isiginda"])
@@ -84,14 +103,15 @@ static func yukle(d, veri: Dictionary) -> bool:
 static func _kisi(i) -> Dictionary:
 	return {
 		"aclik": i.aclik, "susuzluk": i.susuzluk, "yorgunluk": i.yorgunluk,
-		"yarali": i.yarali, "oldu": i.oldu,
+		"yarali": i.yarali, "yara_kalan_gun": i.yara_kalan_gun, "oldu": i.oldu,
 		"_aclik_soylendi": i._aclik_soylendi, "_susuzluk_soylendi": i._susuzluk_soylendi,
 	}
 
 static func _kisi_yukle(i, v: Dictionary) -> void:
 	i.aclik = float(v["aclik"]); i.susuzluk = float(v["susuzluk"])
 	i.yorgunluk = float(v["yorgunluk"])
-	i.yarali = bool(v["yarali"]); i.oldu = bool(v["oldu"])
+	i.yarali = bool(v["yarali"]); i.yara_kalan_gun = float(v["yara_kalan_gun"])
+	i.oldu = bool(v["oldu"])
 	i._aclik_soylendi = bool(v["_aclik_soylendi"])
 	i._susuzluk_soylendi = bool(v["_susuzluk_soylendi"])
 

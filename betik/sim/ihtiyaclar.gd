@@ -10,6 +10,7 @@ var aclik := 0.15
 var susuzluk := 0.20
 var yorgunluk := 0.10
 var yarali := false
+var yara_kalan_gun := 0.0
 var oldu := false
 
 # ARKADAŞ İHTİYAÇTAN ÖLEMEZ (K-055/K-062). Değişmez kural ölümün ani
@@ -45,9 +46,24 @@ func ilerle(gun_kesri: float, uyuyor: bool) -> Array:
 		_susuzluk_soylendi = true
 		yeni.append("susuzluk")
 
+	# Yara İYİLEŞİR. Süresiz olsaydı 3. gecedeki bir ısırık oyunun kalanını
+	# tamamen belirlerdi; tasarım iki gün diyor (4. gün ağır, 5. gün hafif).
+	if yara_kalan_gun > 0.0:
+		yara_kalan_gun = maxf(yara_kalan_gun - gun_kesri, 0.0)
+		if yara_kalan_gun <= 0.0:
+			yarali = false
+
 	if ihtiyactan_olebilir and (aclik >= A.ESIK_OLUM or susuzluk >= A.ESIK_OLUM):
 		oldu = true
 	return yeni
+
+func yarala() -> bool:
+	# Dönüş: bu YARALIYKEN gelen ikinci yara mı (ölümcül olabilir).
+	# "İlk saldırı yaralar, yaralıyken ikincisi öldürebilir" (tasarım §dilim).
+	var ikinci := yarali
+	yarali = true
+	yara_kalan_gun = A.YARA_SURESI_GUN
+	return ikinci
 
 func ye() -> void:
 	aclik = maxf(aclik - A.YIYECEK_DOYURUR, 0.0)

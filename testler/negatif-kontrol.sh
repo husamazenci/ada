@@ -26,6 +26,7 @@ kos() {  # kos <test-adi> → çıkış kodu
 		cagri)   $GODOT --headless --path . --script res://testler/cagri.gd >/dev/null 2>&1 ;;
 		animasyon) $GODOT --headless --path . --script res://testler/animasyon.gd >/dev/null 2>&1 ;;
 		ates)    $GODOT --headless --path . --script res://testler/ates.gd >/dev/null 2>&1 ;;
+		kopek)   $GODOT --headless --path . --script res://testler/kopek.gd >/dev/null 2>&1 ;;
 	esac
 	return $?
 }
@@ -377,6 +378,48 @@ if sabotaj betik/veri/ayarlar.gd 's/^const ATES_ILK_GUN := 2$/const ATES_ILK_GUN
 	dene ates "sabotaj: ateş ilk gece yakılabiliyor" 1; geri betik/veri/ayarlar.gd
 fi
 dene ates "geri yüklendi" 0
+
+# ============ kopek (K-071) ============
+echo "negatif-kontrol · kopek"
+dene kopek "temiz kopya" 0
+
+# DEĞİŞMEZ KURAL (K-049): arkadaş tehditten ÖLMEZ.
+if sabotaj betik/sim/dunya.gd 's/^		arkadas.yarala()$/		if arkadas.yarala(): arkadas.oldu = true/'; then
+	dene kopek "sabotaj: arkadaş köpekten ölebiliyor" 1; geri betik/sim/dunya.gd
+fi
+# K-064: denemek ile çekilmek aynı şey değildir.
+if sabotaj betik/sim/dunya.gd 's/^		guven.tehlikede_birakti(gordu, true)$/		guven.tehlikede_birakti(gordu, false)/'; then
+	dene kopek "sabotaj: denedi ama yetişemedi ihanet sayılıyor" 1; geri betik/sim/dunya.gd
+fi
+# Uyarısız saldırı: hazırlık anlamsızlaşır, "kötü şans ölümü" doğar.
+if sabotaj betik/veri/ayarlar.gd 's/^const KOPEK_ULUMA_SURESI := 0\.015 .*$/const KOPEK_ULUMA_SURESI := 0.0/'; then
+	dene kopek "sabotaj: uluma uyarısı kaldırıldı" 1; geri betik/veri/ayarlar.gd
+fi
+# Ateş caydırmazsa hazırlığın hiçbir karşılığı kalmaz.
+if sabotaj betik/sim/kopek.gd 's/^	return ates_yaniyor and ates_yakit >= A.KOPEK_CAYDIRAN_YAKIT$/	return false/'; then
+	dene kopek "sabotaj: ateş köpeği caydırmıyor" 1; geri betik/sim/kopek.gd
+fi
+# Caydırma eşiği besleme eşiğinin üstüne çıkarsa ateşe bakan oyuncu da saldırı yer.
+if sabotaj betik/veri/ayarlar.gd 's|^const KOPEK_CAYDIRAN_YAKIT := ATES_YAKIT_ESIGI \* 0\.5$|const KOPEK_CAYDIRAN_YAKIT := ATES_YAKIT_ESIGI * 1.5|'; then
+	dene kopek "sabotaj: caydırma eşiği besleme eşiğinin üstünde" 1; geri betik/veri/ayarlar.gd
+fi
+# Araya girmek bedelsiz olursa "onu tehlikeden çıkarmak" ucuz jeste döner.
+if sabotaj betik/sim/dunya.gd 's/^		if oyuncu.yarala():$/		if false:/'; then
+	dene kopek "sabotaj: araya girmenin bedeli yok" 1; geri betik/sim/dunya.gd
+fi
+# Bir gecede iki epizot: tek gecede iki yara, iki ihmal.
+if sabotaj betik/sim/kopek.gd 's/^			if _bu_gece_geldi:$/			if false:/'; then
+	dene kopek "sabotaj: köpek aynı gece defalarca geliyor" 1; geri betik/sim/kopek.gd
+fi
+# Yara süresizse 3. gecedeki bir ısırık oyunun kalanını belirler.
+if sabotaj betik/veri/ayarlar.gd 's/^const YARA_SURESI_GUN := 2\.0$/const YARA_SURESI_GUN := 99.0/'; then
+	dene kopek "sabotaj: yara hiç iyileşmiyor" 1; geri betik/veri/ayarlar.gd
+fi
+# Pencere dışında basmak işe yararsa tuşu basılı tutan her saldırıyı karşılar.
+if sabotaj betik/sim/dunya.gd 's/^			if kopek.saldiri_penceresi_acik_mi():$/			if true:/'; then
+	dene kopek "sabotaj: saldırı yokken 'araya gir' kaydediliyor" 1; geri betik/sim/dunya.gd
+fi
+dene kopek "geri yüklendi" 0
 
 echo "GENEL TOPLAM: $gecti geçti, $kalan kaldı"
 [ "$kalan" -eq 0 ] && exit 0 || exit 1

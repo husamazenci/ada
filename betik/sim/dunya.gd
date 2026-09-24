@@ -9,6 +9,7 @@ const A := preload("res://betik/veri/ayarlar.gd")
 const Ih := preload("res://betik/sim/ihtiyaclar.gd")
 const Gv := preload("res://betik/ai/guven.gd")
 const Cg := preload("res://betik/ai/cagri.gd")
+const Kp := preload("res://betik/sim/kopek.gd")
 const Dv := preload("res://betik/ai/davranis.gd")
 
 var gun := 1
@@ -17,6 +18,7 @@ var oyuncu: Ih = Ih.new()
 var arkadas: Ih = Ih.new()
 var guven: Gv = Gv.new()
 var cagri: Cg = Cg.new()
+var kopek: Kp = Kp.new()
 
 func _init() -> void:
 	# Arkadaşın ihtiyaçtan ölme yolu KAPALIDIR (K-062). Ölümü yalnızca
@@ -47,6 +49,8 @@ var _firsat_acik := false
 var _bugun_toplandi := 0
 var _bugun_odun := 0
 var _ates_ihmali_bu_gece := false
+var _araya_girdi := false        # bu saldırı penceresinde basıldı mı
+var kopek_sonucu := ""           # son saldırı nasıl bitti (ölçüm)
 var ates_sondu_gece := 0        # ölçüm: kaç gece ateşsiz kaldı
 var arkadas_zorla_aldi := 0
 var gunluk: Array = []
@@ -116,6 +120,7 @@ func adim(dt: float, politika: Callable) -> void:
 	arkadas.ilerle(dt, uyuyor)
 
 	_atesi_yak_tuket(dt)
+	_kopegi_ilerlet(dt)
 
 	# Fırsat mandalı: bir epizot bir kez sayılır, her karede değil.
 	var simdi := firsat_var_mi()
@@ -180,6 +185,11 @@ func _eylemi_uygula(eylem: String) -> void:
 			if not gece_mi() and _bugun_toplandi < A.GUNLUK_YIYECEK_BULUNUR:
 				yiyecek += 1
 				_bugun_toplandi += 1
+		"araya_gir":
+			# Saldırı penceresi dışında basmanın hiçbir etkisi yok. Olsaydı
+			# oyuncu tuşu basılı tutup her saldırıyı otomatik karşılardı.
+			if kopek.saldiri_penceresi_acik_mi():
+				_araya_girdi = true
 		"odun_topla":
 			# Gündüz ve günlük sınır içinde — yiyecekle aynı kıtlık kalıbı.
 			if not gece_mi() and _bugun_odun < A.GUNLUK_ODUN_BULUNUR:
@@ -257,6 +267,7 @@ func _gun_bitti() -> void:
 	_bugun_toplandi = 0
 	_bugun_odun = 0
 	_ates_ihmali_bu_gece = false
+	kopek.sifirla_gece()
 	_arkadasin_katkisi()
 	t = 0.0
 	gun += 1
@@ -292,3 +303,53 @@ func _atesi_yak_tuket(dt: float) -> void:
 	if not _ates_ihmali_bu_gece:
 		_ates_ihmali_bu_gece = true
 		guven.ihmal_ekle(A.IHMAL_ATESI_SONDURME)
+
+
+func _kopegi_ilerlet(dt: float) -> void:
+	if arkadas_gitti or arkadas.oldu or bitti:
+		return
+	var olay := kopek.ilerle(dt, gece_mi(), gun, yiyecek, ates_yaniyor, ates_yakit)
+	match olay:
+		"uluma":
+			duyumlar.append("gün %d: uzaktan uluma" % gun)
+		"kenarda":
+			duyumlar.append("gün %d: ışığın sınırında bir şey" % gun)
+		"cekildi":
+			# Ateş caydırdı. Hazırlığın TEK somut karşılığı bu an.
+			duyumlar.append("gün %d: çekildi" % gun)
+		"cozuldu":
+			_kopek_saldirisini_cozumle()
+
+func _kopek_saldirisini_cozumle() -> void:
+	# ÜÇ SONUÇ, ve üçü de tasarımın yazdığı gibi (K-064, §3. gün tablosu):
+	#
+	#   araya girdin (ve yetiştin) → SEN yaralanırsın, o sağlam. Bedelli jest.
+	#   denedin, yetişemedin       → o yaralanır, ama İHANET SAYILMAZ.
+	#   girmedin                   → o yaralanır, yiyecek gider, güven düşer.
+	#
+	# Araya girmek otomatik "doğru seçim" DEĞİLDİR (kullanıcı kararı): bir
+	# yolda sen sakat kalırsın, öbüründe o yaralanır ve yiyecek gider.
+	var yakin := mesafe_m <= A.KURTARMA_MESAFESI_M
+	var gordu := goruyor_mu()
+	if _araya_girdi and yakin:
+		# "İlk saldırı yaralar, yaralıyken ikincisi öldürebilir" (§dilim).
+		# OYUNCU için bu yol açık; arkadaş için KAPALI (K-049).
+		if oyuncu.yarala():
+			oyuncu.oldu = true
+		if guven.bedelli_jest():
+			alinan_firsat += 1
+		kopek_sonucu = "araya girdin"
+	elif _araya_girdi:
+		# Denedi ve yetişemedi. Güven DÜŞMEZ — korkup geri çekilmekle aynı
+		# şey değildir (K-064, kullanıcı kararı).
+		arkadas.yarala()
+		guven.tehlikede_birakti(gordu, true)
+		kopek_sonucu = "denedin, yetişemedin"
+	else:
+		arkadas.yarala()
+		if yiyecek > 0:
+			yiyecek -= 1          # "bir balık düşer; köpek kapıp kaçar"
+		guven.tehlikede_birakti(gordu, false)
+		kopek_sonucu = "girmedin"
+	duyumlar.append("gün %d: köpek — %s" % [gun, kopek_sonucu])
+	_araya_girdi = false
