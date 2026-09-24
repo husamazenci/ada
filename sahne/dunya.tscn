@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" path="res://betik/cizim/oyuncu.gd" id="1_oyuncu"]
 [ext_resource type="Script" path="res://betik/cizim/arkadas.gd" id="2_arkadas"]
+[ext_resource type="Script" path="res://betik/cizim/oyun.gd" id="3_oyun"]
+[ext_resource type="Script" path="res://betik/cizim/damga-katmani.gd" id="4_damga"]
 
 [sub_resource type="Environment" id="Environment_gri"]
 background_mode = 1
@@ -46,6 +48,7 @@ radius = 0.28
 height = 1.75
 
 [node name="Dunya" type="Node3D"]
+script = ExtResource("3_oyun")
 
 [node name="Ortam" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_gri")
@@ -92,3 +95,6 @@ shape = SubResource("CapsuleShape3D_govde")
 [node name="Govde" type="MeshInstance3D" parent="Arkadas"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.875, 0)
 mesh = SubResource("CapsuleMesh_arkadas")
+
+[node name="Damga" type="CanvasLayer" parent="."]
+script = ExtResource("4_damga")
