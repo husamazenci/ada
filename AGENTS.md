@@ -135,6 +135,13 @@ kenarında taç/boy 0.5–0.8; genç ağaç 3–12 m). (K-035, K-053)
   turunu yavaşlatır. Kod ve sahne okunabilir ve **diff'lenebilir** kalmalı.
 - **Masaüstü uygulaması** (macOS). Tarayıcı şartı kaldırıldı (K-054): tek
   kişilik, kalıcı ölümlü bir oyuna hiçbir şey kazandırmıyordu.
+- **`.uid` ve `.import` dosyaları COMMIT EDİLİR** — yoksayılmaz. Godot'nun
+  resmî listesinde yoksayılacak yalnızca iki şey var: `.godot/` ve
+  `*.translation`. Sebep iki ajanlı depoda kritik: `.uid` commit edilmezse
+  her ajan aynı betik için farklı rastgele kimlik üretir ve sahnelerdeki
+  `uid://` referansları birleşmede yanlış dosyayı gösterebilir. `.import`
+  dosyaları da içe aktarma ayarını taşır; yoksa her makine sesi farklı
+  ayarla içe aktarır.
 - **`.tscn` ve `.tres` düz metindir ve LFS'e GİRMEZ.** Ajanların sahneyi
   okuyabilmesinin tek sebebi budur. İkili varlıklar (`.glb`, `.png`, `.wav`…)
   LFS'e girer; `.gitattributes` ilk varlıktan önce kuruldu.

@@ -27,6 +27,22 @@ const UYKU_TOPARLAMA := 1.6       # gece uyurken yorgunluk bu hızla düşer
 # Eşikler. "Aç" olmak duyum cümlesinin ve fırsatın eşiğidir.
 const ESIK_HISSEDILIR := 0.50     # "açsın" / "susadın" — bir kez belirir
 const ESIK_AGIR := 0.80           # beden okunur biçimde yavaşlar
+
+# İHTİYAÇ BAKIŞI EŞİKLERİ (K-060). Arkadaşın ihtiyacı bakış yönünden okunur:
+# aç olan yiyeceğe, susamış olan kaba/dereye bakar. Ekranda gösterge ve kelime
+# olmadığı için oyuncu NEYİ vereceğini yalnızca buradan bilir.
+#
+# Bunlar bağımsız sayı DEĞİL, yukarıdaki eşiklerin TÜREVİ — ve bu kasıtlı.
+# Animasyon spekti bakışı 0.55'te açıyordu, oysa fırsat 0.50'de doğuyor:
+# [0.50, 0.55) aralığında fırsat var ama ekranda hiçbir işaret yok, oyuncu
+# sebebini göremeden güven değişiyordu. İki sayı ayrı yazılırsa er geç
+# kayarlar; türev olunca kayamazlar.
+const BAKIS_ESIGI_ORTA := ESIK_HISSEDILIR   # fırsatla AYNI anda açılır
+const BAKIS_ESIGI_ACIL := ESIK_AGIR
+
+# Histerezis: eşik çevresinde sürekli davranış değişmesini önler (spekt §8).
+const BAKIS_KAPANIS_ORTA := 0.45
+const BAKIS_KAPANIS_ACIL := 0.70
 const ESIK_OLUM := 1.00
 
 # Kıtlık. İki kişi günde ~1.8 porsiyon tüketir (0.40 açlık/gün ÷ 0.45 doyum).

@@ -46,6 +46,15 @@ func _initialize() -> void:
 	if w2.goruyor_mu():
 		hata.append("İHLAL: ateş ışığı gündüz menzilinin ÖTESİNİ de görünür yaptı")
 
+	# K-060 DEĞİŞMEZİ: ihtiyaç bakışı, fırsatın doğduğu eşikten SONRA açılamaz.
+	# Açılırsa görünmez fırsat penceresi doğar: simülasyon güveni değiştirir,
+	# oyuncu sebebini ekranda göremez.
+	if A.BAKIS_ESIGI_ORTA > A.ESIK_HISSEDILIR:
+		hata.append("İHLAL: bakış eşiği (%.2f) fırsat eşiğinden (%.2f) YÜKSEK — görünmez fırsat penceresi" % [A.BAKIS_ESIGI_ORTA, A.ESIK_HISSEDILIR])
+	if A.BAKIS_KAPANIS_ORTA >= A.BAKIS_ESIGI_ORTA:
+		hata.append("histerezis yok: kapanış (%.2f) açılıştan (%.2f) küçük olmalı" % [A.BAKIS_KAPANIS_ORTA, A.BAKIS_ESIGI_ORTA])
+	print("  ✓ bakış eşiği %.2f ≤ fırsat eşiği %.2f (görünmez fırsat yok)" % [A.BAKIS_ESIGI_ORTA, A.ESIK_HISSEDILIR])
+
 	print("")
 	if hata.is_empty():
 		print("GEÇTİ — ateş ışığı istisnası çalışıyor, menzili aşmıyor.")

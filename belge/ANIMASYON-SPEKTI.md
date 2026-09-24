@@ -152,6 +152,77 @@ sonra aynı düzen orta ve dip moral için tekrarlanır.
 moralin yavaşlığı izleyiciyi sistematik olarak "düşük güven" yanıtına
 götürüyorsa, animasyon kanalları yeterince ayrışmamış demektir.
 
+## 8. İhtiyaç bakışı
+
+Bakışın üç hedefi vardır: **oyuncu**, **algılanmış çevre** ve **ihtiyaç
+nesnesi**. İhtiyaç nesnesi, açlıkta oyuncunun elindeki veya görülen yiyecek;
+susuzlukta su kabı veya görülen deredir. NPC görüşü kapalı bir nesneye bakmaz.
+Sahne düzeni, ihtiyaç duyulan nesnenin ikisinin de görebileceği bir konuma
+gelebilmesini sağlamalıdır; aksi halde bakış ipucu oyuncuya ulaşmaz.
+
+İç açlık/susuzluk şiddeti 0–100'dür ve **oyuncuya gösterilmez**. Eşikler bakışı
+açar, tüketimi zorlamaz.
+
+| İç ihtiyaç | İhtiyaç nesnesine bakış | Öncelik ve sıklık |
+|---|---|---|
+| 55'in altında | Özel ihtiyaç bakışı yok | Güvene bağlı oyuncu bakışı ve doğal çevre taraması sürer |
+| 55–79 | İlk bakış 15–35 sn içinde; üç dakikada 1–2 kez, her biri 0,7–1,2 sn | Oyuncuyla kurulan bakışı veya süren işi kesmez |
+| 80 ve üstü | İlk bakış 8–18 sn içinde; üç dakikada 3–5 kez, her biri 1,0–1,8 sn | Olağan çevre taramasının önüne geçer; doğrudan çağrıyı kesmez |
+
+Her aralık değişken seçilir; iki ihtiyaç bakışı arasında **en az 20 sn** bulunur.
+Nesne eldeyse baş ve göz hizası **nesneye** yönelir, oyuncunun yüzüne değil —
+böylece düşük güvenli arkadaş yiyeceğe bakarken göz temasından kaçınmayı
+sürdürür. İki ihtiyaç birden aşılmışsa şiddeti yüksek olanın **görülebilen**
+nesnesi seçilir; ikisi arasında ritmik gidip gelme yapılmaz. İhtiyaç 45'in
+altına inince orta, 70'in altına inince acil sıklık kapanır (histerezis).
+
+Gerçekten algılanmış acil tehlike, moral dipte değilse kısa süreliğine bütün
+bakış hedeflerinin önüne geçer. NPC **işaret etmez, yiyecekle oyuncunun yüzü
+arasında ritmik bakmaz, her teklif anında aynı hareketi yapmaz.** İpucu
+seyrektir ama doğrudur: açlık suya, susuzluk yiyeceğe sahte bir "mesaj bakışı"
+üretmez. Okunurluk nesnenin seçilmesinden ve birkaç dakika içinde tekrar
+görülebilmesinden gelir, kusursuz bir jestten değil.
+
+## 9. Çöküş ilerlemesi
+
+**Vazgeçiş**, "Oturmuş" ile "Ölüm" arasındaki ayrı ve kademeli eksendir. Güven
+veya moral seviyesi değildir; birikmiş ihmalin günler içindeki bedensel
+sonucudur. Tehdit, düşme ve saldırı acı veya geçici hareketsizlik yaratabilir,
+fakat **Ölüm durumuna geçiş açmaz.** Ölüm yalnızca ihmalin sürmesi halinde
+**en erken 6. gün şafağında** değerlendirilir.
+
+İlk üç günde açlık, susuzluk ve yalnız geçen geceler birikir; artan ihtiyaç
+bakışı ve düşen moral erken uyarıdır. Birikim ağırsa **4. gün şafağında**
+görünür çöküş başlar. 4. ve 5. günün tamamı (her biri ~20 dk) müdahale
+penceresidir. Açılar ayakta nötr baş pozuna göredir.
+
+| Zaman ve durum | Nefes | Baş | Bakışı kaldırma | Uzatılan yiyecek | Dokunuş |
+|---|---|---|---|---|---|
+| **4. gün · geri çekilme** | Dk'da 10–12; derinlik ~%65. Nefes sesi belirginleşir | 12–18° aşağı | Yaklaşmada ~%70; 0,6–1,2 sn sonra kısa bakış | Kendi aramaz; elde tutulursa 1–3 sn sonra küçük lokma alabilir | Başını/omzunu dokunuşa doğru az çevirir; kalkmaz |
+| **5. gün · vazgeçiş** | Dk'da 7–9; derinlik ~%45. İç çekmelerin arası açılır | 25–32° aşağı | Yaklaşmada ~%30; bakış kısa ve yarım kalır | İlk teklife uzanmaz. Su verilip 60–120 sn yanında kalınırsa küçük lokma alabilir | İlk dokunuşta tepki vermeyebilir; uzun kalınırsa teması kabul eder |
+| **5. gecenin sonu · sınır** | Dk'da 5–7; derinlik ~%25. Uzun sessizlikler | 38–45° aşağı | Yaklaşmada ~%10; baş birkaç derece kalkar | Kendiliğinden yemez. Şafaktan önce su + yanında kalma ile son teklif kabul edilebilir | Kısa dokunuşa tepki yok; yanında kalınırsa nefes ritmi düzelebilir |
+
+Bu değerler **sahne hedefidir**, ekranda ölçüm olarak görünmez. Değişim tek
+karede olmaz: yeni gün başlayınca nefes, baş açısı ve tepki gücü 2–4 dakikada
+kötüleşir. Oyuncu aynı oturuşun dün daha canlı olduğunu fark edebilmelidir.
+Arkadaş ateşe dönüp bakmayı ve kendiliğinden yemeyi giderek bırakır; son gece
+ateş yakılsa da ona yönelmez.
+
+**Geri dönüş tek bir eşya verme animasyonu değildir.** Oyuncu şafaktan önce
+yiyecek ve su sağlar **ve** geceyi yanında geçirirse çöküş durur. 4. günde
+müdahalede önce nefes 20–40 sn içinde derinleşir, sonra baş 2–3 dakikada
+yükselir; arkadaş uygun fırsatta kalkmayı dener. 5. günde önce suya ve varlığa
+tepki gelir, sonra yiyeceği kabul eder; kalkış ancak sonraki şafakta mümkündür.
+Yalnızca yiyecek ya da yalnızca su kısa bir iyileşme yaratır ama süreci tersine
+çevirmez. Oyuncu gece ayrılırsa nefes ve baş yeniden ağırlaşır; bu kayıp da
+ekranda görülür.
+
+**6. gün şafağı karar anıdır:** toparlanma başlamışsa arkadaş uyanır — hâlâ
+zayıftır ama başını kaldırır ve nefesi düzenlidir. İhmal sürmüşse sabah
+uyanmaz; ancak o zaman hareketsiz son poza geçilir. Böylece oyuncu iki tam gün
+boyunca yaklaşan sonucu görür; ölüm bir saldırının ya da ani şanssızlığın
+sonucu gibi görünmez.
+
 ---
 
 # Claude'un incelemesi (§6.6 — `[x]` bitmiş sayılmaz, ölçülür)
@@ -244,3 +315,39 @@ Spektin önerdiği "dokuz birleşim × beş izleyici" = 45 izleme; tek kişilik
 **Öneri:** geliştirme boyunca hafif sürüm — moral yüksek tutulup üç güven
 seviyesi, üç izleyici. Dokuz hücrelik tam tur yalnızca yayından önce bir kez.
 İlkeyi koruyan ama gerçekten uygulanabilir olan budur.
+
+---
+
+# İkinci tur incelemesi (Claude, 2026-09-24)
+
+**İki eksik de kapandı.** §8 ihtiyaç bakışını üçüncü kanal olarak kuruyor;
+§9 `Oturmuş` ile `Ölüm` arasına iki günlük görünür vazgeçiş koyuyor.
+
+## Özellikle iyi iki ayrıntı
+
+**"Nesneye bakar, oyuncunun yüzüne değil."** Bu tek cümle bir çatışmayı
+çözüyor: düşük güvenli arkadaş göz temasından kaçınmayı sürdürürken yiyeceğe
+bakabiliyor. Güven kanalı ile ihtiyaç kanalı birbirine karışmıyor.
+
+**"Tehdit Ölüm geçişini açmaz."** Değişmez kuralı doğrudan animasyon
+katmanına yazmış. Kural yalnızca simülasyonda değil, gövdede de korunuyor.
+
+## Kodla çapraz kontrol: bir boşluk bulundu ve kapatıldı (K-060)
+
+Spekt ihtiyaç bakışını **55**'te açıyordu; `ayarlar.gd`'de fırsat **0.50**'de
+doğuyor (`ESIK_HISSEDILIR`). Yani `[0.50, 0.55)` aralığında **fırsat var ama
+ekranda hiçbir işaret yok** — simülasyon güveni değiştirir, oyuncu sebebini
+göremez. Acil eşik (80 ↔ `ESIK_AGIR = 0.80`) birebir tutuyordu.
+
+Düzeltme: bakış eşikleri artık bağımsız sayı değil, fırsat eşiğinin **türevi**
+(`BAKIS_ESIGI_ORTA := ESIK_HISSEDILIR`). İki sayı ayrı yazılırsa er geç kayar;
+türev olunca kayamaz. `testler/algi.gd` bakış eşiğinin fırsat eşiğini
+geçemeyeceğini denetliyor. Histerezis (45/70) spektten olduğu gibi alındı.
+
+## Uygulamada dikkat: geri dönüş şartı koda henüz uymuyor
+
+§9 toparlanmayı **yiyecek VE su VE geceyi yanında geçirme** şartına bağlıyor.
+Koddaki `Guven.gun_dondu()` ise ihmali yalnızca `bakim_gordu_bugun` ile
+geriletiyor ve onu herhangi bir bedelli jest tetikliyor — yani spektten daha
+gevşek. Gövde bağlanırken ihmal geriletmesi §9'un üç şartına çekilmeli.
+Bu bir çelişki değil, henüz yazılmamış bir bağ; kayıt olarak duruyor.
