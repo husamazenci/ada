@@ -77,11 +77,19 @@ Kullanıcıya sorulmadan değiştirilmez. Zemin değişti, bunlar değişmedi.
   davranışından okunur. **Çelişen ipucu YOK; hiç ipucu yok.** Bağlanma
   bilgiden değil, birlikte yaşanandan doğar.
 - Adada daha önce bir insanın bulunduğunu **kesinleştiren** hiçbir iz yoktur.
-- **Oyun ÖĞRETMEZ, anlatır** (K-041). Öğretici yok, görev listesi yok,
-  işaret/ok/HUD yok. Yönlendirme dünyadan gelir: arkadaş yapar ve bakar, yarım
+- **Oyun ÖĞRETMEZ, anlatır** (K-041, K-059 ile genişledi). Ekran üstü HUD yok,
+  işaret yok, ok yok. Yönlendirme dünyadan gelir: arkadaş yapar ve bakar, yarım
   iş yarım durur. Ama oyun bir HİKÂYE anlatır: kontrolün alındığı sayılı ve
   kısa sahneler ve nadiren beliren kısa satırlar olabilir. Ölçüt: o satır
   oyuncuya ne yapacağını değil, ne YAŞADIĞINI söylüyorsa doğrudur.
+- **Defter** (K-059, kullanıcı kararı). Enkazda bulunan BOŞ defter. Karakter
+  onu kendi eliyle doldurur; üç şey yazar: **olan biten** (geçmiş zaman),
+  **adanın çizimi**, ve **sayılı birkaç çekirdek iş**. Defter ekran üstü bir
+  gösterge DEĞİLDİR: dünyada bir nesnedir, açmak oyuncunun seçimidir, yazma
+  anlarında kontrol oyuncuda kalır (tam cutscene sayısı 3'te kilitli).
+  **Değişmez sınır: defter ARKADAŞ hakkında hiçbir iş yazmaz.** İşler yalnızca
+  dünyaya dairdir (ateş, su, barınak, sal). İlişkiye dair hiçbir yönlendirme
+  vermez — o alan tamamen oyuncunundur. Bu sınır inşa değişmeziyle denetlenir.
 - Fantastik yaratık yok, kötü adam yok. Tehdit hayvan ve doğa. Arkadaş kötü
   adam değildir; ama çaresizlikte sana karşı güç kullanabilir (itmek, yiyeceği
   zorla almak). Bu bir tehdit türü değil, ilişkinin sonucudur. (K-026)

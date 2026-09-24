@@ -91,7 +91,10 @@ Her gün ~20 dk: gündüz ~13, alacakaranlık ~2, gece ~5.
 **Gün 1 · Uyanış.**
 - **[SAHNE 1 · Uyanış]** *(cutscene 1)* Kumsalda yüzükoyun. Kontrol ALINIR:
   nefes, dalga, uzakta enkaz. 30–40 sn, sonra kontrol sende.
-- Enkaz: içine girilir. İlk eşyalar — ve **tek kap** (susuzluk buradan başlar).
+- Enkaz: içine girilir. İlk eşyalar — **tek kap** (susuzluk buradan başlar)
+  ve **boş defter** (K-059). Defter bulunduğu an bir şey yazmaz; karakter ilk
+  satırı kendi eliyle o akşam yazar. Yazma anlarında **kontrol oyuncuda kalır**
+  — tam cutscene sayısı 3'te kilitli (D2).
   Arkadaş enkazın öbür ucunda oturuyor, sana bakıyor, konuşmuyor. Yanına
   gitmek zorunda değilsin.
 - Gece: ateş YOK. İlk gece üşüyerek, karanlıkta, yan yana ya da ayrı geçer.

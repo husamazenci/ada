@@ -1791,3 +1791,48 @@ Spekt "dokuz birleşim × beş izleyici" = 45 izleme istiyordu. Tek kişilik
 - **Yayından önce bir kez:** dokuz hücre, beş izleyici, beşte dört ölçütü.
 
 İlkeden vazgeçilmedi; sıklığı gerçekçi hale getirildi.
+
+## K-059 · 2026-09-24 · Defter: K-041'in "görev listesi yok" maddesi genişledi
+
+- **Tür:** tasarım kararı (kullanıcı). Değişmez kuralı değiştirir.
+- **Kullanıcı:** "enkazın içinde bir defter bulsak... defterde hem harita
+  çizimi hem hafıza defteri hem de bazı core görevleri kendimize not alalım."
+- **Çatışma açıkça söylendi:** K-041 "görev listesi yok" diyordu. Kullanıcı
+  kuralı değiştirdi; değiştirirken neyin gideceği anlatıldı.
+
+### Korunan yarı — ve neden
+
+**Defter ARKADAŞ hakkında hiçbir İŞ yazmaz.** İşler yalnızca dünyaya dairdir
+(ateş, su, barınak, sal, yiyecek). Sebep: tasarım pusulası "oyuncu arkadaşa
+karşı tutumunu TAMAMEN kendi belirlemeli" diyor. Defterde "ona yiyecek ver"
+yazsaydı tutumu oyun belirlemiş olurdu ve kabul kriteri ("güveni davranıştan
+okuyabiliyor mu") birlikte çökerdi.
+
+İkinci gerekçe dikkatle ilgili: şu an yönlendirmeyi arkadaş yapıyor — hayatta
+tutmaya çalıştığın kişiyi izleyerek öğreniyorsun. Dikkat sıfır toplamlıdır;
+defter ilişki işleri de yazsaydı oyuncu arkadaşı değil defteri okurdu.
+**Dünya işlerini defter üstlenince arkadaş yalnızca İLİŞKİNİN kanalı olarak
+kalıyor** — yani bölünme kalbi zayıflatmıyor, keskinleştiriyor.
+
+### Sınır inşa değişmezidir, sonradan kontrol değil
+
+`betik/veri/defter.gd`: iş hedefleri **kapalı listeden** gelir; `arkadas`
+yasaklı hedeftir ve izinli listeye sızması ayrıca denetlenir; iş anahtarının
+metni bile arkadaşa işaret edemez. `EN_COK_IS = 6` — "sayılı birkaç" ölçülebilir
+olsun diye. Hafıza girdileri yalnızca **koşulsuz** ize bağlanabilir (A1);
+koşullu ize bağlanan hafıza, sahne kaçırılınca defteri boş bırakırdı.
+
+**Ölçüldü:** `testler/defter.gd` geçiyor (13 girdi, 5 iş). Dört negatif kontrol
+— arkadaşı hedef alma · izinli listeye sızma · sayı aşımı · koşullu ize bağlama
+— dördü de yakalanıyor. Toplam 37/37.
+
+### Cutscene kilidi korundu (D2)
+
+Kullanıcı yazma anlarında "güzel cutsceneler" istedi. Tam cutscene sayısı 3'te
+kilitli olduğu için defter anları **ayrı bir kategori**: kontrol oyuncuda kalır,
+el ve defter kalkar, yazı görülür, kapatılabilir. Sebep yalnızca kilit değil —
+tekrar eden cutscene'ler atlanır; kontrolü bırakmayan an daha çok izlenir.
+
+- **Metin yok, anahtar var** (K-010): defter girdileri yalnızca çeviri anahtarı
+  taşır; görünür metin koda yazılmaz.
+- **Çizim** girdisi ada fazına kadar yer tutucudur.

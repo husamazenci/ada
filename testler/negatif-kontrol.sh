@@ -19,6 +19,7 @@ kos() {  # kos <test-adi> → çıkış kodu
 		moral)   $GODOT --headless --path . --script res://testler/moral-tabani.gd >/dev/null 2>&1 ;;
 		zincir)  $GODOT --headless --path . --script res://testler/zincir.gd >/dev/null 2>&1 ;;
 		algi)    $GODOT --headless --path . --script res://testler/algi.gd >/dev/null 2>&1 ;;
+		defter)  $GODOT --headless --path . --script res://testler/defter.gd >/dev/null 2>&1 ;;
 	esac
 	return $?
 }
@@ -160,6 +161,25 @@ if sabotaj betik/veri/ayarlar.gd 's/const GECE_GORUS_CARPANI := 0.45/const GECE_
 	dene algi "sabotaj: gece görüşü hiç daralmıyor" 1; geri betik/veri/ayarlar.gd
 fi
 dene algi "geri yüklendi" 0
+
+# ============ defter (K-059 sınırı) ============
+echo "negatif-kontrol · defter"
+dene defter "temiz kopya" 0
+
+# ASIL SINAV: defter arkadaş hakkında iş yazarsa yakalanmalı.
+if sabotaj betik/veri/defter.gd 's/"hedef": "ates",    "anahtar"/"hedef": "arkadas", "anahtar"/'; then
+	dene defter "sabotaj: iş arkadaşı hedef alıyor" 1; geri betik/veri/defter.gd
+fi
+if sabotaj betik/veri/defter.gd 's/\["ates", "su", "barinak", "sal", "yiyecek"\]/["ates", "su", "barinak", "sal", "yiyecek", "arkadas"]/'; then
+	dene defter "sabotaj: arkadaş izinli hedef listesine sızdı" 1; geri betik/veri/defter.gd
+fi
+if sabotaj betik/veri/defter.gd 's/const EN_COK_IS := 6/const EN_COK_IS := 2/'; then
+	dene defter "sabotaj: 'sayılı birkaç' aşıldı" 1; geri betik/veri/defter.gd
+fi
+if sabotaj betik/veri/defter.gd 's/"iz": "firtina-gecti"/"iz": "barinak-hasarli"/'; then
+	dene defter "sabotaj: hafıza KOŞULLU ize bağlandı" 1; geri betik/veri/defter.gd
+fi
+dene defter "geri yüklendi" 0
 
 echo "GENEL TOPLAM: $gecti geçti, $kalan kaldı"
 [ "$kalan" -eq 0 ] && exit 0 || exit 1
