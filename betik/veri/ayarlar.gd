@@ -15,6 +15,11 @@ extends RefCounted
 const GUNDUZ_BITIS := 0.65
 const ALACAKARANLIK_BITIS := 0.75
 const TOPLAM_GUN := 6
+
+# 1. gün TAM GÜN BATIMINDA başlar (K-063): uçak akşamüstü düşer. Oynanan kısım
+# alacakaranlık + gece = ~7 dk. Toplam süre bu yüzden 107 dakikadır, 120 değil;
+# kısa ve sert bir açılış kasıtlıdır.
+const GUN1_BASLANGIC_T := 0.65
 const GUVENLIK_TAVANI_GUN := 10   # hiç katılmayan oyuncuda dünya sonsuza akmasın
 
 # --- İhtiyaçlar ---

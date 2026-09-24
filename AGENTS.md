@@ -301,7 +301,15 @@ bunlar `@export var` ile tanımlanır, editör panelinde kaydırıcı olur ve **
 | Editörü aç | `godot --path ~/Projects/ada-godot --editor` |
 | Oyunu çalıştır | `godot --path ~/Projects/ada-godot` |
 | Katman kuralları | `godot --headless --path . --script res://testler/katman-kurallari.gd` |
-| Negatif kontroller | `./testler/negatif-kontrol.sh` |
+| Hikâye zinciri | `godot --headless --path . --script res://testler/zincir.gd` |
+| Moral tabanı (A2) | `godot --headless --path . --script res://testler/moral-tabani.gd` |
+| Algı ve ateş ışığı | `godot --headless --path . --script res://testler/algi.gd` |
+| Defter sınırı | `godot --headless --path . --script res://testler/defter.gd` |
+| İki dil | `godot --headless --path . --script res://testler/dil.gd` |
+| Kayıt gidiş-dönüş | `godot --headless --path . --script res://testler/kayit.gd` |
+| Altı günlük koşu | `godot --headless --path . --script res://testler/alti-gun.gd` |
+| Kadraj (görüntü + ölçüm) | `godot --path . --script araclar/kadraj.gd` — görünür pencere |
+| Negatif kontroller (hepsi) | `./testler/negatif-kontrol.sh` — ~3 dk |
 
 Çıkış kodu **0** geçti · **1** başarısız · **2** çalıştırılamadı.
 **2'yi "geçti" sayma.**
@@ -313,6 +321,7 @@ bunlar `@export var` ile tanımlanır, editör panelinde kaydırıcı olur ve **
 | Dosya | Ne için |
 |---|---|
 | `AGENTS.md` (`CLAUDE.md` → bağ) | Ortak ve kalıcı kurallar |
+| **`belge/OYUN.md`** | **Oyunun tek okumalık anlatımı — yeni gelen ÖNCE bunu okur** |
 | `belge/OYUN-TASARIMI.md` | Tasarımın tek kaynağı; davranış tablosu |
 | `belge/KARAR-GUNLUGU.md` | Kararlar ve hatalar; sebebi ve nasıl bulunduğu |
 | `belge/UCUNCU-DENEME.md` | Zemin değişikliğinin gerekçesi ve kurulum |

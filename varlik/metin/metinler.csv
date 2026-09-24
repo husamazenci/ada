@@ -1,0 +1,26 @@
+keys,tr,en
+duyum.aclik,açsın,you are hungry
+duyum.susuzluk,susadın,you are thirsty
+duyum.yara,yaralısın,you are hurt
+duyum.o_hala_orada,o hâlâ orada,he is still there
+defter.is.su,Su.,Water.
+defter.is.ates,Ateş.,Fire.
+defter.is.barinak,Barınak.,Shelter.
+defter.is.yiyecek,Yiyecek — uzakta.,Food — far.
+defter.is.sal,Sal.,The raft.
+defter.hafiza.uyanis,Uyandım. Bir kişi daha var.,I woke up. There is one other person.
+defter.hafiza.ates,Çakmaktaşını bana uzattı.,He held out the flint to me.
+defter.hafiza.ayrilik,Yakındaki her şeyi topladık.,We gathered everything nearby.
+defter.hafiza.kopek,Gece bir şey geldi. Ateşin dışında durdu.,Something came in the night. It stayed outside the fire.
+defter.hafiza.firtina,Fırtına geceyi böldü.,The storm broke the night.
+defter.hafiza.kriz,Sabah kalkmadı.,He did not get up this morning.
+defter.hafiza.sal,Kıyıda bir sal var. Tek kişilik.,There is a raft on the shore. It holds one.
+menu.basla,Başla,Begin
+menu.devam,Devam et,Continue
+menu.ses,Ses,Sound
+menu.dil,Dil,Language
+menu.cik,Çık,Quit
+menu.uyari,Bu oyun kayıp ve ölüm içerir.,This game contains loss and death.
+soz.hey,Hey.,Hey.
+soz.iyi_misin,İyi misin?,Are you okay?
+soz.duyuyor_musun,Duyuyor musun?,Can you hear me?

@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://c6p2b547yvgwf"
+
+[deps]
+
+files=["res://varlik/metin/metinler.tr.translation", "res://varlik/metin/metinler.en.translation"]
+
+source_file="res://varlik/metin/metinler.csv"
+dest_files=["res://varlik/metin/metinler.tr.translation", "res://varlik/metin/metinler.en.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

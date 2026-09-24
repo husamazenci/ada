@@ -86,6 +86,19 @@ kare. Üç oyuncu tipi üç güven seviyesine ayrışıyor.
 **Açık borç:** ışık yukarı bakıyor (kuyrukta, Cursor, tek satır). Gri kutu
 `main`'de ama düz aydınlatılıyor.
 
+### AÇIK BORÇ — ihmal kanalının 4/5'i bağlı değil (K-061)
+
+`ayarlar.gd`'de beş ihmal kaynağı tanımlı, `dunya.gd`'de bağlı olan bir tane.
+Sonuç: **moral ölümü hiçbir oynanışla tetiklenemiyor** — bir son tamamen
+kapalı. Bağlanacaklar ve önkoşulları:
+
+| Kaynak | Önkoşul | Şimdi yapılabilir mi |
+|---|---|---|
+| Çökmüş/yaralıyken geceyi yalnız bırakma | `mesafe_m` (var) | **EVET** |
+| Tehlikede bırakma | köpek | hayır |
+| Geceleyin ateşi söndürme | yakıt sistemi | hayır |
+| Sözü tutmama | "bekle" mekaniği | hayır |
+
 ### Şu an
 - Faz 0 bitti: proje iskeleti, iki test, dokuz negatif kontrol, LFS, 48 CC0 ses.
 - Tasarım gözden geçirmesi bitti (K-055, K-056): kapsam 6 gün/120 dk, zincir

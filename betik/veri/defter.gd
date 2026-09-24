@@ -24,9 +24,13 @@ const YASAK_HEDEFLER: Array[String] = ["arkadas"]
 
 const EN_COK_IS := 6
 
+# Defter 2. GÜN enkazın içinde bulunur (kapı 1. gün sıkışıktır). Hiçbir girdi
+# defterden önce olamaz — olsaydı karakter elinde olmayan bir deftere yazardı.
+const BULUNUR_GUN := 2
+
 const GIRDILER: Array[Dictionary] = [
 	# --- çekirdek işler (dünyaya dair, sayılı) ---
-	{"tur": "is", "hedef": "su",      "anahtar": "defter.is.su",      "gun": 1},
+	{"tur": "is", "hedef": "su",      "anahtar": "defter.is.su",      "gun": 2},
 	{"tur": "is", "hedef": "ates",    "anahtar": "defter.is.ates",    "gun": 2},
 	{"tur": "is", "hedef": "barinak", "anahtar": "defter.is.barinak", "gun": 2},
 	{"tur": "is", "hedef": "yiyecek", "anahtar": "defter.is.yiyecek", "gun": 3},
@@ -74,6 +78,11 @@ static func dogrula() -> Array:
 				hata.append("%s: hafıza girdisi KOŞULSUZ bir ize bağlı değil (%s) — sahne kaçırılırsa defter boş kalır" % [anahtar, iz])
 		elif tur != "cizim":
 			hata.append("%s: bilinmeyen girdi türü (%s)" % [anahtar, tur])
+
+	for g in GIRDILER:
+		if g.has("gun") and int(g["gun"]) < BULUNUR_GUN:
+			hata.append("%s: defter %d. günde bulunuyor ama girdi %d. güne konmuş" % [
+				g["anahtar"], BULUNUR_GUN, int(g["gun"])])
 
 	if is_sayisi > EN_COK_IS:
 		hata.append("iş girdisi %d — en çok %d olabilir; 'sayılı birkaç' görev listesine dönüşüyor" % [is_sayisi, EN_COK_IS])

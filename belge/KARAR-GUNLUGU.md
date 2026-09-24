@@ -1858,3 +1858,346 @@ tekrar eden cutscene'ler atlanır; kontrolü bırakmayan an daha çok izlenir.
   geceyi yanında geçirme" şartına bağlıyor; koddaki ihmal geriletmesi şu an
   herhangi bir bedelli jestle tetikleniyor, yani daha gevşek. Gövde
   bağlanırken §9'un üç şartına çekilecek.
+
+## K-061 · 2026-09-24 · İki dil ve tek yuvalı kayıt kuruldu; bir son kapalı çıktı
+
+### İki dil (K-010 borcu kapandı)
+
+`varlik/metin/metinler.csv` → Godot'nun CSV yerelleştirmesi. 22 anahtar, Türkçe
+ve İngilizce. `.translation` dosyaları ondan üretilir ve git'e girmez (Godot'nun
+resmî yoksayma listesi); kaynak CSV'dir.
+
+`testler/dil.gd` üç şeyi birden denetler: her anahtarın iki dilde de karşılığı
+var mı · **kodun bildirdiği her anahtar CSV'de var mı** · boru hattı gerçekten
+çözüyor mu (çeviri anahtarın kendisini döndürmemeli). Ortadaki asıl risktir:
+`defter.gd` bir anahtar bildirir, CSV'de yoktur, oyun ekrana ham anahtarı basar
+ve bu ancak o sahneye gelindiğinde fark edilir.
+
+### Tek yuvalı kayıt (K-006 borcu kapandı)
+
+`betik/sim/kayit.gd`. Serileştirme dosya işleminden ayrı: `topla`/`yukle`
+yalnızca Sözlükle çalışır, böylece test dosya sistemine dokunmadan koşar.
+Özel alanlar (`_` ile başlayanlar) DA kaydedilir — atlanırsa oyun yüklendikten
+sonra sessizce başka türlü akar. Kipi uymayan yuva atılır.
+
+### Test tasarımı: gidiş-dönüş, ve kapsamın yalanı
+
+Test şöyle kurgulandı: koştur → kaydet → TERTEMİZ dünyaya yükle → ikisini de
+aynı politikayla devam ettir → karşılaştır. Tek alan unutulsa ayrışırlar.
+
+**İlk hâli yetersizdi ve bunu negatif kontrol gösterdi.** Tek senaryoyla
+(400 adım, fedakâr politika) koşuyordu; iki sabotaj KAÇTI:
+`_aclik_soylendi` ve `_cokus_suresi_gun` yanlış kaydedilince hiçbir şey
+değişmiyordu. Sebep: o kayıt anında ikisi de zaten varsayılan değerindeydi.
+**Bir alanı sınamak için onu AYIRT EDİCİ bir duruma sokmak gerekir.**
+
+Düzeltme: test üç senaryoya çıkarıldı — sıradan akış · oyuncu AÇ iken (eşik
+cümlesi söylenmişken) · çöküş sürerken. Üçüncüsü `çöküş 1.192` ile kaydediyor.
+Sabotajlar artık yakalanıyor: **50/50**.
+
+Raporda ikinci bir hata daha vardı: kayıt anının değerlerini değil, 300 adım
+SONRASINI basıyordum; çöküş değeri 0 görünüyordu. Ölçülen an ile raporlanan an
+farklıydı (§5.8).
+
+### BULGU: arkadaşın ölümü şu an oynanışla ULAŞILAMAZ
+
+Çöküş senaryosunu kurarken çıktı. `ayarlar.gd`'de **beş** ihmal kaynağı
+tanımlı; `dunya.gd`'de bağlı olan **bir** tane (`IHMAL_VERMEME`).
+
+| Kaynak | Bağlı mı | Neden |
+|---|---|---|
+| Gözünün önünde yiyip vermeme | ✅ | — |
+| Çökmüş/yaralıyken geceyi yalnız bırakma | ❌ | `mesafe_m` var — **şimdi bağlanabilir** |
+| Tehlikede bırakma | ❌ | Köpek henüz yok |
+| Geceleyin ateşi söndürme | ❌ | Yakıt sistemi henüz yok |
+| Sözü tutmama | ❌ | "Bekle" mekaniği henüz yok |
+
+Tek kaynak 0.08 birikiyor; çöküşün başlaması için ihmal ~0.65 gerekiyor, yani
+dokuz ihanet. Altı günlük bencil koşuda dört ihanet oluyor. **Sonuç: moral
+ölümü — oyunun en ağır sonu — şu an hiçbir oynanışla tetiklenemiyor.**
+
+Bu bir hata değil, henüz yazılmamış bağ; ama yazılmazsa değişmez kural
+("arkadaş kalıcı olarak ölebilir") kâğıtta kalır. Panoya borç olarak geçti.
+
+## K-062 · 2026-09-24 · Kıtlık gerçekten ısırıyor — ve ikinci bir ölüm yolu kapandı
+
+### Üç kullanıcı kararı
+
+1. **Kontroller ana menüde gösterilir.** K-041 çiğnenmiyor: kural DÜNYA İÇİ
+   yönlendirmeyi yasaklıyor, menü dünya değildir. ChatGPT'nin ayrımı doğru:
+   *"oyuncuya cevabı vermemek ile gerekli bilgiyi saklamak aynı şey değil."*
+2. **Kabul testi üç izleyicide kalıyor** (K-058 korunur; ChatGPT 8–12 önerdi).
+3. **Kıtlık gerçekten ısırsın.**
+
+### Kıtlık: kâğıtta vardı, oyunda yoktu
+
+ChatGPT "altı günün yiyecek fazlası yalnızca 1,2 porsiyon, çok kırılgan" diye
+uyardı. Aritmetiği **doğru**: ölçtüm, 1,33 porsiyon — toplam talebin %12,5'i.
+
+Ama kodda tablo tersine döndü:
+
+| Ölçüm | Sonuç |
+|---|---|
+| Günlük toplama tavanının bağladığı adım | **0** |
+| Bir toplama gününü kaçırmanın etkisi | **tam sıfır** |
+| Oyuncunun topladığı | 12 mümkünden 8 |
+
+Sebep: `_arkadasin_kendi_isi` arkadaşın açlığını **bedavaya** azaltıyordu.
+Havuza hiç baskı binmiyordu. Yani endişe haklıydı ama yön tersti: marj ince
+değildi, **hiç baskı yoktu.**
+
+### Düzeltme ve sonucu
+
+Arkadaş artık **havuzdan** yiyor. Ayrıca güvenin MADDİ karşılığı eklendi:
+yüksek güvende günde 1 porsiyon havuza katkı verir, orta güvende gün aşırı,
+düşük güvende hiç. Güven artık yalnızca davranışta değil **kilerde** de
+okunuyor.
+
+**Fırsat sayısı 11 → 16.** K-056'da tahminle konan 12–16 bandı ilk kez tutuyor
+— hedef yanlış değilmiş, ekonomi yanlışmış. Üç oyuncu tipi hâlâ üç güven
+seviyesine ayrışıyor (0.71 / 0.41 / 0.00).
+
+### BULGU: arkadaşın İKİNCİ bir ölüm yolu varmış
+
+Kıtlık ısırmaya başlayınca ortaya çıktı: bencil koşularda **arkadaş açlıktan
+öldü.** `Ihtiyaclar.ilerle` açlık 1.0'a vurunca `oldu = true` yapıyordu.
+
+Bu, K-055'in tamamını atlıyor: görünür çöküş yok, iki günlük müdahale
+penceresi yok, "en erken 6. gün" yok. İki ayrı ölüm yolu vardı ve yalnızca
+biri kurala tabiydi. Daha önce fark edilmemişti çünkü arkadaş kendini bedava
+besliyordu — yani kıtlık düzeltmesi bir hatayı yaratmadı, **saklandığı yerden
+çıkardı**.
+
+**Düzeltme:** `ihtiyactan_olebilir` bayrağı; arkadaşta kapalı. Aşırı açlık
+artık yalnızca baskı üretir, baskı morali iter, moral ancak İHMAL varsa
+ölümcül bölgeye iner. Ölüm tek kapıdan geçiyor.
+
+`testler/moral-tabani.gd` bunu denetliyor (açlık 1.0 + susuzluk 1.0 → ölmemeli)
+ve bir negatif kontrol bayrağı kaldırınca testin düştüğünü doğruluyor.
+
+## K-063 · 2026-09-24 · Süre 107 dk; jest bir kez; oyuncu mırıldanır, kelime yazıyla belirir
+
+### Üç kullanıcı kararı
+
+**1. Toplam süre 107 dakika yazılı olsun.** 1. gün tam gün batımında başlar
+(`GUN1_BASLANGIC_T = 0.65`), oynanan kısmı ~7 dk. 7 + (5 × 20) = 107.
+Kısa ve sert bir açılış kasıtlıdır; 120 hedefi buna göre düzeltildi.
+
+**2. İşaret jesti BİR KEZ olur:** 1. gün, arkadaş çağırırken. Sebep, animasyon
+spektinin kendi kuralı: *"NPC işaret etmez; tek anlamlı, tekrar eden mesaj
+jestleri kullanılmaz"* — mesaj jestleri arkadaşı bir arayüze çevirir. Bir
+kereye özgü, yazılmış bir sahne anı bu kuralı bozmaz; alışkanlık hâline gelen
+bir jest bozar.
+
+**3. Oyuncu konuşur ama KELİME DUYULMAZ.** Duyulan şey boğuk, anlaşılmayan
+mırıltıdır; ekranda beliren yazı onun YAKLAŞIK karşılığıdır. Ayrım önemli:
+seslendirilmiş diyalog olsaydı sahne bir konuşma denemesi olurdu; mırıltı +
+yazı olunca bir **yalnızlık anı** oluyor. Cevap gelmez, seçenek çıkmaz,
+diyalog açılmaz.
+
+### Sınır inşa değişmezidir
+
+`betik/veri/sozler.gd`: sözler kapalı listeden gelir, türü yalnızca **çağrı**
+ya da **soru** olabilir. **"Bildirim" diye bir tür YOKTUR** — yani "seni
+bırakmam" gibi bir satır yazılamaz, çünkü yazılacak yeri yok. Sebep tasarım
+pusulası: oyuncunun arkadaşa karşı tutumunu oyun belirleyemez. `EN_COK = 6`;
+fazlası diyalog sistemine dönüşür. Dil testi hem sözleri hem değişmezi
+denetliyor.
+
+### Not: dil testi bir kaymayı yakaladı
+
+CSV'ye üç söz eklendikten sonra yeniden içe aktarılmamıştı; test altı satırda
+"çeviri çözülmedi, ham anahtar döndü" dedi. Yani boru hattının bayatlaması
+sessiz kalmıyor — `--import` unutulursa test düşüyor.
+
+## K-064 · 2026-09-24 · Üçüncü gün: barınak, köpek — ve "denedi ama yetişemedi"
+
+### Kullanıcı kararları
+
+- **İşaret jesti kalktı** (2. gün). Zaten kapının önünde ve parçayı uzatıyor;
+  eylem işaretten güçlü. K-063'ün "bir kez" kuralı korunuyor.
+- **Yüz ifadesi bedenle kurulur.** Yüz animasyonu yok. Yarım saniyelik
+  duraklama, omuz düşmesi, başın yana eğilmesi. *Beden yüzden daha okunamaz
+  kalır — yani belirsizlik bedenle DAHA iyi çalışıyor.*
+- **Çöken gövde 4. günde açılır** ve içinde barınağın çatısını kapatacak
+  malzeme vardır: fırtınadan önceki son fırsat, ve "kim gidecek" sorusunun
+  sebebi.
+- **Yabanileşmiş köpek, kurt değil.** Okyanus ortasındaki küçük bir adada
+  kurdun varlığı ayrıca açıklama gerektirir. Saldırının sebebi de açık:
+  yiyeceğin kokusu; arkadaş stoğu korurken hedef olur.
+
+### Barınağın eksikliği KASITLI
+
+Barınak 3. günde kurulur ama **üstü açık kalır.** Böylece 4. günün fırtınası
+gökten inen yeni bir felaket değil, **bir gün önce fark edilen zayıflığın
+sınanması** olur. Sebep–sonuç hiçbir şey anlatmadan kuruluyor — K-041'in tam
+istediği şey.
+
+### Zincir yeniden düzenlendi
+
+`barinak` yeni bir sahne oldu (3. gün), `kim-gidecek` 4. güne taşındı ve artık
+bir SEBEBİ var: biriniz yaralı, çöken gövde açıldı, çatı malzemesi orada,
+fırtına geliyor. **10 sahne, cutscene hâlâ 3.** Hiç katılmayan oyuncuda 10/10
+açılıyor.
+
+### "Denedi ama yetişemedi" — koda geçti
+
+Kullanıcının üçüncü tasarım notu: *"Oyuncu müdahale etmeye çalışıp
+yetişemediyse, bunu korkup geri çekilmekle aynı saymamalıyız."*
+
+`Guven.tehlikede_birakti(gordu_mu, denedi_mi)`:
+- görmediyse → ceza yok (algı dürüstlüğü)
+- gördü ve **denedi** → ceza yok
+- gördü ve **denemedi** → ihanet + ihmal
+
+Ölçüldü: denedi 0.35 · denemedi 0.23 · görmedi 0.35 (başlangıç 0.35).
+Moral yaralanmadan zaten düşer; bu ayrı kanaldır ve buradan geçmez.
+
+**Bu, ihmal kanalının dünyaya bağlanan İKİNCİ kaynağıdır** (K-061 borcunun
+1/4'ü kapandı). Kalan üçü: gece yalnız bırakma, ateşi söndürme, sözü tutmama.
+
+## K-065 · 2026-09-24 · Dördüncü gün; ve kazanılabilir cutscene
+
+Metin on kısıtın **onunu da** tuttu. Üç şey özellikle iyi çıktı:
+
+### 1. A1 metinle kurulmuş
+
+> *"Bunlar, o gece nerede olduğunuzdan ve ne yaptığınızdan bağımsız olarak
+> oradadır: fırtına adadan geçmiştir."*
+
+Koşulsuz iz kuralı burada koda değil **dünyaya** yazılmış. Islak kül, açılmış
+çatı, açıklığa sürüklenmiş yosun — oyuncu ne yaparsa yapsın sabah oradalar.
+Zincirin kırılmazlığı artık bir mühendislik kuralı değil, bir manzara.
+
+### 2. Cutscene 2 KOŞULLU oldu (karar)
+
+> *"Nöbetteysen bu kısa uyanma anı yaşanmaz: yaklaşan fırtınayı görerek
+> hareket edersin."*
+
+Uyuyan oyuncu 15–20 saniye kontrolünü kaybeder; **nöbet tutan hiç
+kaybetmez.** Tam cutscene sayısı hâlâ üçte kilitli (D2) — değişen, birinin
+**kazanılabilir** olması. Uyanıklığın karşılığı gösteri değil, eylem.
+
+Bedeli kabul edildi: nöbet tutan oyuncu üç cutscene'den birini hiç görmez.
+Bu, "gösteriyi kaybetmek" değil "kontrolü kazanmak" olarak tasarlandı.
+
+### 3. Fırtına GÖRÜNTÜYLE haber veriyor
+
+Rüzgârın panelin kenarını kaldırması, denizin koyulaşması, kuşların adanın
+içine çekilmesi. *"İkiniz de görürsünüz. Kimse fırtınanın geleceğini
+söylemez."* — kritik bilgi yalnızca sesle taşınmıyor (erişilebilirlik kuralı),
+ve arkadaş bunu bir mesaj jestiyle bildirmiyor; ikiniz de aynı dünyayı
+görüyorsunuz.
+
+### Yaranın günü yönetmesi
+
+"Kim gidecek" ayrı bir sahne değil, 3. gecenin sonucu. Dört yol da yazılmış:
+sen gidersin · o gider · yaralıyken onu durdurursun · hiçbir şey yapmazsın
+(gün yine ilerler). **Ayrılığın en güçlü ayrıntısı dönüş:** kampa döndüğünde
+ateş canlı ve barınağın açık tarafına taş yığılmış — yokluğunda ne yaptığı
+anlatılmıyor, **sonucu duruyor.**
+
+Simetriği de var: o giderse gecikmesi "bir sonraki sefer onu göndermenin
+bedelini görünür kılar."
+
+### Yeni koşullu izler
+
+`malzeme-getirildi`, `nobet-kimde` eklendi. Zincir hâlâ 10/10 açılıyor.
+
+## K-066 · 2026-09-24 · Beşinci gün — ve kapanan bir son
+
+Metin **on iki kısıtın on ikisini de** tuttu; en temiz gün bu.
+
+### Tek kap döngüsü: mekanik ile duygu aynı cümlede
+
+> *"Kabı doldurup döndüğünde arkadaşına su verirsin. Sonra kendinin de
+> susadığını fark edersin. Yeniden gitmen gerekir."*
+
+K-056'da suyu "ucuz ve keskin" tasarlarken bunu arıyordum ama bulamamıştım:
+tek kap, bedeli **nesnenin kendisine** gömüyor. Ve her gidiş onu yalnız
+bırakıyor — yani bakım eylemi ile ihmal eylemi **aynı hareket**. Oyunun tezi
+("senin ihtiyacın olan bir şeyden vazgeçmek") burada en saf hâlinde.
+
+### Oyuncunun yanlış okumasını önleyen cümle
+
+> *"Su içince kısa süreliğine doğrulması, iyileştiği anlamına gelmez."*
+
+Geri bildirimin yanlış yorumlanma riskini metin kendisi kapatıyor. Toparlanma
+üç şart ister: yiyecek VE su VE geceyi yanında geçirmek (spekt §9).
+
+### Salın sınırı yazısız sezdiriliyor
+
+> *"Kenarına bastığında bordası hemen suya yaklaşır; ağırlığını çekince
+> yeniden yükselir. Üzerinde kapasitesini anlatan bir yazı yoktur."*
+
+ChatGPT'nin §11'deki önerisi ("sınırı önceden sezdir") uygulanmış. Oyuncu
+"bir kişi taşır"ı son gün deneyerek öğrenmiyor.
+
+### ÜÇÜNCÜ İHMAL KAYNAĞI BAĞLANDI — ve bir son açıldı
+
+Metnin *"ayrılıp başka bir yerde uyursan sabah farkı görürsün"* cümlesi
+`Guven.gece_yalniz_birakti(muhtac_mi)` olarak koda geçti. "Gördü mü" şartı
+yok — **yokluk da algıdır.** Ucuz ikizi de var: sağlamken yanından ayrılmak
+ihmal sayılmaz.
+
+**Ölçüldü:** üç gün üst üste ihmal (tehlikede bırakma + gece yalnız bırakma)
+→ ihmal **1.00**, moral tabanı **0.000**, çöküş eşiği 0.12'nin çok altında.
+
+**K-061'de "moral ölümü hiçbir oynanışla tetiklenemiyor — bir son tamamen
+kapalı" diye yazdığım borç KAPANDI.** "Arkadaş kalıcı olarak ölebilir"
+değişmez kuralı artık kâğıtta değil.
+
+Kalan iki kaynak (ateşi söndürme, sözü tutmama) hâlâ bağlı değil ama
+ulaşılabilirlik için artık gerekli değiller.
+
+## K-067 · 2026-09-24 · Altıncı gün; zaman çizgisi düzeltmesi; adalet kuralı
+
+### Zaman çizgisi düzeltildi (kullanıcı) — hata bendeydi
+
+Altıncı gün briefinde sırayı "şafak → son gün → **son gece** → ertesi şafak
+gelgit" diye dizmiştim. Bu oyunu **yedi güne taşıyordu**: altıncı günün akşamı,
+sonra sabah, sonra yine "aynı günün batımı".
+
+Doğrusu: **son gece ateş sahnesi BEŞİNCİ gecededir**; seçim altıncı gün
+yaşanır; sal altıncı günün **batımında** gider. Zincirde `son-gece` 5. güne
+alındı; 10/10 açılmaya devam ediyor.
+
+Bir de kullanıcının eklediği doğru ayrıntı: **arkadaş 5. gün ayrıldıysa iki
+kişilik ateş sahnesi yaşanamaz — onun YOKLUĞU sahnenin karşılığı olur.**
+Sahne yine geçer, izi yine düşer. A1'in doğru uygulaması.
+
+### ADALET KURALI (kullanıcı) — ve ölçümü
+
+> *"Beşinci günkü tam bakım iyileştirir; yalnızca bir kısmını yapıp öncesinde
+> ağır ihmal biriktirmemiş oyuncuyu ani ölümle cezalandırmayız."*
+> *"Birikmiş ihmal varsa arkadaşın yavaş vazgeçişi fırtınadan önce de
+> bedeniyle görülmeli."*
+
+İkinci cümle 4. günün metnine koşullu ayrıntı olarak eklendi: ihmal varsa
+çöküş **fırtınadan önce** görünür, böylece 6. gün uyanmaması yalnızca 5. günkü
+hastalığa bağlanmaz.
+
+Birinci cümle **zaten modelin sonucuydu**, şimdi teste bağlandı. Ölçüldü:
+
+| İhmal | 6. günde ölüm mümkün mü |
+|---|---|
+| 0.10 · 0.25 · 0.40 · 0.55 | **HAYIR** |
+| 0.90 | evet |
+
+Matematiksel eşik: `taban = 0.34 × (1 − ihmal) ≤ 0.12` → **ihmal ≥ 0.647.**
+Pratikte bu, üç gece üst üste çökmüş arkadaşı yalnız bırakmak (3 × 0.25) ya da
+dört kez tehlikede bırakmak demek — ve ihmal bakımla günde 0.15 gerilediği için
+**tek seferlik bir eksiklik asla yetmez.** Kullanıcının istediği adalet
+sayıyla sağlanıyor.
+
+### Sonun kurallarına uyulmuş
+
+Metin on üç kısıtın tamamını tuttu. Özellikle:
+- **Ahlaki hüküm yok:** *"Kurtuluş görüntüsü, kararların özeti ya da doğru
+  seçimi açıklayan bir cümle gelmez. Ada birkaç saniye daha görünür."*
+- **Arkadaşın kararı sürpriz değil sonuç:** yüksek güvende salı sana iter, sen
+  ısrar edersen bir süre sonra kabul eder; düşük güvende senden önce biner ve
+  dönüp bakmaz.
+- **Güç, güvenin yerine geçmez:** *"Ayağa kalkamayacak kadar güçsüzse bunu
+  yapamaz; güvensizlik ona kaybettiği gücü geri vermez."* — iki eksenin
+  (güven / moral) birbirine karışmadığının en net cümlesi.

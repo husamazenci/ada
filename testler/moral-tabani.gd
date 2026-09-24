@@ -15,6 +15,7 @@ extends SceneTree
 
 const A := preload("res://betik/veri/ayarlar.gd")
 const Gv := preload("res://betik/ai/guven.gd")
+const D := preload("res://betik/sim/dunya.gd")
 
 const EPS := 0.0005
 const GUN_KESRI := 1.0 / 120.0
@@ -65,6 +66,77 @@ func _initialize() -> void:
 	_ez(g5, 1.0, 1)      # yalnızca 1 gün — COKUS_EN_AZ_GUN = 2
 	if g5.olebilir_mi(6):
 		hata.append("İHLAL: tek günlük çöküş öldürdü — 'defalarca müdahale fırsatı' kuralı çiğneniyor")
+
+	# 6 · İKİNCİ ÖLÜM YOLU KAPALI OLMALI (K-062).
+	# Arkadaş açlık/susuzluk sayacı 1.0'a vurunca ölebiliyordu; bu, görünür
+	# çöküşü, iki günlük müdahale penceresini ve "en erken 6. gün" kuralını
+	# TAMAMEN atlıyordu. Kıtlık gerçekten ısırmaya başlayınca ortaya çıktı.
+	var w = D.new()
+	if w.arkadas.ihtiyactan_olebilir:
+		hata.append("İHLAL: arkadaş ihtiyaçtan ölebiliyor — çöküş sistemi atlanır")
+	if not w.oyuncu.ihtiyactan_olebilir:
+		hata.append("oyuncu ihtiyaçtan ölemiyor — oyuncunun ölümü hiç mümkün olmaz")
+	w.arkadas.aclik = 1.0
+	w.arkadas.susuzluk = 1.0
+	w.arkadas.ilerle(0.5, false)
+	if w.arkadas.oldu:
+		hata.append("İHLAL: arkadaş açlık/susuzluktan ÖLDÜ — ani ölüm yolu hâlâ açık")
+	print("arkadaş açlık 1.00 · susuzluk 1.00 → öldü mü: %s (hayır olmalı)" % w.arkadas.oldu)
+
+	# 7 · "Denedi ama yetişemedi" ihanet SAYILMAZ (K-064).
+	var d1 := Gv.new(); var d2 := Gv.new(); var d3 := Gv.new()
+	var bas := d1.deger
+	d1.tehlikede_birakti(true, true)     # gördü, denedi → ceza yok
+	d2.tehlikede_birakti(true, false)    # gördü, denemedi → ceza
+	d3.tehlikede_birakti(false, false)   # görmedi → ceza yok
+	print("tehlikede bırakma → denedi %.2f · denemedi %.2f · görmedi %.2f (başlangıç %.2f)" % [
+		d1.deger, d2.deger, d3.deger, bas])
+	if d1.deger < bas:
+		hata.append("İHLAL: denediği hâlde yetişemeyen oyuncu cezalandırıldı")
+	if d2.deger >= bas:
+		hata.append("bilerek bırakma cezalandırılmadı — ayrım hiç çalışmıyor")
+	if d3.deger < bas:
+		hata.append("İHLAL: görmediği bir şey için cezalandırdı (algı dürüstlüğü)")
+	if d2.ihmal <= 0.0:
+		hata.append("bilerek bırakma ihmal üretmedi — ikinci kaynak bağlanmamış")
+
+	# 8 · Gece yalnız bırakma (K-066) — ve UCUZ İKİZİ.
+	var n1 := Gv.new(); var n2 := Gv.new()
+	n1.gece_yalniz_birakti(true)    # çökmüşken bırakıldı → ihmal
+	n2.gece_yalniz_birakti(false)   # sağlamken ayrıldın → ihmal DEĞİL
+	print("gece yalnız bırakma → muhtaçken ihmal %.2f · sağlamken %.2f" % [n1.ihmal, n2.ihmal])
+	if n1.ihmal <= 0.0:
+		hata.append("çökmüşken yalnız bırakma ihmal üretmedi")
+	if n2.ihmal > 0.0:
+		hata.append("İHLAL: sağlamken yanından ayrılmak ihmal sayıldı (ucuz ikiz)")
+
+	# Üç kaynak bağlandığında çöküş oynanışla ULAŞILABİLİR olmalı (K-061 borcu).
+	var y3 := Gv.new()
+	for gun in 3:
+		y3.tehlikede_birakti(true, false)
+		y3.gece_yalniz_birakti(true)
+	print("üç gün üst üste ihmal → ihmal %.2f · moral tabanı %.3f (çöküş eşiği %.2f)" % [
+		y3.ihmal, y3.moral_tabani(), A.MORAL_COKUS_ESIGI])
+	if y3.moral_tabani() > A.MORAL_COKUS_ESIGI:
+		hata.append("üç gün ihmalle bile taban çöküş eşiğinin ÜSTÜNDE (%.3f) — moral ölümü hâlâ ulaşılamaz" % y3.moral_tabani())
+
+	# 9 · ADALET KURALI (K-067, kullanıcı): "yalnızca bir kısmını yapıp
+	# öncesinde ağır ihmal biriktirmemiş oyuncuyu ani ölümle cezalandırmayız."
+	# Tek bir eksik jest bir gecede öldürmemeli. Orta düzey ihmalde ölüm
+	# 6. günde bile MÜMKÜN OLMAMALI.
+	for orta_ihmal in [0.10, 0.25, 0.40, 0.55]:
+		var a := Gv.new()
+		a.ihmal_ekle(orta_ihmal)
+		_ez(a, 1.0, 10)          # koşullar cehennem olsa bile
+		if a.olebilir_mi(6):
+			hata.append("İHLAL: ihmal %.2f (ağır değil) iken 6. günde ölüm mümkün — eksik bakım ani ölümle cezalandırılıyor" % orta_ihmal)
+	# Buna karşılık AĞIR ihmalde ölüm mümkün OLMALI, yoksa kural kâğıtta kalır.
+	var b := Gv.new()
+	b.ihmal_ekle(0.9)
+	_ez(b, 1.0, 10)
+	if not b.olebilir_mi(6):
+		hata.append("ağır ihmalde bile ölüm mümkün değil — son yine kapalı")
+	print("adalet: ihmal 0.10–0.55 → ölüm YOK · ihmal 0.90 → ölüm mümkün (%s)" % b.olebilir_mi(6))
 
 	print("")
 	if hata.is_empty():
