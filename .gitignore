@@ -3,3 +3,8 @@
 .DS_Store
 dist/
 *.translation
+
+# Satıcı indirmesi olduğu gibi depoya girmez (127 MB, çoğu Unity/Unreal
+# kopyası). Kullandığımız dosyalar varlik/karakter/temel/ altına kopyalandı;
+# kaynak belge/VARLIK-KAYNAKLARI.md'de yazılı.
+varlik/karakter/Universal Base Characters\[Standard\]/

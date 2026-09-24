@@ -17,8 +17,16 @@ const D := preload("res://betik/ai/davranis.gd")
 @export_range(0.5, 20.0, 0.1) var ivme_ms2: float = 6.0
 @export_range(0.5, 12.0, 0.1) var donme_hizi_rad_s: float = 3.0
 @export_range(0.05, 1.5, 0.05) var mesafe_olu_bant_m: float = 0.4
-@export_range(0.0, 1.2, 0.01) var oturma_dusumu_m: float = 0.55
+## 0 = alçalma yok. Kapsül döneminde 0.55'ti: kapsülün duruşu olmadığı için
+## "oturmak" ancak alçalmakla gösterilebiliyordu. Gerçek gövdede ÖLÇÜLDÜ ve
+## kötüydü — bacaklar zemine gömülüyor, "oturan" değil "batan" biri okunuyordu.
+## Dip moral artık omurga eğimiyle (30°) ve durmakla okunuyor; gerçek oturma
+## pozu animasyon kütüphanesiyle gelecek.
+@export_range(0.0, 1.2, 0.01) var oturma_dusumu_m: float = 0.0
 @export_range(0.5, 8.0, 0.1) var oturma_hizi_ms: float = 2.0
+@export_range(0.5, 12.0, 0.1) var egim_hizi_rad_s: float = 2.5
+## Modelin baktığı yön Godot'nun −Z'sinden sapıyorsa buradan düzeltilir.
+@export_range(-180.0, 180.0, 1.0) var model_yon_duzeltme_derece: float = 0.0
 
 @export_group("Gri kutu sondası (yalnızca geliştirme)")
 ## −1 = simülasyondan al. 0..1 = zorla. Üç seviyeyi kadrajlamak için.
@@ -35,12 +43,21 @@ var cagriya_cevap_veriyor := false
 var _oyuncu: Node3D
 var _govde: Node3D
 var _govde_y0: float = 0.0
+var _iskelet: Skeleton3D
+var _omurga: Array[int] = []
+var _egim_su_an := 0.0
 
 func _ready() -> void:
 	_oyuncu = get_node_or_null(oyuncu_yolu)
 	_govde = get_node_or_null(^"Govde")
 	if _govde:
 		_govde_y0 = _govde.position.y
+		_iskelet = _govde.find_child("Skeleton3D", true, false)
+	if _iskelet:
+		for ad in ["spine_01", "spine_02", "spine_03"]:
+			var i := _iskelet.find_bone(ad)
+			if i >= 0:
+				_omurga.append(i)
 
 func _physics_process(delta: float) -> void:
 	if guven_zorla >= 0.0:
@@ -86,7 +103,29 @@ func _physics_process(delta: float) -> void:
 	var hedef_aci := atan2(bakis.x, bakis.z)
 	rotation.y = rotate_toward(rotation.y, hedef_aci, donme_hizi_rad_s * delta)
 
-	# MORAL KANALI: duruş. Dipte gövde alçalır (oturma yer tutucusu).
+	# MORAL KANALI: duruş — İKİ parça.
 	if _govde:
+		_govde.rotation.y = deg_to_rad(model_yon_duzeltme_derece)
+
+		# 2) ALÇALMA (dip moralde oturma). Animasyon kütüphanesi gelene kadar
+		#    yer tutucu. TEK BAŞINA "yere gömülmüş" diye okunuyordu; 30°'lik
+		#    eğimle birlikte "çökmüş" diye okunuyor. Gerçek çözüm Quaternius
+		#    Universal Animation Library'deki oturma klibi (pano: açık borç).
 		var hedef_y := _govde_y0 - (oturma_dusumu_m if D.oturuyor_mu(moral) else 0.0)
 		_govde.position.y = move_toward(_govde.position.y, hedef_y, oturma_hizi_ms * delta)
+
+	# 1) ÖNE EĞİM (0° / 12° / 30°) — OMURGA KEMİĞİNDEN, gövde kökünden değil.
+	#    Önce kökü döndürdüm: pivot AYAKLARDA kaldığı için "öne düşen ağaç"
+	#    gibi göründü, üstelik alçalmayla birlikte bacaklar zemine gömüldü.
+	#    Ölçüldü: omurga kemiği yerel X'te dönünce baş aşağı ve öne gidiyor —
+	#    yani doğru pivot bel. Açı üç omurga kemiğine PAYLAŞTIRILIR; tek
+	#    kemiğe verilince bel kırılıyor gibi duruyor.
+	#
+	#    UYARI: set_bone_pose_rotation pozu DEĞİŞTİRİR, üstüne eklemez.
+	#    AnimationTree geldiğinde bu bir SkeletonModifier3D'ye taşınmalı,
+	#    yoksa animasyonla çakışır (pano: açık borç).
+	if _iskelet and not _omurga.is_empty():
+		var pay := deg_to_rad(D.duruş_egimi_derece(moral)) / float(_omurga.size())
+		_egim_su_an = move_toward(_egim_su_an, pay, egim_hizi_rad_s * delta)
+		for i in _omurga:
+			_iskelet.set_bone_pose_rotation(i, Quaternion(Vector3.RIGHT, _egim_su_an))

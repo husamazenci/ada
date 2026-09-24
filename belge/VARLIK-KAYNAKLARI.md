@@ -6,7 +6,8 @@
 > Bütçe 0 TL. **Lisansı belirsiz olan varlık bu deftere girmez.**
 
 Kullanılan varlık buraya **indirme tarihi ve yapılan değişiklikle** yazılır.
-Henüz hiçbiri indirilmedi; aşağıdakiler ADAY listesidir.
+Aşağıdaki 1–N bölümleri ADAY listesidir; gerçekten indirilip depoya girenler
+en sonda "İndirilenler" bölümünde.
 
 ---
 
@@ -101,3 +102,39 @@ görünür. K-053 "tutarlı stilize" dedi ve tutarlılık burada kırılır.
 denenir. Fotoğraf dokusu kullanılacaksa 1K'ya indirilir, normal haritası
 neredeyse kapatılır ve rengi düzleştirilir. Ölçüt gözle: **kadrajda hangi
 yüzeyin fotoğraf olduğu anlaşılıyorsa yanlıştır.**
+
+
+---
+
+## İndirilenler — depoda gerçekten duran varlıklar
+
+### Universal Base Characters (Quaternius) · CC0 · indirildi 2026-09-24
+
+| | |
+|---|---|
+| Kaynak | Quaternius — Universal Base Characters [Standard] |
+| Lisans | CC0 (`License_Standard.txt` pakette) |
+| Depodaki yer | `varlik/karakter/temel/` |
+| Kullanılan | `Superhero_Male_FullBody.gltf` + `.bin` + 7 doku |
+| Ölçü | boy 1.81 m, **metre biriminde** — ölçeklemeye gerek yok |
+| Rig | 65 kemik, UE adlandırması (`pelvis`, `spine_01..03`, `thigh_l` …) |
+| Yoğunluk | 14 318 üçgen · 3 ağ (gövde, saç, göz) · 3 malzeme |
+
+**Yapılan değişiklikler:**
+
+1. **İki doku adı düzeltildi.** Satıcı ihracı `T_Hair_1_Normal_png.png` ve
+   `T_Eye_Normal_png.png` arıyordu; pakette bu adda dosya YOK, doğruları
+   `T_Hair_1_Normal.png` ve `T_Eye_Normal.png`. Düzeltilmeseydi Godot iki
+   normal haritayı bulamaz ve **hata bile vermeden** saç/göz normalsiz
+   kalırdı. `.gltf`'in LFS dışında, düz metin tutulması bunu görünür kıldı.
+2. **Yalnızca kullanılan dosyalar depoya alındı** (11 MB). Satıcı klasörünün
+   tamamı 127 MB ve çoğu Unity/Unreal kopyası; `.gitignore`'da.
+
+**"Superhero" isim, kostüm değil:** model iç çamaşırlı bir TEMEL gövde.
+Hayatta kalma oyunu için **kıyafet gerekiyor** — ayrı bir CC0 paket işi.
+
+### Eksik: Universal Animation Library (Quaternius) · CC0
+
+Bu pakette **animasyon yok** (0 klip). Aynı rigi kullanan Universal Animation
+Library indirilmeden arkadaş T-pozunda duruyor. Gereken en az dört klip:
+**dur · yürü · otur · çök.**

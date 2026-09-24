@@ -100,12 +100,42 @@ kapalı. Bağlanacaklar ve önkoşulları:
 | Geceleyin ateşi söndürme | yakıt sistemi | hayır |
 | Sözü tutmama | "bekle" mekaniği | hayır |
 
+### AÇIK BORÇ — animasyon kütüphanesi (2026-09-24)
+
+Gövde geldi, animasyon gelmedi. Arkadaş T-pozunda duruyor ve "oturma"
+yer tutucu (omurgayı 30° öne eğmek). **Kullanıcıdan gereken tek şey:**
+Quaternius **Universal Animation Library** (CC0) indirip
+`varlik/karakter/animasyon/` altına koymak — Universal Base Characters ile
+AYNI rigi kullanıyor, retarget yok.
+
+Geldiğinde yapılacaklar (Claude):
+1. `AnimationLibrary` olarak içe aktarma, klip adlarını doğrulama
+2. `AnimationTree` + `StateMachine`: dur · yürü · otur · çök
+3. Tempo çarpanını (`Davranis.tempo_carpani`) yürüyüş hızına koşma
+4. Omurga eğimini `SkeletonModifier3D`'ye taşıma — şu an
+   `set_bone_pose_rotation` pozu DEĞİŞTİRİYOR, animasyonla çakışır
+5. Kıyafet: model iç çamaşırlı temel gövde; CC0 giysi paketi gerekiyor
+
+### AÇIK BORÇ — mırıltı sesi (K-068)
+
+Çağırma çalışıyor, yazı ekranda beliriyor, ama **ses yok**. Kullanıcının
+kararı: "kelime duyulmasın, karakterin boğuk mırıltısı duyulsun". Uydurma
+bir yer tutucu koymaktansa sessiz bırakıldı. CC0 bir mırıltı/nefes sesi
+gerekiyor (`varlik/ses/` altında 48 CC0 ses var, aralarında yok).
+
 ### Şu an
 - Faz 0 bitti: proje iskeleti, iki test, dokuz negatif kontrol, LFS, 48 CC0 ses.
 - Tasarım gözden geçirmesi bitti (K-055, K-056): kapsam 6 gün/120 dk, zincir
   düzeltildi, moral modeli sayıya bağlandı, düşüş tablosu yazıldı, su ihtiyaç
   oldu, fiil listesi dört tuşa indi, insan hissi kural seviyesine çıktı.
-- Sıradaki: **Faz 1 · çekirdek an** — saf simülasyon katmanı, penceresiz.
+- Faz 1 sürüyor: saf simülasyon + köprü + gri kutu kapısı + çağırma bitti.
+  10 test, 74 negatif kontrol, derlenebilir `.app`.
+- **Çağırma (K-068) bağlandı** — Q ile seslen, arkadaş bedeniyle cevap versin.
+  Sahnede ölçüldü: yüksek 1.05 sn · orta 4.85 sn · düşük gelmiyor.
+- **Gerçek gövde sahnede** — kapsül gitti, 1.81 m insan geldi; mesafeler
+  bozulmadı (2.20 / 4.28 / 8.28 m).
+- Sıradaki: animasyon kütüphanesi beklerken bağımsız işler (yakıt sistemi →
+  `IHMAL_ATESI_SONDURME`, "bekle" sözü → `IHMAL_SOZ_TUTMAMA`).
 
 ---
 
