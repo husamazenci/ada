@@ -328,6 +328,7 @@ bunlar `@export var` ile tanımlanır, editör panelinde kaydırıcı olur ve **
 | Animasyon kütüphanesi | `godot --headless --path . --script res://testler/animasyon.gd` |
 | Ateş ve yakıt (K-070) | `godot --headless --path . --script res://testler/ates.gd` |
 | Yaban köpeği (K-071) | `godot --headless --path . --script res://testler/kopek.gd` |
+| "Bekle" sözü (K-072) | `godot --headless --path . --script res://testler/soz.gd` |
 | Kadraj (görüntü + ölçüm) | `godot --path . --script araclar/kadraj.gd` — görünür pencere |
 | Çağrı sondası (ekranda) | `godot --path . --script araclar/cagri-sondasi.gd` — görünür pencere |
 | Performans bütçesi | `godot --path . --script araclar/butce.gd` — görünür pencere, ~12 s |

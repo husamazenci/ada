@@ -2507,3 +2507,58 @@ göstermeye başladı. Sebep: senaryo 3. gecedeydi, ateşsiz gece köpeği de
 Görsel varlık yok — köpek şu an yalnızca simülasyonda. Quaternius
 **Ultimate Animated Animal Pack** (CC0, 12 hayvan, 12+ animasyon) aday;
 köpek/kurt içeriği indirilince doğrulanacak.
+
+
+---
+
+## K-072 · "Bekle": söz türü açılmadan verilen söz
+
+**Tarih:** 2026-09-25 · **Karar:** kullanıcı (üç seçenekten birincisi).
+
+`IHMAL_SOZ_TUTMAMA` ihmalin **beşinci ve son** kaynağıydı; bağlanması bir
+tasarım engeline takılıyordu. Söz türleri kapalı liste (`cagri`, `soru`) ve
+"bildirim" **bilerek yok** (K-063): oyun oyuncunun tutumunu söyleyemesin diye.
+"Bekle" ne çağrı ne soru — **buyruk**. Yeni tür açmak sınırı gevşetirdi.
+
+**Kullanıcı kararı:** yeni tür yok. **"Bekle" çağrının bir çeşidi.**
+Q'ya basmak *"gel"*, basılı tutmak *"kal"*. Kapalı liste olduğu gibi kalıyor.
+
+### Kural
+
+| | |
+|---|---|
+| Söz | "orada kal, döneceğim" |
+| Tutmak | gidip **dönmek** (≤ 3 m) |
+| Tutmanın ödülü | **YOK** |
+| Bozmanın bedeli | güven düşer + **0.15 ihmal** |
+| Ömrü | 0.08 gün ≈ 96 sn → ~77 m gidiş-dönüş |
+
+**Tutmanın ödülü olmaması kasıtlı.** Dönmek jestin kendisi değil asgarisi;
+ödüllendirilseydi oyuncu söz verip dönerek güven çiftliği kurar ve "ucuz jest
+yükseltmez" (§2) delinirdi. Ölçüldü: gidip dönen oyuncuda güven 0.500 → 0.500.
+
+### Dört adalet şartı, dördü de teste bağlı
+
+1. **Duyulmayan söz verilemez.** Menzil dışındayken Q tutmak sözü açmaz —
+   oyuncu vermediği sözden ceza yemesin.
+2. **Tutmak mümkün olmalı.** Ömür ~77 m gidiş-dönüşe yetiyor; çağrı menzili
+   25 m. Kısa olsaydı ceza davranışa değil **saate** bağlanırdı.
+3. **Hiç gitmediysen söz bozulmaz.** Yanı başında kalan oyuncu sözü zaten
+   tutuyor. Ölçüldü: ihmal 0.000.
+4. **Tekrar "bekle" demek sayacı sıfırlamaz.** Yoksa oyuncu sözü sonsuza
+   kadar erteler.
+
+### Ekranda görünür
+
+Söz açıkken arkadaş **yerinden kıpırdamaz**, seni takip etmez, ama döner ve
+bakar. Görünmeyen bir söz, tutulup tutulmadığı anlaşılmayan bir sözdür.
+
+### Testimdeki kusur
+
+"Uzaklaşma mandalını kaldır" sabotajı **kaçtı.** Mandal olmadan söz daha
+ağızdan çıkarken "tutuldu" sayılıyordu — ama testin ölçtüğü SONUÇ ("tutuldu
+1") iki hâlde de aynıydı. Ölçülmesi gereken şey sonuç değil, sözün **arada
+açık kaldığı**: oyuncu yanı başında dururken 10 adım geçiyor ve söz hâlâ açık
+olmalı. Madde eklendi.
+
+**İhmalin beş kaynağı da artık dünyada bağlı.**

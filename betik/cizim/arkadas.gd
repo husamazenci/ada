@@ -32,6 +32,10 @@ var moral: float = 0.70
 # Köprü yazar (betik/cizim/oyun.gd), burası yalnızca uygular. Karar saf
 # katmandadır (betik/ai/cagri.gd): "cevap veriyor mu" sorusunu sahne sormaz.
 var cagriya_cevap_veriyor := false
+# "Bekle" sözü açık. Sözün EKRANDAKİ tek karşılığı bu: yerinden kıpırdamaz,
+# seni takip etmez, ama döner ve bakar. Görünmeyen bir söz, tutulup
+# tutulmadığı anlaşılmayan bir sözdür.
+var bekliyor := false
 
 var _oyuncu: Node3D
 var _govde: Node3D
@@ -76,6 +80,8 @@ func _physics_process(delta: float) -> void:
 	# MORAL KANALI: tempo. Dip moralde hiç yürümez (oturur).
 	var tempo := D.tempo_carpani(moral)
 	var istenen := Vector3.ZERO
+	if bekliyor:
+		tempo = 0.0          # söz verildi: olduğu yerde kalır
 	if tempo > 0.0 and absf(fark) > mesafe_olu_bant_m:
 		istenen = -yon * signf(fark) * taban_hiz_ms * tempo
 

@@ -87,11 +87,10 @@ kare. Üç oyuncu tipi üç güven seviyesine ayrışıyor.
 **Açık borç:** ışık yukarı bakıyor (kuyrukta, Cursor, tek satır). Gri kutu
 `main`'de ama düz aydınlatılıyor.
 
-### AÇIK BORÇ — ihmal kanalının 4/5'i bağlı değil (K-061)
+### KAPANDI — ihmal kanalının beşi de bağlı (K-061 borcu, 2026-09-25)
 
-`ayarlar.gd`'de beş ihmal kaynağı tanımlı, `dunya.gd`'de bağlı olan bir tane.
-Sonuç: **moral ölümü hiçbir oynanışla tetiklenemiyor** — bir son tamamen
-kapalı. Bağlanacaklar ve önkoşulları:
+`ayarlar.gd`'deki beş ihmal kaynağının **hepsi** artık dünyada karşılık
+buluyor. Moral ölümü oynanışla tetiklenebilir durumda.
 
 | Kaynak | Önkoşul | Şimdi yapılabilir mi |
 |---|---|---|
@@ -99,7 +98,7 @@ kapalı. Bağlanacaklar ve önkoşulları:
 | Tehlikede bırakma | köpek | **BAĞLANDI** — köpek geldi (K-071) |
 | Geceleyin ateşi söndürme | yakıt sistemi | **BAĞLANDI** (K-070) |
 | Elinde varken vermeme | — | **BAĞLANDI** |
-| Sözü tutmama | "bekle" mekaniği | hayır — tek kalan |
+| Sözü tutmama | "bekle" mekaniği | **BAĞLANDI** (K-072) |
 
 ### AÇIK BORÇ — kıyafet (2026-09-25)
 

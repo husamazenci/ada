@@ -42,6 +42,9 @@ static func topla(d) -> Dictionary:
 			"caydirma": d.kopek.caydirma_sayisi,
 		},
 		"_araya_girdi": d._araya_girdi, "kopek_sonucu": d.kopek_sonucu,
+		"soz_bekle": d.soz_bekle, "_soz_kalan": d._soz_kalan,
+		"_soz_uzaklasti": d._soz_uzaklasti,
+		"soz_tutuldu": d.soz_tutuldu, "soz_tutulmadi": d.soz_tutulmadi,
 		"_bugun_odun": d._bugun_odun,
 		"_ates_ihmali_bu_gece": d._ates_ihmali_bu_gece,
 		"oyuncu_atesin_isiginda": d.oyuncu_atesin_isiginda,
@@ -79,6 +82,9 @@ static func yukle(d, veri: Dictionary) -> bool:
 	d.kopek.saldiri_sayisi = int(kp["saldiri"])
 	d.kopek.caydirma_sayisi = int(kp["caydirma"])
 	d._araya_girdi = bool(veri["_araya_girdi"])
+	d.soz_bekle = bool(veri["soz_bekle"]); d._soz_kalan = float(veri["_soz_kalan"])
+	d._soz_uzaklasti = bool(veri["_soz_uzaklasti"])
+	d.soz_tutuldu = int(veri["soz_tutuldu"]); d.soz_tutulmadi = int(veri["soz_tutulmadi"])
 	d.kopek_sonucu = String(veri["kopek_sonucu"])
 	d._bugun_odun = int(veri["_bugun_odun"])
 	d._ates_ihmali_bu_gece = bool(veri["_ates_ihmali_bu_gece"])

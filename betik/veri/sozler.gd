@@ -23,6 +23,10 @@ const SOZLER: Array[Dictionary] = [
 	{"anahtar": "soz.hey",            "tur": "cagri", "gun": 1},
 	{"anahtar": "soz.iyi_misin",      "tur": "soru",  "gun": 1},
 	{"anahtar": "soz.duyuyor_musun",  "tur": "soru",  "gun": 1},
+	# "Bekle" ÇAĞRI türünde (K-072, kullanıcı kararı). Yeni bir tür açmak
+	# yerine çağrının çeşidi sayıldı: Q'ya basmak "gel", basılı tutmak "kal".
+	# Buyruk türü açılsaydı kapalı liste gevşerdi ve sonrasını tutmak zorlaşırdı.
+	{"anahtar": "soz.bekle",          "tur": "cagri", "gun": 3},
 ]
 
 static func dogrula() -> Array:

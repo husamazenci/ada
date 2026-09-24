@@ -100,6 +100,22 @@ const KURTARMA_MESAFESI_M := 3.0
 # Sebep: 5. günün ağırlığı hastalıktan gelmeli, üst üste binen iki engelden değil.
 const YARA_SURESI_GUN := 2.0
 
+# --- "Bekle" sözü (K-072) ---
+# Söz türü AÇILMADI (kullanıcı kararı): "bekle" yeni bir tür değil, ÇAĞRININ
+# bir çeşidi. Q'ya basmak "gel", basılı tutmak "kal" demek. Böylece K-063'ün
+# kapalı tür listesi (yalnızca çağrı ve soru) olduğu gibi duruyor — oyun
+# oyuncunun tutumunu hâlâ söyleyemiyor.
+const SOZ_BASILI_TUTMA_SN := 0.45     # bu kadar tutulursa "gel" değil "kal"
+
+# Sözün ömrü. ADALET ŞARTI: tutmak İSTEYEN oyuncu tutabilmeli. 0.08 gün,
+# 20 dakikalık günde ~96 saniye; 1.6 m/s ile ~150 m gidiş-dönüş demek.
+# Kısa olsaydı ceza mesafeye değil saate bağlanırdı.
+const SOZ_SURESI_GUN := 0.08
+
+# Sözü tutmuş sayılmak için bu kadar yakına dönmek gerekir. Kurtarma
+# mesafesiyle AYNI ve bu kasıtlı: "yanındayım" demenin tek bir ölçüsü olsun.
+const SOZ_DONUS_MESAFESI_M := KURTARMA_MESAFESI_M
+
 # Bir porsiyon ne kadar kapatır
 const YIYECEK_DOYURUR := 0.45
 const SU_KANDIRIR := 0.60

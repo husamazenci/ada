@@ -49,6 +49,11 @@ var _firsat_acik := false
 var _bugun_toplandi := 0
 var _bugun_odun := 0
 var _ates_ihmali_bu_gece := false
+var soz_bekle := false           # "bekle" sözü açık mı
+var _soz_kalan := 0.0            # sözün ömründen kalan (gün kesri)
+var _soz_uzaklasti := false      # söz verildikten sonra gerçekten gittin mi
+var soz_tutuldu := 0             # ölçüm
+var soz_tutulmadi := 0
 var _araya_girdi := false        # bu saldırı penceresinde basıldı mı
 var kopek_sonucu := ""           # son saldırı nasıl bitti (ölçüm)
 var ates_sondu_gece := 0        # ölçüm: kaç gece ateşsiz kaldı
@@ -121,6 +126,7 @@ func adim(dt: float, politika: Callable) -> void:
 
 	_atesi_yak_tuket(dt)
 	_kopegi_ilerlet(dt)
+	_sozu_ilerlet(dt)
 
 	# Fırsat mandalı: bir epizot bir kez sayılır, her karede değil.
 	var simdi := firsat_var_mi()
@@ -185,6 +191,15 @@ func _eylemi_uygula(eylem: String) -> void:
 			if not gece_mi() and _bugun_toplandi < A.GUNLUK_YIYECEK_BULUNUR:
 				yiyecek += 1
 				_bugun_toplandi += 1
+		"bekle_de":
+			# Söz ancak DUYULABİLİYORSA verilir. Duyulmayan bir söz sonradan
+			# "tutulmadı" diye yazılsaydı oyuncu hiç vermediği bir sözden
+			# ceza yerdi.
+			if not soz_bekle and duyar_mi():
+				soz_bekle = true
+				_soz_kalan = A.SOZ_SURESI_GUN
+				_soz_uzaklasti = false
+				duyumlar.append("gün %d: bekle dedin" % gun)
 		"araya_gir":
 			# Saldırı penceresi dışında basmanın hiçbir etkisi yok. Olsaydı
 			# oyuncu tuşu basılı tutup her saldırıyı otomatik karşılardı.
@@ -268,6 +283,9 @@ func _gun_bitti() -> void:
 	_bugun_odun = 0
 	_ates_ihmali_bu_gece = false
 	kopek.sifirla_gece()
+	if soz_bekle:
+		# Gün dönerken açık kalan söz TUTULMAMIŞ sayılır.
+		_sozu_boz()
 	_arkadasin_katkisi()
 	t = 0.0
 	gun += 1
@@ -353,3 +371,62 @@ func _kopek_saldirisini_cozumle() -> void:
 		kopek_sonucu = "girmedin"
 	duyumlar.append("gün %d: köpek — %s" % [gun, kopek_sonucu])
 	_araya_girdi = false
+
+
+func _sozu_ilerlet(dt: float) -> void:
+	# "BEKLE" SÖZÜ (K-072) — ihmalin BEŞİNCİ ve son kaynağı.
+	#
+	# Söz basit: "orada kal, döneceğim". Tutmak dönmek demek. Tutmamanın
+	# bedeli var, TUTMANIN ÖDÜLÜ YOK — ve bu kasıtlı. Dönmek jestin kendisi
+	# değil, asgarisi; ödüllendirilseydi oyuncu söz verip dönerek güven
+	# çiftliği kurardı ve "ucuz jest yükseltmez" kuralı delinirdi (§2).
+	if not soz_bekle:
+		return
+	if arkadas_gitti or arkadas.oldu:
+		soz_bekle = false
+		_soz_kalan = 0.0
+		return
+
+	var yakin := mesafe_m <= A.SOZ_DONUS_MESAFESI_M
+	if not yakin:
+		_soz_uzaklasti = true
+	elif _soz_uzaklasti:
+		# Gittin ve DÖNDÜN: söz tutuldu, sessizce kapanır.
+		# UZAKLAŞMA MANDALI ŞART. İlk yazışımda yoktu ve oyuncu yanı başında
+		# dururken söz verir vermez "tuttu" sayılıyordu — söz hiçbir şey
+		# ifade etmiyordu. Söz ancak GİDİP DÖNMEKLE tutulur.
+		_sozu_kapat(true)
+		return
+
+	_soz_kalan -= dt
+	if _soz_kalan > 0.0:
+		return
+	# Süre doldu. Hâlâ yanındaysan hiç gitmemişsin demektir: söz tutulmuş
+	# sayılır. Uzaktaysan tutulmamıştır.
+	_sozu_kapat(yakin)
+
+func _sozu_kapat(tutuldu: bool) -> void:
+	if tutuldu:
+		soz_bekle = false
+		_soz_kalan = 0.0
+		_soz_uzaklasti = false
+		soz_tutuldu += 1
+		duyumlar.append("gün %d: döndün" % gun)
+		return
+	_sozu_boz()
+
+func _sozu_boz() -> void:
+	soz_bekle = false
+	_soz_kalan = 0.0
+	_soz_uzaklasti = false
+	soz_tutulmadi += 1
+	guven.ihanet()
+	guven.ihmal_ekle(A.IHMAL_SOZ_TUTMAMA)
+	duyumlar.append("gün %d: dönmedin" % gun)
+
+func bekleyerek_mi_duruyor() -> bool:
+	# Çizim katmanı bunu okur: söz açıkken arkadaş KENDİ mesafe bandını
+	# terk etmez, seni takip etmez. Sözün ekrandaki tek karşılığı bu —
+	# ve olması şart: görünmeyen bir söz, tutulup tutulmadığı anlaşılmayan
+	# bir sözdür.
+	return soz_bekle

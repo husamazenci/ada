@@ -23,6 +23,8 @@ var _bekleyen_eylem := "bekle"
 var _kayit_sayaci := 0.0
 var _arkadas: Node3D
 var _soz: CanvasLayer
+var _cagir_basili_sn := 0.0
+var _cagri_islendi := false
 
 func _ready() -> void:
 	sim = D.new()
@@ -59,6 +61,9 @@ func _process(delta: float) -> void:
 		_arkadas.guven = sim.guven.deger
 		_arkadas.moral = sim.guven.moral
 		_arkadas.cagriya_cevap_veriyor = sim.cagri.yanit_veriyor_mu()
+		_arkadas.bekliyor = sim.bekleyerek_mi_duruyor()
+
+	_sesleni_isle(delta)
 
 	_kayit_sayaci += delta
 	if _kayit_sayaci >= kayit_araligi_sn:
@@ -84,12 +89,6 @@ func _unhandled_input(_event: InputEvent) -> void:
 			_bekleyen_eylem = "araya_gir"
 		else:
 			_bekleyen_eylem = "ver_su" if sim.arkadas.en_acil() == "su" else "ver_yiyecek"
-	elif Input.is_action_just_pressed("cagir"):
-		# Q = SESLEN. Güvene DOKUNMAZ (K-068): ucuz jest yükseltmez, ve
-		# güveni okumanın tek yolu güvene mal olsaydı oyuncu bakmaktan
-		# cezalandırılırdı. Cevabı arkadaşın bedeni verir — ya da vermez.
-		if sim.cagir() and _soz:
-			_soz.soyle("soz.hey")
 	elif Input.is_action_just_pressed("etkiles"):
 		_bekleyen_eylem = _baglama_gore()
 
@@ -136,3 +135,29 @@ func _baglama_gore() -> String:
 	if sim.odun < A.GUNLUK_ODUN_BULUNUR and not sim.gece_mi():
 		return "odun_topla"
 	return "topla"
+
+
+func _sesleni_isle(delta: float) -> void:
+	# Q'nun İKİ anlamı var ve ikisi de ÇAĞRI (K-072): kısa basmak "gel",
+	# basılı tutmak "kal". Yeni bir söz türü açılmadı — K-063'ün kapalı
+	# listesi (yalnızca çağrı ve soru) olduğu gibi duruyor, yani oyun hâlâ
+	# oyuncunun tutumunu söyleyemiyor.
+	#
+	# "Kal" eşiği GEÇİLDİĞİ AN tetiklenir, bırakınca değil: oyuncu tuşu ne
+	# kadar tuttuğunu ekranda belirmesinden anlar. Bırakmayı beklemek
+	# geri bildirimi geciktirirdi.
+	if Input.is_action_pressed("cagir"):
+		_cagir_basili_sn += delta
+		if not _cagri_islendi and _cagir_basili_sn >= A.SOZ_BASILI_TUTMA_SN:
+			_cagri_islendi = true
+			_bekleyen_eylem = "bekle_de"
+			if _soz:
+				_soz.soyle("soz.bekle")
+		return
+	if _cagir_basili_sn > 0.0:
+		if not _cagri_islendi:
+			# Kısa basış: SESLEN. Güvene dokunmaz (K-068).
+			if sim.cagir() and _soz:
+				_soz.soyle("soz.hey")
+		_cagir_basili_sn = 0.0
+		_cagri_islendi = false

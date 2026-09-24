@@ -27,6 +27,7 @@ kos() {  # kos <test-adi> → çıkış kodu
 		animasyon) $GODOT --headless --path . --script res://testler/animasyon.gd >/dev/null 2>&1 ;;
 		ates)    $GODOT --headless --path . --script res://testler/ates.gd >/dev/null 2>&1 ;;
 		kopek)   $GODOT --headless --path . --script res://testler/kopek.gd >/dev/null 2>&1 ;;
+		soz)     $GODOT --headless --path . --script res://testler/soz.gd >/dev/null 2>&1 ;;
 	esac
 	return $?
 }
@@ -420,6 +421,41 @@ if sabotaj betik/sim/dunya.gd 's/^			if kopek.saldiri_penceresi_acik_mi():$/			i
 	dene kopek "sabotaj: saldırı yokken 'araya gir' kaydediliyor" 1; geri betik/sim/dunya.gd
 fi
 dene kopek "geri yüklendi" 0
+
+# ============ soz (K-072) ============
+echo "negatif-kontrol · soz"
+dene soz "temiz kopya" 0
+
+# Sözü tutmak ÖDÜLLENDİRİLMEMELİ: dönmek jest değil asgaridir. Ödül olsaydı
+# oyuncu söz verip dönerek güven çiftliği kurardı (§2 ihlali).
+if sabotaj betik/sim/dunya.gd 's/^		soz_tutuldu += 1$/		soz_tutuldu += 1; guven.bedelli_jest()/'; then
+	dene soz "sabotaj: sözü tutmak güveni yükseltiyor" 1; geri betik/sim/dunya.gd
+fi
+# Uzaklaşma mandalı olmadan söz anında "tutuldu" sayılır — söz anlamsızlaşır.
+if sabotaj betik/sim/dunya.gd 's/^	elif _soz_uzaklasti:$/	elif true:/'; then
+	dene soz "sabotaj: uzaklaşma mandalı kaldırıldı" 1; geri betik/sim/dunya.gd
+fi
+# Duyulmayan söz kabul edilirse oyuncu VERMEDİĞİ sözden ceza yer.
+if sabotaj betik/sim/dunya.gd 's/^			if not soz_bekle and duyar_mi():$/			if not soz_bekle:/'; then
+	dene soz "sabotaj: menzil dışında söz veriliyor" 1; geri betik/sim/dunya.gd
+fi
+# Tekrar "bekle" demek sayacı sıfırlarsa oyuncu sözü sonsuza kadar erteler.
+if sabotaj betik/sim/dunya.gd 's/^			if not soz_bekle and duyar_mi():$/			if duyar_mi():/'; then
+	dene soz "sabotaj: tekrar 'bekle' demek sayacı sıfırlıyor" 1; geri betik/sim/dunya.gd
+fi
+# Söz ömrü gidip dönmeye yetmezse ceza davranışa değil SAATE bağlanır.
+if sabotaj betik/veri/ayarlar.gd 's/^const SOZ_SURESI_GUN := 0\.08$/const SOZ_SURESI_GUN := 0.005/'; then
+	dene soz "sabotaj: söz ömrü gidip dönmeye yetmiyor" 1; geri betik/veri/ayarlar.gd
+fi
+# Gün dönerken açık kalan söz sessizce kaybolursa gece boyu kaçmak bedava olur.
+if sabotaj betik/sim/dunya.gd '/kopek.sifirla_gece()/,+3s/^		_sozu_boz()$/		soz_bekle = false/'; then
+	dene soz "sabotaj: gün dönünce açık söz sessizce siliniyor" 1; geri betik/sim/dunya.gd
+fi
+# Yeni söz türü açmak K-063'ün kapalı listesini gevşetir.
+if sabotaj betik/veri/sozler.gd 's/^const TURLER: Array\[String\] = \["cagri", "soru"\]$/const TURLER: Array[String] = ["cagri", "soru", "buyruk"]/'; then
+	dene soz "sabotaj: 'buyruk' türü açıldı" 1; geri betik/veri/sozler.gd
+fi
+dene soz "geri yüklendi" 0
 
 echo "GENEL TOPLAM: $gecti geçti, $kalan kaldı"
 [ "$kalan" -eq 0 ] && exit 0 || exit 1
