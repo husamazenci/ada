@@ -1836,3 +1836,25 @@ tekrar eden cutscene'ler atlanır; kontrolü bırakmayan an daha çok izlenir.
 - **Metin yok, anahtar var** (K-010): defter girdileri yalnızca çeviri anahtarı
   taşır; görünür metin koda yazılmaz.
 - **Çizim** girdisi ada fazına kadar yer tutucudur.
+
+## K-060 · 2026-09-24 · Görünmez fırsat penceresi kapatıldı
+
+- **Nasıl bulundu:** ChatGPT'nin animasyon spekti (§8) ile `betik/veri/ayarlar.gd`
+  yan yana kondu. Spekt ihtiyaç bakışını **55**'te açıyordu; kodda fırsat
+  **0.50**'de doğuyor (`ESIK_HISSEDILIR`). Aradaki `[0.50, 0.55)` aralığında
+  **fırsat var ama ekranda hiçbir işaret yok**: simülasyon güveni değiştirir,
+  oyuncu sebebini göremez. Acil eşik (80 ↔ 0.80) birebir tutuyordu; kaçan
+  yalnızca alt eşikti.
+- **Neden ciddi:** oyunun tezi "sen açken vermek". Ekranda gösterge ve kelime
+  olmadığı için oyuncu arkadaşın ihtiyacını YALNIZCA bakışından bilir. Bakış
+  geç açılırsa fırsatın bir kısmı sessizce geçer ve güven "sebepsiz" değişir.
+- **Düzeltme:** bakış eşikleri bağımsız sayı olmaktan çıkarıldı, fırsat
+  eşiğinin **TÜREVİ** yapıldı: `BAKIS_ESIGI_ORTA := ESIK_HISSEDILIR`.
+  İki sayı ayrı yazılırsa er geç kayar; türev olunca kayamaz.
+  Histerezis spektten alındı (45/70).
+- **Ölçüldü:** `testler/algi.gd` bakış eşiğinin fırsat eşiğini geçemeyeceğini
+  ve histerezisin var olduğunu denetliyor. İki negatif kontrol de yakalıyor.
+- **Kayıt (henüz yazılmamış bağ):** spekt §9 toparlanmayı "yiyecek VE su VE
+  geceyi yanında geçirme" şartına bağlıyor; koddaki ihmal geriletmesi şu an
+  herhangi bir bedelli jestle tetikleniyor, yani daha gevşek. Gövde
+  bağlanırken §9'un üç şartına çekilecek.

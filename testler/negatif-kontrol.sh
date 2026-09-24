@@ -160,6 +160,12 @@ fi
 if sabotaj betik/veri/ayarlar.gd 's/const GECE_GORUS_CARPANI := 0.45/const GECE_GORUS_CARPANI := 1.0/'; then
 	dene algi "sabotaj: gece görüşü hiç daralmıyor" 1; geri betik/veri/ayarlar.gd
 fi
+if sabotaj betik/veri/ayarlar.gd 's/const BAKIS_ESIGI_ORTA := ESIK_HISSEDILIR/const BAKIS_ESIGI_ORTA := 0.55/'; then
+	dene algi "sabotaj: bakış eşiği fırsattan yüksek (görünmez fırsat)" 1; geri betik/veri/ayarlar.gd
+fi
+if sabotaj betik/veri/ayarlar.gd 's/const BAKIS_KAPANIS_ORTA := 0.45/const BAKIS_KAPANIS_ORTA := 0.50/'; then
+	dene algi "sabotaj: histerezis kaldırıldı" 1; geri betik/veri/ayarlar.gd
+fi
 dene algi "geri yüklendi" 0
 
 # ============ defter (K-059 sınırı) ============
