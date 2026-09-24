@@ -220,19 +220,74 @@ Kısa ve sert bir açılış; oyun 2. günde normal uzunluğuna kavuşur.
   bir kayaya vurur. **Biriniz uyurken diğeriniz ateşi besler ve ışığın bittiği
   yeri izler.**
 
-**Gün 4 · Yaralı gün ve fırtına.**
-- Yaralı olan yavaşlar ve koşamaz; diğeri iki kişilik çalışır: su, ateş,
-  yiyecek. *Yara yoksa* gün yorgunluk ve azalan kaynak üzerinden geçer —
-  gün her hâlükârda ağırdır.
-- *Varyant:* yaralı sensen, o seni besler mi? Güvenin ilk büyük testi.
-- **[SAHNE 5 · Fırtına]** *(cutscene 2)* Gece yarısı. Kontrol YALNIZCA uyanma
-  anında alınır (15–20 sn: çatı gıcırdar, ateş söner, dışarıda rüzgâr), sonra
-  bırakılır — kaçış oyuncunun elinde geçer, arkadaşın varyantı ekranda okunur.
-  Barınak yetmez; kaya çıkıntısına gitmek gerek.
-  *Varyantlar:* yüksek güven → seni kolundan çeker, birlikte koşarsınız ·
-  orta → gider, arkasına bakar, bekler · düşük → tek başına gider.
-  *Koşulsuz iz:* `firtina-gecti`. *Koşullu:* `barinak-hasarli` (barınak varsa),
-  `firtinada-birlikte`.
+**Gün 4 · Kim gidecek ve fırtına.** *(yazılmış metin — 2026-09-24)*
+
+- **Sabah yara görünür.** Köpek seni ısırdıysa kolunu kullanırken duraksarsın,
+  yükü öteki ele alırsın. O yaralandıysa barınaktan kalkması uzun sürer,
+  ağırlığını sağlam bacağına verir. **Hanginiz yaralıysa bugün yavaştır ve
+  koşamaz.** Günün tamamı bu yaraya göre değişir.
+- **Fırtına sessizce haber verir:** rüzgâr panelin gevşek kenarını kaldırır,
+  deniz dünkünden koyu görünür, kıyıda beslenen kuşlar adanın içine çekilir.
+  **İkiniz de görürsünüz. Kimse fırtınanın geleceğini söylemez.**
+  *(Kritik bilgi sesle değil GÖRÜNTÜYLE taşınıyor — erişilebilirlik kuralı.)*
+- **[SAHNE 5 · Kim gidecek]** Yiyecek kalmamıştır. Enkazın ilerisindeki kayalık
+  kıyıda avlanılabilir; yolun üzerinde, **dün geçilemeyen iç bölümde** çatıyı
+  kapatacak **branda ve kayışlar** vardır. Gidiş-dönüş sağlam biri için bile
+  günün büyük kısmını alır. Balığı, brandayı ve paneli birlikte taşımak zordur.
+  - **Kimin gideceği KONUŞMAYLA kararlaştırılmaz.** Sen hazırlanıp ayrılırsan
+    o kalır. Sen kalırsan, bir süre sonra **boş yiyecek kabını alıp kendisi
+    yola çıkar** — yaralıysa kabı kaldırırken bile zorlandığını görürsün.
+    Durdurup yolculuğu üstlenebilir ya da gitmesine izin verebilirsin.
+  - *Sen gidersen:* çökmüş paneli yeniden zorlarsın. Branda ve kayışlar
+    oradadır; yiyecek için kıyının ilerisinde vakit geçirmen gerekir.
+    Yaralıysan ikisini birden taşımak ya da alacakaranlıktan önce dönmek
+    zorlaşır — **neyi önce alacağına sen karar verirsin.** Döndüğünde
+    **ateş canlı, barınağın açık tarafına taş yığılmıştır.** Malzemeyi alırken
+    yaralı yerine bakar; yardım edebildiği işi sessizce üstlenir.
+  - *O giderse:* dönüşünü sesle değil, **açıklığa çıkan patikada görürsün.**
+    Sağlamsa yiyeceğin yanında çatı malzemesi de getirir. Yaralıysa daha geç
+    gelir ve taşıdığı azdır — **gecikmesi, bir sonraki sefer onu göndermenin
+    bedelini görünür kılar.**
+  - *Hiçbir şey yapmazsan:* gün yine ilerler. **Fırtına seni beklemez.**
+  - *Koşulsuz iz:* `ayrilik-gecti`. *Koşullu:* `uzaga-giden`,
+    `malzeme-getirildi`, `soz-tutuldu`.
+- **Alacakaranlık:** barınağı yetiştirebildiğiniz kadar kapatırsınız. Malzeme
+  geldiyse açıklığın bir kısmı örtülür; gelmediyse rüzgâr hâlâ girer.
+  **Her iki durumda da kaya ile panelin arası tamamen kapanmaz.**
+  Nöbet düzeni sürer: biriniz uyurken diğeri ateşe bakar. *Yaralı olanın
+  uyuması kolay bir seçim gibi görünür — ama bunu siz belirlersiniz.*
+  *Koşullu iz:* `nobet-kimde`.
+- **[SAHNE 6 · Fırtına]** *(cutscene 2 — KOŞULLU)* Gece deniz artık karanlık
+  bir çizgi değildir; **beyaz köpükler kıyıdan seçilir.** Rüzgâr paneli
+  kaldırır, yağmur ateşin çevresine düşer.
+  - **Uyuyorsan:** panelin kayaya çarptığı anda uyanırsın. İlk **15–20 saniye**
+    kontrol alınır — su barınağa girer, ateş söner — sonra hareket edebilirsin.
+  - **Nöbetteysen bu uyanma anı HİÇ YAŞANMAZ:** yaklaşan fırtınayı görerek
+    hareket edersin.
+  > **KARAR:** cutscene 2 koşulludur. Nöbet tutan oyuncu onu hiç görmez.
+  > Sayı hâlâ üçte kilitli (D2); değişen, birinin **kazanılabilir** olması.
+  > Uyanıklığın karşılığı gösteri değil **eylem** oluyor.
+  - Barınak, malzeme gelmiş olsa da korumaz. **Kayanın birkaç adım ötedeki
+    ters yüzüne** geçmek gerekir. Yol kısa tutulmuştur; yaralı biri de
+    koşmadan güçlükle ulaşabilir.
+  - **Arkadaş dört günün sonucunu bedeninden gösterir:**
+
+  | Güven | Davranış | Yaralıysa |
+  |---|---|---|
+  | **Yüksek** | Yanına gelir, sağlam kolundan ya da giysinden tutar, sen geçene kadar yakınında kalır | Seni çekmeye çalışır ama aksar — **bu kez sen onun hızına uymak zorundasın** |
+  | **Orta** | Önce korunaklı tarafa geçer. Sınırda durur, omzunun üzerinden bakar, bekler. Yaklaşınca yeniden yürür | — |
+  | **Düşük** | Tek başına gider | Aksayarak gider; **dönüp bakmaz** |
+
+  - *Koşulsuz iz:* `firtina-gecti`.
+    *Koşullu:* `barinak-hasarli`, `firtinada-birlikte`.
+- **Sabaha karşı** rüzgâr diner. Ateşin yerinde ıslak kül vardır. Barınağın
+  üstü açılmış, kıyıdan gelen yosunlar açıklığa kadar sürüklenmiştir.
+  > **Bunlar, o gece nerede olduğunuzdan ve ne yaptığınızdan BAĞIMSIZ olarak
+  > oradadır: fırtına adadan geçmiştir.** *(A1'in metinle kurulmuş hâli —
+  > koşulsuz iz burada dünyanın kendisi oluyor.)*
+- Branda geldiyse hasarlı çatı yeniden kurulabilir; gelmediyse barınak da
+  içeride bıraktıklarınız da sırılsıklamdır. Arkadaş kayanın yanında durur.
+  **Aranızdaki mesafe, fırtına sırasında ne yaptığınızı sözcüksüz anlatır.**
 
 ### Perde III — Seçim
 

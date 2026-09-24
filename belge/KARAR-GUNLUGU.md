@@ -2055,3 +2055,51 @@ Moral yaralanmadan zaten düşer; bu ayrı kanaldır ve buradan geçmez.
 
 **Bu, ihmal kanalının dünyaya bağlanan İKİNCİ kaynağıdır** (K-061 borcunun
 1/4'ü kapandı). Kalan üçü: gece yalnız bırakma, ateşi söndürme, sözü tutmama.
+
+## K-065 · 2026-09-24 · Dördüncü gün; ve kazanılabilir cutscene
+
+Metin on kısıtın **onunu da** tuttu. Üç şey özellikle iyi çıktı:
+
+### 1. A1 metinle kurulmuş
+
+> *"Bunlar, o gece nerede olduğunuzdan ve ne yaptığınızdan bağımsız olarak
+> oradadır: fırtına adadan geçmiştir."*
+
+Koşulsuz iz kuralı burada koda değil **dünyaya** yazılmış. Islak kül, açılmış
+çatı, açıklığa sürüklenmiş yosun — oyuncu ne yaparsa yapsın sabah oradalar.
+Zincirin kırılmazlığı artık bir mühendislik kuralı değil, bir manzara.
+
+### 2. Cutscene 2 KOŞULLU oldu (karar)
+
+> *"Nöbetteysen bu kısa uyanma anı yaşanmaz: yaklaşan fırtınayı görerek
+> hareket edersin."*
+
+Uyuyan oyuncu 15–20 saniye kontrolünü kaybeder; **nöbet tutan hiç
+kaybetmez.** Tam cutscene sayısı hâlâ üçte kilitli (D2) — değişen, birinin
+**kazanılabilir** olması. Uyanıklığın karşılığı gösteri değil, eylem.
+
+Bedeli kabul edildi: nöbet tutan oyuncu üç cutscene'den birini hiç görmez.
+Bu, "gösteriyi kaybetmek" değil "kontrolü kazanmak" olarak tasarlandı.
+
+### 3. Fırtına GÖRÜNTÜYLE haber veriyor
+
+Rüzgârın panelin kenarını kaldırması, denizin koyulaşması, kuşların adanın
+içine çekilmesi. *"İkiniz de görürsünüz. Kimse fırtınanın geleceğini
+söylemez."* — kritik bilgi yalnızca sesle taşınmıyor (erişilebilirlik kuralı),
+ve arkadaş bunu bir mesaj jestiyle bildirmiyor; ikiniz de aynı dünyayı
+görüyorsunuz.
+
+### Yaranın günü yönetmesi
+
+"Kim gidecek" ayrı bir sahne değil, 3. gecenin sonucu. Dört yol da yazılmış:
+sen gidersin · o gider · yaralıyken onu durdurursun · hiçbir şey yapmazsın
+(gün yine ilerler). **Ayrılığın en güçlü ayrıntısı dönüş:** kampa döndüğünde
+ateş canlı ve barınağın açık tarafına taş yığılmış — yokluğunda ne yaptığı
+anlatılmıyor, **sonucu duruyor.**
+
+Simetriği de var: o giderse gecikmesi "bir sonraki sefer onu göndermenin
+bedelini görünür kılar."
+
+### Yeni koşullu izler
+
+`malzeme-getirildi`, `nobet-kimde` eklendi. Zincir hâlâ 10/10 açılıyor.
