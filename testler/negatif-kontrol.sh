@@ -127,6 +127,9 @@ fi
 if sabotaj betik/veri/ayarlar.gd 's/const COKUS_EN_AZ_GUN := 2.0/const COKUS_EN_AZ_GUN := 0.0/'; then
 	dene moral "sabotaj: müdahale penceresi kaldırıldı" 1; geri betik/veri/ayarlar.gd
 fi
+if sabotaj betik/sim/dunya.gd 's/	arkadas.ihtiyactan_olebilir = false/	pass/'; then
+	dene moral "sabotaj: arkadaş açlıktan ölebiliyor (ikinci ölüm yolu)" 1; geri betik/sim/dunya.gd
+fi
 dene moral "geri yüklendi" 0
 rm -f /tmp/_sab.yedek /tmp/_g.yedek
 

@@ -15,6 +15,7 @@ extends SceneTree
 
 const A := preload("res://betik/veri/ayarlar.gd")
 const Gv := preload("res://betik/ai/guven.gd")
+const D := preload("res://betik/sim/dunya.gd")
 
 const EPS := 0.0005
 const GUN_KESRI := 1.0 / 120.0
@@ -65,6 +66,22 @@ func _initialize() -> void:
 	_ez(g5, 1.0, 1)      # yalnızca 1 gün — COKUS_EN_AZ_GUN = 2
 	if g5.olebilir_mi(6):
 		hata.append("İHLAL: tek günlük çöküş öldürdü — 'defalarca müdahale fırsatı' kuralı çiğneniyor")
+
+	# 6 · İKİNCİ ÖLÜM YOLU KAPALI OLMALI (K-062).
+	# Arkadaş açlık/susuzluk sayacı 1.0'a vurunca ölebiliyordu; bu, görünür
+	# çöküşü, iki günlük müdahale penceresini ve "en erken 6. gün" kuralını
+	# TAMAMEN atlıyordu. Kıtlık gerçekten ısırmaya başlayınca ortaya çıktı.
+	var w = D.new()
+	if w.arkadas.ihtiyactan_olebilir:
+		hata.append("İHLAL: arkadaş ihtiyaçtan ölebiliyor — çöküş sistemi atlanır")
+	if not w.oyuncu.ihtiyactan_olebilir:
+		hata.append("oyuncu ihtiyaçtan ölemiyor — oyuncunun ölümü hiç mümkün olmaz")
+	w.arkadas.aclik = 1.0
+	w.arkadas.susuzluk = 1.0
+	w.arkadas.ilerle(0.5, false)
+	if w.arkadas.oldu:
+		hata.append("İHLAL: arkadaş açlık/susuzluktan ÖLDÜ — ani ölüm yolu hâlâ açık")
+	print("arkadaş açlık 1.00 · susuzluk 1.00 → öldü mü: %s (hayır olmalı)" % w.arkadas.oldu)
 
 	print("")
 	if hata.is_empty():

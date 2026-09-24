@@ -12,6 +12,15 @@ var yorgunluk := 0.10
 var yarali := false
 var oldu := false
 
+# ARKADAŞ İHTİYAÇTAN ÖLEMEZ (K-055/K-062). Değişmez kural ölümün ani
+# olamayacağını söylüyor: çöküş 4. günden itibaren görünür olmalı, iki tam gün
+# müdahale penceresi bulunmalı, ve en erken 6. günün şafağında gelmeli.
+# Açlık sayacının 1.0'a vurmasıyla gelen ölüm bu sistemin TAMAMINI atlıyordu —
+# iki ayrı ölüm yolu vardı ve yalnızca biri kurala tabiydi.
+# Arkadaşta bu yol kapalıdır: aşırı açlık yalnızca baskı üretir, baskı morali
+# iter, moral ancak İHMAL varsa ölümcül bölgeye iner (Guven.olebilir_mi).
+var ihtiyactan_olebilir := true
+
 # Duyum cümlesi eşiği bir kez geçilir; her karede tekrar bağırmaz (K-056).
 var _aclik_soylendi := false
 var _susuzluk_soylendi := false
@@ -36,7 +45,7 @@ func ilerle(gun_kesri: float, uyuyor: bool) -> Array:
 		_susuzluk_soylendi = true
 		yeni.append("susuzluk")
 
-	if aclik >= A.ESIK_OLUM or susuzluk >= A.ESIK_OLUM:
+	if ihtiyactan_olebilir and (aclik >= A.ESIK_OLUM or susuzluk >= A.ESIK_OLUM):
 		oldu = true
 	return yeni
 

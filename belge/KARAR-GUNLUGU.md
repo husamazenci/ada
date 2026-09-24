@@ -1918,3 +1918,59 @@ dokuz ihanet. Altı günlük bencil koşuda dört ihanet oluyor. **Sonuç: moral
 
 Bu bir hata değil, henüz yazılmamış bağ; ama yazılmazsa değişmez kural
 ("arkadaş kalıcı olarak ölebilir") kâğıtta kalır. Panoya borç olarak geçti.
+
+## K-062 · 2026-09-24 · Kıtlık gerçekten ısırıyor — ve ikinci bir ölüm yolu kapandı
+
+### Üç kullanıcı kararı
+
+1. **Kontroller ana menüde gösterilir.** K-041 çiğnenmiyor: kural DÜNYA İÇİ
+   yönlendirmeyi yasaklıyor, menü dünya değildir. ChatGPT'nin ayrımı doğru:
+   *"oyuncuya cevabı vermemek ile gerekli bilgiyi saklamak aynı şey değil."*
+2. **Kabul testi üç izleyicide kalıyor** (K-058 korunur; ChatGPT 8–12 önerdi).
+3. **Kıtlık gerçekten ısırsın.**
+
+### Kıtlık: kâğıtta vardı, oyunda yoktu
+
+ChatGPT "altı günün yiyecek fazlası yalnızca 1,2 porsiyon, çok kırılgan" diye
+uyardı. Aritmetiği **doğru**: ölçtüm, 1,33 porsiyon — toplam talebin %12,5'i.
+
+Ama kodda tablo tersine döndü:
+
+| Ölçüm | Sonuç |
+|---|---|
+| Günlük toplama tavanının bağladığı adım | **0** |
+| Bir toplama gününü kaçırmanın etkisi | **tam sıfır** |
+| Oyuncunun topladığı | 12 mümkünden 8 |
+
+Sebep: `_arkadasin_kendi_isi` arkadaşın açlığını **bedavaya** azaltıyordu.
+Havuza hiç baskı binmiyordu. Yani endişe haklıydı ama yön tersti: marj ince
+değildi, **hiç baskı yoktu.**
+
+### Düzeltme ve sonucu
+
+Arkadaş artık **havuzdan** yiyor. Ayrıca güvenin MADDİ karşılığı eklendi:
+yüksek güvende günde 1 porsiyon havuza katkı verir, orta güvende gün aşırı,
+düşük güvende hiç. Güven artık yalnızca davranışta değil **kilerde** de
+okunuyor.
+
+**Fırsat sayısı 11 → 16.** K-056'da tahminle konan 12–16 bandı ilk kez tutuyor
+— hedef yanlış değilmiş, ekonomi yanlışmış. Üç oyuncu tipi hâlâ üç güven
+seviyesine ayrışıyor (0.71 / 0.41 / 0.00).
+
+### BULGU: arkadaşın İKİNCİ bir ölüm yolu varmış
+
+Kıtlık ısırmaya başlayınca ortaya çıktı: bencil koşularda **arkadaş açlıktan
+öldü.** `Ihtiyaclar.ilerle` açlık 1.0'a vurunca `oldu = true` yapıyordu.
+
+Bu, K-055'in tamamını atlıyor: görünür çöküş yok, iki günlük müdahale
+penceresi yok, "en erken 6. gün" yok. İki ayrı ölüm yolu vardı ve yalnızca
+biri kurala tabiydi. Daha önce fark edilmemişti çünkü arkadaş kendini bedava
+besliyordu — yani kıtlık düzeltmesi bir hatayı yaratmadı, **saklandığı yerden
+çıkardı**.
+
+**Düzeltme:** `ihtiyactan_olebilir` bayrağı; arkadaşta kapalı. Aşırı açlık
+artık yalnızca baskı üretir, baskı morali iter, moral ancak İHMAL varsa
+ölümcül bölgeye iner. Ölüm tek kapıdan geçiyor.
+
+`testler/moral-tabani.gd` bunu denetliyor (açlık 1.0 + susuzluk 1.0 → ölmemeli)
+ve bir negatif kontrol bayrağı kaldırınca testin düştüğünü doğruluyor.

@@ -15,6 +15,12 @@ var oyuncu: Ih = Ih.new()
 var arkadas: Ih = Ih.new()
 var guven: Gv = Gv.new()
 
+func _init() -> void:
+	# Arkadaşın ihtiyaçtan ölme yolu KAPALIDIR (K-062). Ölümü yalnızca
+	# Guven.olebilir_mi() üzerinden gelir: görünür çöküş + müdahale penceresi
+	# + en erken 6. gün. Oyuncuda bu yol açıktır.
+	arkadas.ihtiyactan_olebilir = false
+
 var yiyecek := 2                # oyuncunun taşıdığı porsiyon
 var kap_dolu := true            # TEK kap — bir dolum bir kişilik (K-056)
 var mesafe_m := 3.0
@@ -32,6 +38,7 @@ var alinan_firsat := 0
 var ihanet_sayisi := 0
 var _firsat_acik := false
 var _bugun_toplandi := 0
+var arkadas_zorla_aldi := 0
 var gunluk: Array = []
 var duyumlar: Array = []
 
@@ -153,18 +160,37 @@ func _eylemi_uygula(eylem: String) -> void:
 
 func _arkadasin_kendi_isi(dt: float) -> void:
 	# İNSAN HİSSİ, 1. madde (K-056): sen olmasan da bir şey yapar.
-	# Tepki veren şey evcil hayvandır; kendi işi olan şey insandır.
+	#
+	# KITLIK DÜZELTMESİ (K-062). Önceden arkadaş açlığını BEDAVA azaltıyordu:
+	# havuza hiç baskı binmiyordu, günlük toplama tavanı hiç bağlamıyordu
+	# (ölçüldü: 0 adım) ve bir toplama gününü kaçırmanın etkisi tam sıfırdı.
+	# Kıtlık kâğıtta vardı, oyunda yoktu. Artık arkadaş da HAVUZDAN yer.
 	if arkadas_gitti or arkadas.oldu:
 		return
 	if guven.cokuyor_mu():
 		return          # çökmüşken kendi işini yapamaz — bakıma muhtaç
-	# Kendi başına az miktarda su ve yiyecek bulur; güven düşükken uzakta,
-	# kendi başına daha çok arar (mesafe açar ama aç kalmaz).
-	var beceri := 0.55 if guven.deger < A.GUVEN_DUSUK_UST else 0.40
+
+	# Su dere kampta olduğu için ikisi için de bedava (K-056).
 	if arkadas.susuzluk >= A.ESIK_HISSEDILIR:
-		arkadas.susuzluk = maxf(arkadas.susuzluk - beceri * dt * 2.0, 0.0)
-	if arkadas.aclik >= A.ESIK_AGIR:
-		arkadas.aclik = maxf(arkadas.aclik - beceri * dt * 1.2, 0.0)
+		arkadas.susuzluk = maxf(arkadas.susuzluk - dt * 2.0, 0.0)
+
+	# Yiyecek: havuzdan yer. Çok açsa ve güven dipteyse SORMADAN alır (K-026).
+	if arkadas.aclik >= A.ESIK_AGIR and yiyecek > 0:
+		yiyecek -= 1
+		arkadas.ye()
+		if guven.deger <= A.GUVEN_DUSUK_UST:
+			arkadas_zorla_aldi += 1
+
+func _arkadasin_katkisi() -> void:
+	# Güvenin MADDİ karşılığı: güvendiği biri için toplar, güvenmediği için
+	# kendine saklar. Böylece güven yalnızca davranışta değil, kilerde de
+	# okunur — ve düşük güven hayatta kalmayı gerçekten zorlaştırır.
+	if arkadas_gitti or arkadas.oldu or guven.cokuyor_mu():
+		return
+	if guven.deger >= A.GUVEN_YUKSEK_ALT:
+		yiyecek += 1
+	elif guven.deger > A.GUVEN_DUSUK_UST and gun % 2 == 0:
+		yiyecek += 1
 
 func _gun_bitti() -> void:
 	gunluk.append({
@@ -174,6 +200,7 @@ func _gun_bitti() -> void:
 	})
 	guven.gun_dondu()
 	_bugun_toplandi = 0
+	_arkadasin_katkisi()
 	t = 0.0
 	gun += 1
 	if oyuncu.oldu:
