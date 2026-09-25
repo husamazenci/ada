@@ -8,6 +8,12 @@ on:
     branches: [main]
   pull_request:
   workflow_dispatch:
+  schedule:
+    # Her gece 03:00 UTC. Yorumda "gecelik" yazıp cron'u koymamıştım:
+    # negatif kontroller yalnızca elle tetiklenebiliyordu, yani hiç
+    # koşmayacaklardı. Yorum ile kod arasındaki sessiz fark tam da bu
+    # projenin kovaladığı hata ailesi.
+    - cron: "0 3 * * *"
 
 env:
   GODOT_SURUM: 4.7.2-stable
