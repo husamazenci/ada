@@ -43,8 +43,16 @@ dene() {  # dene <test> <ad> <beklenen>
 }
 
 sabotaj() {  # sabotaj <dosya> <sed-ifadesi>  → uygulanmadıysa 1 döner
+	# -i KULLANILMIYOR ve bu kasıtlı. macOS'un BSD sed'i `-i ''` ister,
+	# GNU sed (Linux, CI) ise o boş dizgiyi İFADE sanar ve asıl ifadeyi
+	# DOSYA ADI sanar: "sed: can't read s/.../.../". CI'nin ilk koşusunda
+	# tam olarak bu oldu — bütün sabotajlar Linux'ta sessizce uygulanmadı.
+	# §5.10 tuzağı doğru çalıştı ve yakaladı; yoksa negatif kontroller
+	# CI'da yeşil görünüp hiçbir şey ölçmeyecekti.
+	#
+	# Yedekten okuyup özgün dosyaya yazmak iki sed'de de aynı davranıyor.
 	cp "$1" "/tmp/_sab.yedek"
-	sed -i '' "$2" "$1"
+	sed "$2" "/tmp/_sab.yedek" > "$1"
 	if cmp -s "$1" "/tmp/_sab.yedek"; then
 		echo "  ✗ SABOTAJ UYGULANMADI: $1 ← '$2' (metin eşleşmedi, §5.10)"
 		kalan=$((kalan+1)); return 1
