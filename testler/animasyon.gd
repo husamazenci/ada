@@ -95,6 +95,33 @@ func _initialize() -> void:
 		hata.append("iz '%s' kemiğini arıyor, gövdede YOK — klip başka bir rige ait" % k)
 	govde.free()
 
+	# 4b · KÖPEĞİN KLİPLERİ de kendi modelinde var mı?
+	var kopek_sahne = load(An.KOPEK_KAYNAK)
+	if kopek_sahne == null:
+		printerr("ÇALIŞTIRILAMADI: köpek modeli yüklenemedi: %s" % An.KOPEK_KAYNAK)
+		quit(2); return
+	var kopek: Node = kopek_sahne.instantiate()
+	var kop: AnimationPlayer = kopek.find_child("AnimationPlayer", true, false)
+	if kop == null:
+		printerr("ÇALIŞTIRILAMADI: köpek modelinde AnimationPlayer yok"); quit(2); return
+	var kopek_klip := 0
+	for oyun_adi in An.KOPEK_KLIPLER:
+		var klip: String = An.KOPEK_KLIPLER[oyun_adi]
+		if not kop.has_animation(klip):
+			hata.append("köpek '%s' → '%s' modelde YOK (hayvan kıpırdamaz, konsol susar)" % [oyun_adi, klip])
+		else:
+			kopek_klip += 1
+			var ka: Animation = kop.get_animation(klip)
+			var dongulu := ka.loop_mode != Animation.LOOP_NONE
+			var olmali: bool = oyun_adi in An.KOPEK_DONGULU
+			if dongulu != olmali:
+				hata.append("köpek '%s' (%s) döngü %s — %s olmalı" % [
+					oyun_adi, klip, "AÇIK" if dongulu else "kapalı",
+					"açık" if olmali else "KAPALI"])
+	print("köpek: %d/%d klip bulundu (modelde %d klip var)" % [
+		kopek_klip, An.KOPEK_KLIPLER.size(), kop.get_animation_list().size()])
+	kopek.free()
+
 	# 5 · Saf durum seçicisi üç bedeni de veriyor mu, ve MORAL SIRALI mı?
 	var d_yuksek := D.durus_animasyonu(0.80, 0.0)
 	var d_orta := D.durus_animasyonu(0.50, 0.0)

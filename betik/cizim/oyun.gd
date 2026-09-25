@@ -25,6 +25,7 @@ var _arkadas: Node3D
 var _oyuncu_dugum: Node3D
 var _ates: Node3D
 var _gokyuzu: Node3D
+var _kopek: Node3D
 var _soz: CanvasLayer
 var _cagir_basili_sn := 0.0
 var _cagri_islendi := false
@@ -35,6 +36,7 @@ func _ready() -> void:
 	_oyuncu_dugum = get_node_or_null(^"Oyuncu")
 	_ates = get_node_or_null(^"Ates")
 	_gokyuzu = get_node_or_null(^"Gokyuzu")
+	_kopek = get_node_or_null(^"Kopek")
 	_soz = get_node_or_null(^"Soz")
 	# Çağrı gecikmesi bandın İÇİNDE rastgele seçilir. Saf makine belirlenimci
 	# başlar ki test aynı sayıyı görsün; tohumu OYUN atar, test atmaz.
@@ -74,6 +76,9 @@ func _process(delta: float) -> void:
 
 	if _gokyuzu:
 		_gokyuzu.t = sim.t
+
+	if _kopek:
+		_kopek.durum = sim.kopek.durum
 
 	if _ates:
 		_ates.yaniyor = sim.ates_yaniyor

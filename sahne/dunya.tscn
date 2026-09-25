@@ -9,6 +9,8 @@
 [ext_resource type="AnimationLibrary" uid="uid://cxywrxnmaec55" path="res://varlik/karakter/animasyon/UAL1_Standard.glb" id="7_anim"]
 [ext_resource type="Script" path="res://betik/cizim/ates.gd" id="8_ates"]
 [ext_resource type="Script" path="res://betik/cizim/gokyuzu.gd" id="9_gok"]
+[ext_resource type="Script" path="res://betik/cizim/kopek.gd" id="10_kopek"]
+[ext_resource type="PackedScene" uid="uid://du3a34s710hg0" path="res://varlik/hayvan/Husky.gltf" id="11_husky"]
 
 [sub_resource type="Environment" id="Environment_gri"]
 background_mode = 1
@@ -56,6 +58,10 @@ material = SubResource("StandardMaterial3D_kutuk")
 top_radius = 0.09
 bottom_radius = 0.09
 height = 0.9
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kopek"]
+radius = 0.22
+height = 0.64
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_govde"]
 radius = 0.28
@@ -150,6 +156,18 @@ root_node = NodePath("..")
 libraries = {
 "": ExtResource("7_anim")
 }
+
+; KÖPEK. Gece ateşin ışık çemberinin SINIRINDA dolanır, içine girmez.
+; Görünürlüğünü ve konumunu köprü sürer; kural betik/sim/kopek.gd'de.
+[node name="Kopek" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 0, -2)
+script = ExtResource("10_kopek")
+
+[node name="Carpisma" type="CollisionShape3D" parent="Kopek"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.32, 0)
+shape = SubResource("CapsuleShape3D_kopek")
+
+[node name="Govde" parent="Kopek" instance=ExtResource("11_husky")]
 
 [node name="Soz" type="CanvasLayer" parent="."]
 script = ExtResource("5_soz")

@@ -35,6 +35,21 @@ const KLIPLER := {
 # kuruyor; bu liste onun doğru kurduğunu DENETLEMEK için var. "Giriş/çıkış" ve
 # "çöküş" tek seferliktir — çöküş döngüye alınırsa arkadaş sonsuza kadar yere
 # yığılıp yığılıp durur.
+# --- KÖPEK (K-071) ---
+# Ayrı bir kütüphane: köpek animasyonlarını kendi modeli taşıyor
+# (varlik/hayvan/Husky.gltf), insan rigiyle ilgisi yok. Liste yine KAPALI,
+# yine aynı sebeple: klip adı koda serpilirse biri yanlış yazılır ve hata
+# "hayvan kıpırdamıyor" diye sessizce görünür.
+const KOPEK_KAYNAK := "res://varlik/hayvan/Husky.gltf"
+const KOPEK_KLIPLER := {
+	"bekle": "Idle_2_HeadLow",   # ışığın sınırında, başı alçak, koku alıyor
+	"dolan": "Walk",             # çemberin çevresinde
+	"atil": "Gallop",            # saldırı
+	"isir": "Attack",
+	"cekil": "Walk",             # geri çekilme
+}
+const KOPEK_DONGULU := ["bekle", "dolan", "atil", "cekil"]
+
 const DONGULU := ["dur", "yuru", "otur"]
 
 # Kök hareketi KAPALI sürüm kullanılıyor (UAL1_Standard, _RM değil).
@@ -59,4 +74,9 @@ static func dogrula() -> Array:
 		hata.append("İHLAL: çöküş döngüye alınmış — arkadaş sonsuza kadar yığılır")
 	if KOK_HAREKETI_VAR:
 		hata.append("İHLAL: kök hareketli klip seçilmiş — mesafe ve tempo kanallarını ezer")
+	for d in KOPEK_DONGULU:
+		if not KOPEK_KLIPLER.has(d):
+			hata.append("köpek: döngülü listede olmayan durum: %s" % d)
+	if "isir" in KOPEK_DONGULU:
+		hata.append("İHLAL: ısırma döngüye alınmış — köpek durmadan ısırır")
 	return hata
