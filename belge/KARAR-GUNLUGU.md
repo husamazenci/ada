@@ -2711,3 +2711,50 @@ birisi "`.import` bozuk, git'e ekleyelim" diye yanlış yere bakar.
 `testler/hepsi.sh` — hem elde hem CI'da **aynı** betik. İki ayrı liste
 tutulsaydı biri eksik kalır, CI yeşil görünürken bir test hiç koşmazdı.
 Çıkış kodu 2'yi **başarısızlık** sayıyor; "atlandı" diye bir sonuç yok.
+
+
+---
+
+## K-076 · CI ilk koşusunda bir yılı bulmayacak bir hata buldu
+
+**Tarih:** 2026-09-25. Depo: `github.com/husamazenci/ada` (public, kullanıcı
+kararı).
+
+İlk CI koşusu **16/16 yeşil**, 41 saniye. İkinci iş — negatif kontroller —
+kırmızı yandı ve sebebi şuydu:
+
+**`sed -i` iki sistemde farklı.** macOS'un BSD sed'i `-i ''` (boş sonek)
+ister; GNU sed (Linux) o boş dizgiyi **ifade** sanar ve asıl ifadeyi
+**dosya adı** sanar: `sed: can't read s/.../.../`.
+
+Yani **negatif kontrollerin tamamı Linux'ta sessizce hiçbir şey
+yapmıyordu.** Sabotaj uygulanmıyor, test doğal olarak geçiyor, kontrol
+"✓" diyor. CI yemyeşil görünürken 118 kontrolün hiçbiri bir şey ölçmüyor
+olacaktı.
+
+**Yakalayan şey §5.10'du:** "sabotajın UYGULANDIĞINI da doğrula". O tuzağı
+ikinci denemenin dersinden koymuştum (metin aranıp bulunamayınca işlem
+sessizce hiçbir şey yapar) ve ilk kez gerçekten işe yaradı — üstelik
+yerelde **asla** görünmeyecek bir hatada.
+
+### Üç turda kapandı, ve her tur bir şey öğretti
+
+1. **`sabotaj()` yardımcısı düzeltildi** — `-i` hiç kullanılmıyor, yedekten
+   okuyup özgün dosyaya yazıyor. CI: 3 kaldı (çoktan azaldı ama bitmedi).
+2. **Yardımcıdan geçmeyen iki elle `sed` daha varmış.** Düzeltme onları
+   kapsamıyordu. Aynı hatayı üçüncü kez aramamak için **yapısal koruma**:
+   betik kendi içinde yerinde düzenleme kalıp kalmadığını denetliyor.
+3. **Koruma kendi satırını yakaladı** — grep'in klasik kendini-sayma
+   tuzağı. Desen köşeli parantezli yazıldı (`sed +-[i]`), ve yorum
+   satırları muaf tutuldu: bu dosyanın kendi negatif kontrollerinden biri
+   zaten *"yorumdaki yasak kelime ihlal SAYILMAMALI"* diyor.
+
+**Sonuç: Linux CI'da 118/118, macOS'ta 118/118.**
+
+### Yorum ile kodun sessiz farkı
+
+Aynı koşuda ikinci bir küçük bulgu: workflow'da negatif kontrol işinin
+koşulu `workflow_dispatch || schedule` idi ama `on:` altında **`schedule`
+tetikleyicisi yoktu**. Yorum "gecelik" diyordu, kod demiyordu — iş
+yalnızca elle tetiklenebiliyor, yani pratikte hiç koşmayacaktı. Cron
+eklendi (03:00 UTC).

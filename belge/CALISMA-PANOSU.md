@@ -138,6 +138,16 @@ gerekiyor (`varlik/ses/` altında 48 CC0 ses var, aralarında yok).
 Hepsi tek dalda: `claude/kopek`. Kod dalı — sabah birleştirme için onay
 sorulacak.
 
+### GitHub ve CI — kuruldu 2026-09-25
+
+Depo: **github.com/husamazenci/ada** (public, kullanıcı kararı).
+`main`'e her itişte ve her PR'da 16 test; negatif kontroller gecelik
+(03:00 UTC) ve elle tetiklenebilir.
+
+**Temiz kopyada kurulum sırası KRİTİK** (K-075): `git lfs pull` → `--import`
+→ test. Sıra bozulursa Godot `.import` dosyalarını bozar ve iş sessizce
+çürür. Workflow'da karşılığı `actions/checkout`'ta `lfs: true`.
+
 ### Şu an
 - Faz 0 bitti: proje iskeleti, iki test, dokuz negatif kontrol, LFS, 48 CC0 ses.
 - Tasarım gözden geçirmesi bitti (K-055, K-056): kapsam 6 gün/120 dk, zincir
