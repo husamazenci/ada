@@ -2662,3 +2662,52 @@ oyuncu ÇEVRESİNDEKİ açısal konumu kilitli değil; bandına yürürken nered
 geldiğine göre ekranın farklı yerinde duruyor. Sayının bir kısmı oradan
 geliyor. Kanıt olan iki şey: ölçülen **mesafeler** ve **üç izleyici**
 kriteri. Sonda dosyasının başına uyarı düşüldü.
+
+
+---
+
+## K-075 · GitHub ve CI — ve temiz kopyada bulunan sessiz tuzak
+
+**Tarih:** 2026-09-25. Kullanıcı sordu: *"bunu nasıl githuba koyucam,
+koymak mantıklı mı"*.
+
+**Mantıklı, üç sebeple.** (1) **CI**: 16 test ve 118 negatif kontrol şu an
+yalnızca ben elimle koşturunca çalışıyor; "main hep yeşil" bir umut, bir
+olgu değil. (2) **Yedek**: her şey tek bir dizüstünde. İki deneme zaten
+başarısız oldu; üçüncüsünü bir diske kaptırmak saçma olur. (3) **İki ajanlı
+akış**: Cursor ve ben `main` üzerinden birleşiyoruz; uzak depo birleşmeleri
+geri alınabilir ve geçmişi görünür yapar.
+
+Depo **33 MB** (26.8 MB'ı LFS, 58 dosya). GitHub'ın ücretsiz LFS katmanı
+1 GB depolama / 1 GB aylık bant genişliği — bol bol yeter, ama **CI her
+koşuda LFS çekiyor**: 27 MB × koşu. Bu yüzden testler yalnızca `main` ve
+PR'da, negatif kontroller gecelik.
+
+### Tarifi ölçerken bir tuzak çıktı
+
+CI adımlarını uydurmak yerine **temiz bir kopyaya klonlayıp denedim**. Üç
+şey öğrenildi, üçü de ancak deneyerek:
+
+1. **İçe aktarmasız test 2 veriyor**, 0 değil. `.godot/` git'te yok; sahne
+   yükleyen her test "çalıştırılamadı" diyor. K-003 disiplini doğru
+   çalışıyor — yeşil görünüp hiçbir şey ölçmüyor olmuyor.
+
+2. **LFS çekilmezse dosyalar işaretçi.** Beklenen.
+
+3. **SIRA KRİTİK, ve bozulunca iş SESSİZCE ÇÜRÜYOR.** Godot işaretçi
+   dosyalara karşı içe aktarma yaparsa kaynağı okuyamaz ve `.import`
+   dosyalarını "başarısız" diye **yeniden yazar**. Ölçüldü: önce `--import`
+   koşturup sonra `git lfs pull` yaptım — dosyalar gerçek hâle geldi,
+   `.godot`'u silip yeniden içe aktardım, **test yine 2 verdi**, çünkü
+   `.import` dosyaları artık bozuktu. Doğru sırayla (LFS → import → test)
+   temiz kopyada **16/16 yeşil**.
+
+GitHub Actions'taki karşılığı `actions/checkout` adımında `lfs: true`.
+Varsayılan `false`; unutulsa CI ya kırmızı yanar ya da — daha kötüsü —
+birisi "`.import` bozuk, git'e ekleyelim" diye yanlış yere bakar.
+
+### Yeni: tek koşucu betiği
+
+`testler/hepsi.sh` — hem elde hem CI'da **aynı** betik. İki ayrı liste
+tutulsaydı biri eksik kalır, CI yeşil görünürken bir test hiç koşmazdı.
+Çıkış kodu 2'yi **başarısızlık** sayıyor; "atlandı" diye bir sonuç yok.

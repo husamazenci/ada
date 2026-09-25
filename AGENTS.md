@@ -310,6 +310,26 @@ bunlar `@export var` ile tanımlanır, editör panelinde kaydırıcı olur ve **
 
 ---
 
+### Temiz kopyada kurulum sırası — SIRA KRİTİK (K-075)
+
+Depoyu yeni bir yere klonlayan (ya da CI) **şu sırayı** izlemek zorunda:
+
+```
+git lfs install --local
+git lfs pull                       # ÖNCE
+godot --headless --path . --import # SONRA
+./testler/hepsi.sh
+```
+
+**Sıra bozulursa iş sessizce çürür.** Godot işaretçi (pointer) dosyalara
+karşı içe aktarma yaparsa kaynağı okuyamaz ve `.import` dosyalarını
+"başarısız" diye **yeniden yazar**; sonradan LFS çekilse bile varlık bir
+daha yüklenmez. Temiz kopyada ölçüldü: `animasyon` testi 2 veriyordu ve
+`git lfs pull` sonrası bile 2 vermeye devam etti — düzelmesi için
+`.import` dosyalarını geri almak gerekti.
+
+GitHub Actions'ta karşılığı `actions/checkout` adımındaki `lfs: true`.
+
 ## 9. Komutlar
 
 | Ne | Komut |
@@ -336,6 +356,7 @@ bunlar `@export var` ile tanımlanır, editör panelinde kaydırıcı olur ve **
 | Gün dönüşü (ekranda) | `godot --path . --script araclar/gun-donusu.gd` — görünür pencere |
 | Köpek (ekranda) | `godot --path . --script araclar/kopek-sondasi.gd` — görünür pencere |
 | Nefes: çöküş ≠ ölüm | `godot --path . --script araclar/nefes-sondasi.gd` — görünür pencere |
+| **Bütün testler** | `./testler/hepsi.sh` — ~1 dk |
 | Negatif kontroller (hepsi) | `./testler/negatif-kontrol.sh` — ~3 dk |
 
 Çıkış kodu **0** geçti · **1** başarısız · **2** çalıştırılamadı.

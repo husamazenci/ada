@@ -1,0 +1,77 @@
+name: testler
+
+# Ne zaman koşar: main'e her itişte ve her PR'da.
+# Negatif kontroller ayrı iş (~5 dk) ve yalnızca gecelik — her itişte
+# koşsaydı LFS bant genişliğini ve koşucu dakikasını gereksiz yerdi.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+env:
+  GODOT_SURUM: 4.7.2-stable
+
+jobs:
+  testler:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Depoyu al
+        uses: actions/checkout@v4
+        with:
+          # LFS ŞART VE SIRASI KRİTİK (K-075). İşaretçi dosyalara karşı
+          # koşan bir Godot içe aktarması .import dosyalarını BOZAR: Godot
+          # kaynağı okuyamayınca onları "başarısız" diye yeniden yazar ve
+          # sonradan LFS çekilse bile varlık bir daha yüklenmez. Temiz
+          # kopyada ölçüldü. lfs:false ile bu iş sessizce çürür.
+          lfs: true
+
+      - name: Godot kur
+        run: |
+          set -euo pipefail
+          DOSYA="Godot_v${GODOT_SURUM}_linux.x86_64"
+          curl -fsSL -o godot.zip \
+            "https://github.com/godotengine/godot/releases/download/${GODOT_SURUM}/${DOSYA}.zip"
+          unzip -q godot.zip
+          chmod +x "$DOSYA"
+          sudo mv "$DOSYA" /usr/local/bin/godot
+          # ÇIKIŞ KODUNA DEĞİL, İŞE BAK: sürümü yazdıramıyorsa kurulmamıştır.
+          godot --version
+
+      - name: Varlıkları içe aktar
+        run: |
+          set -euo pipefail
+          godot --headless --path . --import
+          # .godot/ git'te yok; içe aktarma çalışmadan sahne yükleyen her
+          # test 2 ("çalıştırılamadı") verir. Üretildiğini DOĞRULA.
+          test -d .godot/imported || { echo "içe aktarma dizini yok"; exit 1; }
+
+      - name: Testler
+        run: ./testler/hepsi.sh
+
+      - name: Derlenebiliyor mu (yalnızca ayrıştırma)
+        run: |
+          # Tam dışa aktarma şablon ister; burada projenin hatasız
+          # yüklendiğini doğrulamak yeter.
+          godot --headless --path . --quit 2>&1 | tee /tmp/acilis.log
+          ! grep -qiE "SCRIPT ERROR|Parse Error" /tmp/acilis.log
+
+  negatif-kontroller:
+    # Sabotajları geri koyup testlerin DÜŞTÜĞÜNÜ görür (§5.9). Düşmüyorsa
+    # test bir şey ölçmüyordur. Uzun sürdüğü için gecelik.
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+      - name: Godot kur
+        run: |
+          set -euo pipefail
+          DOSYA="Godot_v${GODOT_SURUM}_linux.x86_64"
+          curl -fsSL -o godot.zip \
+            "https://github.com/godotengine/godot/releases/download/${GODOT_SURUM}/${DOSYA}.zip"
+          unzip -q godot.zip && chmod +x "$DOSYA" && sudo mv "$DOSYA" /usr/local/bin/godot
+          godot --version
+      - run: godot --headless --path . --import
+      - run: ./testler/negatif-kontrol.sh
