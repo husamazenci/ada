@@ -61,6 +61,15 @@ sabotaj() {  # sabotaj <dosya> <sed-ifadesi>  → uygulanmadıysa 1 döner
 }
 geri() { cp "/tmp/_sab.yedek" "$1"; }
 
+duz_sed() {  # duz_sed <sed-ifadesi> <dosya> — yerinde düzenleme, -i KULLANMADAN
+	# `sed -i` iki sed'de farklı: BSD (macOS) boş sonek ister, GNU (Linux)
+	# istemez. İkisinde de aynı çalışan tek yol geçici dosyadan geçmek.
+	local gecici
+	gecici="$(mktemp)"
+	sed "$1" "$2" > "$gecici" && cat "$gecici" > "$2"
+	rm -f "$gecici"
+}
+
 # ============ katman-kurallari ============
 echo "negatif-kontrol · katman-kurallari"
 dene katman "temiz kopya" 0
@@ -126,12 +135,12 @@ dene moral "temiz kopya" 0
 # Taban İKİ yerde korunuyor (hedef kırpması + son kırpma). Bu kasıtlı: biri
 # düşerse öteki tutar. Tek tek sabotajın GEÇMESİ beklenir — savunma derinliği.
 cp betik/ai/guven.gd /tmp/_g.yedek
-sed -i '' 's/maxf(1.0 - kosul_baskisi, taban)/(1.0 - kosul_baskisi)/' betik/ai/guven.gd
+duz_sed 's/maxf(1.0 - kosul_baskisi, taban)/(1.0 - kosul_baskisi)/' betik/ai/guven.gd
 cmp -s betik/ai/guven.gd /tmp/_g.yedek && { echo "  ✗ SABOTAJ UYGULANMADI (hedef kırpması)"; kalan=$((kalan+1)); }
 dene moral "tek kırpma düşse ÖTEKİ tutmalı (savunma derinliği)" 0
 
 # Ama İKİSİ birden düşerse değişmez çökmeli — düşmüyorsa test ölçmüyordur.
-sed -i '' 's/moral = maxf(moral, taban)/moral = moral/' betik/ai/guven.gd
+duz_sed 's/moral = maxf(moral, taban)/moral = moral/' betik/ai/guven.gd
 cmp -s betik/ai/guven.gd /tmp/_g.yedek && { echo "  ✗ SABOTAJ UYGULANMADI (son kırpma)"; kalan=$((kalan+1)); }
 dene moral "sabotaj: İKİ kırpma da kaldırıldı → değişmez çökmeli" 1
 cp /tmp/_g.yedek betik/ai/guven.gd
@@ -491,6 +500,21 @@ if sabotaj betik/veri/isik.gd '/^static func gunduz_orani/,/^	return 0\.0$/s/^	i
 	dene isik "sabotaj: gece eşiği elle yazıldı (Ayarlar'dan koptu)" 1; geri betik/veri/isik.gd
 fi
 dene isik "geri yüklendi" 0
+
+# YAPISAL KORUMA (K-076): betikte yerinde düzenleme KALMAMALI. macOS'ta çalışıp
+# Linux'ta sessizce hiçbir şey yapan bu fark CI'nın ilk koşusunda çıktı;
+# ikinci koşuda yardımcıdan geçmeyen iki satır daha çıktı. Üçüncü kez
+# aramak yerine betik kendini denetliyor. Desen köşeli parantezli, yoksa
+# koruma kendi satırını yakalar (grep'in klasik kendini-sayma tuzağı).
+# YORUM SATIRLARI SAYILMAZ — bu dosyanın kendi negatif kontrollerinden
+# biri zaten "yorumdaki yasak kelime ihlal SAYILMAMALI" diyor; koruma da
+# aynı ilkeye uymalı.
+if grep -nE "^[^#]*sed +-[i]" "$0" >/dev/null 2>&1; then
+	echo ""
+	echo "✗ İHLAL: bu betikte hâlâ yerinde düzenleme var — macOS'ta çalışır, Linux'ta sessizce hiçbir şey yapmaz:"
+	grep -nE "^[^#]*sed +-[i]" "$0" | sed 's/^/    /'
+	kalan=$((kalan+1))
+fi
 
 echo "GENEL TOPLAM: $gecti geçti, $kalan kaldı"
 [ "$kalan" -eq 0 ] && exit 0 || exit 1
