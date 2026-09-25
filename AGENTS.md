@@ -335,6 +335,7 @@ bunlar `@export var` ile tanımlanır, editör panelinde kaydırıcı olur ve **
 | Performans bütçesi | `godot --path . --script araclar/butce.gd` — görünür pencere, ~12 s |
 | Gün dönüşü (ekranda) | `godot --path . --script araclar/gun-donusu.gd` — görünür pencere |
 | Köpek (ekranda) | `godot --path . --script araclar/kopek-sondasi.gd` — görünür pencere |
+| Nefes: çöküş ≠ ölüm | `godot --path . --script araclar/nefes-sondasi.gd` — görünür pencere |
 | Negatif kontroller (hepsi) | `./testler/negatif-kontrol.sh` — ~3 dk |
 
 Çıkış kodu **0** geçti · **1** başarısız · **2** çalıştırılamadı.

@@ -36,11 +36,14 @@ var cagriya_cevap_veriyor := false
 # seni takip etmez, ama döner ve bakar. Görünmeyen bir söz, tutulup
 # tutulmadığı anlaşılmayan bir sözdür.
 var bekliyor := false
+## Köprü yazar. Ölü beden KIPIRDAMAZ — çöküşü ölümden ayıran tek şey bu.
+var oldu := false
 
 var _oyuncu: Node3D
 var _govde: Node3D
 var _iskelet: Skeleton3D
 var _oynatici: AnimationPlayer
+var _eklenti: SkeletonModifier3D
 var _durum := ""            # oynayan OYUN durumu (klip adı değil)
 var _gecis := ""            # bitmesini beklediğimiz tek seferlik klip
 
@@ -53,6 +56,13 @@ func _ready() -> void:
 		_oynatici = _govde.get_node_or_null(^"Animasyon")
 	if _oynatici:
 		_oynatici.animation_finished.connect(_klip_bitti)
+	if _iskelet:
+		# Eklenti İSKELETİN ÇOCUĞU olmak zorunda; Godot modifier'ları yalnızca
+		# orada çalıştırıyor. Kodla eklemek sahnede unutulmasını imkânsız
+		# kılıyor — model değişse bile yerini bulur.
+		_eklenti = preload("res://betik/cizim/beden-eklentisi.gd").new()
+		_eklenti.name = "BedenEklentisi"
+		_iskelet.add_child(_eklenti)
 	else:
 		push_error("[ada] Arkadas/Govde/Animasyon yok — arkadaş T-pozunda kalır")
 
@@ -108,6 +118,9 @@ func _physics_process(delta: float) -> void:
 	# (set_bone_pose_rotation pozu DEĞİŞTİRİR, üstüne eklemez).
 	if _govde:
 		_govde.rotation.y = deg_to_rad(model_yon_duzeltme_derece)
+	if _eklenti:
+		_eklenti.moral = moral
+		_eklenti.canli = not oldu
 	_animasyonu_surdur(Vector2(velocity.x, velocity.z).length())
 
 func _animasyonu_surdur(hiz_ms: float) -> void:

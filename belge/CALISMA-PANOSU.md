@@ -105,18 +105,10 @@ buluyor. Moral ölümü oynanışla tetiklenebilir durumda.
 Animasyon kütüphanesi geldi ve bağlandı (K-069). Kalan: model **iç çamaşırlı
 bir temel gövde**. Hayatta kalma oyunu için CC0 bir giysi paketi gerekiyor.
 
-### AÇIK BORÇ — çöküş ile ölüm ekranda ayrışmıyor (2026-09-25)
+### KAPANDI — çöküş/ölüm ayrımı ve orta moralin bedeni (K-074)
 
-`Death01` son karesinde arkadaş yüzüstü yatıyor. Tasarım çöküşün **günlerce**
-sürmesini ve oyuncunun defalarca müdahale şansı olmasını istiyor — ama yatan
-çöküş ölümle aynı görünüyor. Canlıyken küçük bir devinim (nefes) gerekiyor,
-yoksa gerçekten öldüğünde ekranda hiçbir şey değişmez.
-
-### AÇIK BORÇ — orta moralin bedeni yok (2026-09-25)
-
-Spektin "omuz/baş düşmesi 12°" maddesi bağlı değil: elle omurga bükme
-animasyonla çakıştığı için kaldırıldı. Doğru yeri bir `SkeletonModifier3D` —
-animasyonun ÜSTÜNE ekler. Şu an orta moral yalnızca tempo (×0.70) ile okunuyor.
+İkisi de `SkeletonModifier3D` ile çözüldü. Ölçüldü: çökmüş canlı beden
+34 piksel kıpırdıyor, ölü beden 2. Orta moral 12° omuz düşüşüyle okunuyor.
 
 ### AÇIK BORÇ — mırıltı sesi (K-068)
 

@@ -1,6 +1,13 @@
 extends SceneTree
 
 # GRİ KUTU KAPISI — görsel yarısı.
+#
+# ÖLÇÜT UYARISI: kadrajlar arası piksel farkı KABA bir göstergedir, kanıt
+# değildir. Oyuncu kilitli ama arkadaşın oyuncu ÇEVRESİNDEKİ açısal konumu
+# kilitli değil — bandına yürürken nereden geldiğine göre ekranın farklı
+# yerinde duruyor, ve fark sayısının bir kısmı oradan geliyor. Kanıt olan
+# iki şey: (1) ölçülen MESAFELER, (2) üç izleyicinin kaydı izleyip seviyeyi
+# adlandırması (kabul kriteri).
 # Üç güven seviyesini sırayla zorlar, arkadaşın yerleşmesini bekler, her biri
 # için PNG yazar ve gerçekleşen mesafeyi ölçer. --headless ile ÇALIŞMAZ.
 
@@ -14,6 +21,7 @@ var _yerlesti := false
 var _arkadas: Node3D
 var _oyuncu: Node3D
 var _oyuncu_konum := Vector3.INF
+var _oturdu_kare := -1
 # Her durum İKİ AŞAMALI: önce "yerleşme" değerleriyle konumlanır, sonra
 # "gösterim" değerleri uygulanır. Sebep: dip moralde arkadaş yerinden
 # kalkamaz — moral düşmeden önce yakına yerleşmezse, uzakta oturan biri
@@ -28,6 +36,9 @@ const DURUMLAR := [
 	# Çöküş kapının parçasıdır: oyuncunun müdahale etmesi gereken an EKRANDA
 	# oturmaktan ayırt edilebilmeli. Ayırt edilemiyorsa o son ulaşılamaz.
 	{"ad": "cokus",                  "yer_g": 0.80, "yer_m": 0.80, "g": 0.80, "m": 0.05},
+	# ORTA MORAL: spektin 12°'lik omuz düşüşü. Aynı mesafe, aynı klip ("dur"),
+	# tek fark omuz/baş eğimi — kapının en ince ayrımı bu.
+	{"ad": "orta-moral",             "yer_g": 0.80, "yer_m": 0.80, "g": 0.80, "m": 0.50},
 ]
 
 func _mesafe() -> float:
@@ -98,10 +109,21 @@ func _process(_d: float) -> bool:
 	var durdu: bool = _arkadas.velocity.length() < 0.02
 	var mesafe_tamam: bool = absf(_mesafe() - D.hedef_mesafe_m(d["g"])) < 0.35 or D.oturuyor_mu(d["m"])
 	if not (durum_tamam and durdu and mesafe_tamam):
+		_oturdu_kare = -1
 		if _kare > 3000:
 			printerr("ÇALIŞTIRILAMADI: %s gösterimde oturmadı (durum '%s', beklenen '%s')" % [
 				d["ad"], str(_arkadas.get("_durum")), beklenen])
 			quit(2); return true
+		return false
+
+	# HARMANIN BİTMESİNİ DE BEKLE. Durum adı doğru olduğu ANDA koşullar
+	# sağlanıyor ama beden hâlâ önceki klipten geçiş yapıyor: orta moral
+	# kadrajında arkadaş YERDE YATIYORDU, çünkü bir önceki durum çöküştü ve
+	# Death01'den Idle'a harman daha yeni başlamıştı. Klip adı "Idle"dı,
+	# görüntü Death01'di — ölçtüğüm şey yine ölçmek istediğim şey değildi.
+	if _oturdu_kare < 0:
+		_oturdu_kare = _kare
+	if _kare - _oturdu_kare < 90:
 		return false
 
 	var olculen := _mesafe()
@@ -112,6 +134,7 @@ func _process(_d: float) -> bool:
 
 	_i += 1
 	_kare = 0
+	_oturdu_kare = -1
 	_yerlesti = false
 	if _i >= DURUMLAR.size():
 		quit(0); return true

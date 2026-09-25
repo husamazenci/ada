@@ -2619,3 +2619,46 @@ ama simülasyonun "gece" dediği evre (günün son çeyreği) değil. Doğru de�
 ve doğru — şafak kısa bir karanlıktır. İkinci bir madde o karanlığın
 `SAFAK_SURESI`'ni aşmadığını denetliyor, yoksa oyuncu gündüzün bir bölümünü
 gece sanardı.
+
+
+---
+
+## K-074 · Çöküş ile ölüm ekranda ayrıldı; orta moralin bedeni geldi
+
+**Tarih:** 2026-09-25 (gece işi).
+
+İki açık borç aynı yere bağlandı: `SkeletonModifier3D` — **animasyonun
+ÜSTÜNE ekleyen**, yerine geçmeyen bir eklenti (`betik/cizim/beden-eklentisi.gd`).
+
+**a) Nefes.** `Death01`ın son karesinde arkadaş yüzüstü yatıyor ve hiç
+kıpırdamıyordu; yani **çöküş ile ölüm ekranda aynı görünüyordu.** Tasarım
+çöküşün günlerce sürmesini ve oyuncunun defalarca müdahale şansı olmasını
+istiyor (K-049) — ayırt edilemiyorsa o pencere yok demektir. Artık çökmüş
+ama **canlı** beden yavaş ve sığ nefes alıyor (1.6°, 0.22 Hz), ölü beden
+hiç kıpırdamıyor.
+
+Ölçüldü (2.6 sn arayla iki kare, 160×90 örnekleme):
+**çökmüş canlı 34 piksel · çökmüş ölü 2 piksel.**
+
+**b) Orta moralin bedeni.** Spektin 12°'lik omuz/baş düşüşü
+(`Davranis.duruş_egimi_derece`) baştan beri sayıda vardı ama kullanılamıyordu:
+`set_bone_pose_rotation` pozu **değiştirir**, üstüne eklemez — animasyonla
+çakışırdı. Eklenti animasyondan sonra koşup mevcut pozu okuyarak üstüne
+ekliyor. Artık orta moral aynı klipte (`Idle`), aynı mesafede, yalnızca
+duruşla okunuyor.
+
+### İki ölçüm hatası daha
+
+**Gri kutu sondası HARMANIN ortasında yakalıyordu.** Orta moral kadrajında
+arkadaş **yerde yatıyordu** — bir önceki durum çöküştü ve `Death01`dan
+`Idle`a geçiş daha yeni başlamıştı. Tanı sondası klip adının doğru olduğunu
+gösterdi (`Idle`, oynuyor, konum 2.33/2.50) ama görüntü hâlâ eski klipti.
+Sonda artık durum sağlandıktan sonra harman süresi kadar daha bekliyor.
+*Düzeltmeden sonra bütün fark sayıları neredeyse ikiye katlandı — yani
+önceki ölçümlerin tamamı harman ortasındaydı.*
+
+**Piksel farkı ölçütünün sınırı yazıldı.** Oyuncu kilitli ama arkadaşın
+oyuncu ÇEVRESİNDEKİ açısal konumu kilitli değil; bandına yürürken nereden
+geldiğine göre ekranın farklı yerinde duruyor. Sayının bir kısmı oradan
+geliyor. Kanıt olan iki şey: ölçülen **mesafeler** ve **üç izleyici**
+kriteri. Sonda dosyasının başına uyarı düşüldü.

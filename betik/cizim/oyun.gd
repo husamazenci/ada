@@ -89,6 +89,7 @@ func _process(delta: float) -> void:
 		_arkadas.moral = sim.guven.moral
 		_arkadas.cagriya_cevap_veriyor = sim.cagri.yanit_veriyor_mu()
 		_arkadas.bekliyor = sim.bekleyerek_mi_duruyor()
+		_arkadas.oldu = sim.arkadas.oldu
 
 	_sesleni_isle(delta)
 
