@@ -28,6 +28,7 @@ kos() {  # kos <test-adi> → çıkış kodu
 		ates)    $GODOT --headless --path . --script res://testler/ates.gd >/dev/null 2>&1 ;;
 		kopek)   $GODOT --headless --path . --script res://testler/kopek.gd >/dev/null 2>&1 ;;
 		soz)     $GODOT --headless --path . --script res://testler/soz.gd >/dev/null 2>&1 ;;
+		isik)    $GODOT --headless --path . --script res://testler/isik.gd >/dev/null 2>&1 ;;
 	esac
 	return $?
 }
@@ -456,6 +457,32 @@ if sabotaj betik/veri/sozler.gd 's/^const TURLER: Array\[String\] = \["cagri", "
 	dene soz "sabotaj: 'buyruk' türü açıldı" 1; geri betik/veri/sozler.gd
 fi
 dene soz "geri yüklendi" 0
+
+# ============ isik (K-073) ============
+echo "negatif-kontrol · isik"
+dene isik "temiz kopya" 0
+
+# Gece karanlık değilse ateşin ışık çemberi hiçbir şey ifade etmez.
+if sabotaj betik/veri/isik.gd 's/^const ORTAM_GECE := 0\.08 .*$/const ORTAM_GECE := 0.55/'; then
+	dene isik "sabotaj: gece ortam ışığı gündüz gibi" 1; geri betik/veri/isik.gd
+fi
+# Gecede güneş sıfırın üstünde kalırsa gölgeler her yeri aydınlatır.
+if sabotaj betik/veri/isik.gd '/^static func gunduz_orani/,/^$/s/^	return 0\.0$/	return 0.12/'; then
+	dene isik "sabotaj: gecede güneş hâlâ yanıyor" 1; geri betik/veri/isik.gd
+fi
+# Şafak kaldırılırsa gün karanlıktan değil tam ışıktan başlar.
+if sabotaj betik/veri/isik.gd '/^static func gunduz_orani/,/^	if g < A.GUNDUZ_BITIS/s/^	if g < SAFAK_SURESI:$/	if false:/'; then
+	dene isik "sabotaj: şafak kaldırıldı" 1; geri betik/veri/isik.gd
+fi
+# Alacakaranlıkta ışık ARTARSA güneş geri doğar.
+if sabotaj betik/veri/isik.gd 's|^		return 1\.0 - (g - A.GUNDUZ_BITIS) / (A.ALACAKARANLIK_BITIS - A.GUNDUZ_BITIS)$|		return (g - A.GUNDUZ_BITIS) / (A.ALACAKARANLIK_BITIS - A.GUNDUZ_BITIS)|'; then
+	dene isik "sabotaj: alacakaranlıkta ışık artıyor" 1; geri betik/veri/isik.gd
+fi
+# Eşik elle yazılırsa Ayarlar'dan kayar: sim gece der, ekran aydınlık kalır.
+if sabotaj betik/veri/isik.gd '/^static func gunduz_orani/,/^	return 0\.0$/s/^	if g < A.ALACAKARANLIK_BITIS:$/	if g < 0.88:/'; then
+	dene isik "sabotaj: gece eşiği elle yazıldı (Ayarlar'dan koptu)" 1; geri betik/veri/isik.gd
+fi
+dene isik "geri yüklendi" 0
 
 echo "GENEL TOPLAM: $gecti geçti, $kalan kaldı"
 [ "$kalan" -eq 0 ] && exit 0 || exit 1

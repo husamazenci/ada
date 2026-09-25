@@ -2562,3 +2562,60 @@ açık kaldığı**: oyuncu yanı başında dururken 10 adım geçiyor ve söz h
 olmalı. Madde eklendi.
 
 **İhmalin beş kaynağı da artık dünyada bağlı.**
+
+
+---
+
+## K-073 · Gece nihayet ekranda: günün ışığı ve ateşin çemberi
+
+**Tarih:** 2026-09-25 (gece işi).
+
+İki şey **yalnızca sayıda** var, ekranda yokmuş — ikisi de sessizce.
+
+**a) Ateşin ışık çemberi hiç kurulmamıştı.** `Dunya.oyuncu_atesin_isiginda` ve
+`arkadas_atesin_isiginda` alanlarını köprü **hiç yazmıyordu**; ikisi de hep
+`false` kalıyordu. Yani K-058'in bütün gerekçesi — *"ateşin aydınlattığı
+çember içinde algı gündüz gibi çalışır"*, kullanıcı kararı — oyunda **ölüydü**.
+Testler geçiyordu çünkü testler o alanları elle kuruyordu. §5.2'nin tam
+tanımı: "testte geçiyor ama ekranda bozuk."
+
+**b) Gece diye bir şey yoktu.** `gece_mi()` true dönüyordu ama sahnenin ortam
+ışığı sabit 0.65'ti; ekran gündüz gibi duruyordu. Ateşin 6 m'lik çemberi de,
+köpeğin "ışığın sınırında durması" da görünmezdi — çünkü ortalık zaten
+aydınlıktı.
+
+### Yapılanlar
+
+**Ocak sahneye kondu** (`betik/cizim/ates.gd`): ışık yarıçapı `ATES_ISIK_YARICAPI_M`
+sabitinden geliyor, elle girilmiyor — elle girilseydi ekrandaki çember ile
+algının kullandığı çember ayrı ayrı kayardı ve *"ateşin yanındaydım ama
+görmedi"* doğardı. Alev yakıtla küçülüyor ama **sıfırlanmıyor**: sönme kararı
+simülasyonun, görsel sıfıra inseydi oyuncu yanan ateşi sönmüş sanardı.
+
+**Günün ışığı** (`betik/veri/isik.gd` — saf eğri, `betik/cizim/gokyuzu.gd` —
+uygulayıcı). Eşikler `Ayarlar`dan **türev**: alacakaranlık `GUNDUZ_BITIS` ile
+`ALACAKARANLIK_BITIS` arasında iniyor, gece tam `ALACAKARANLIK_BITIS`'te
+başlıyor. Ayrı yazılsalardı kayarlardı.
+
+### Ölçüldü (ekran parlaklığı, 64×36 örnekleme)
+
+| An | t | Güneş | Ekran parlaklığı |
+|---|---|---|---|
+| şafak | 0.03 | 0.41 | 0.2510 |
+| gündüz | 0.35 | 1.10 | **0.5490** |
+| alacakaranlık | 0.70 | 0.55 | 0.2730 |
+| gece (ateş yanıyor) | 0.85 | 0.00 | **0.0765** |
+| gece (ateşsiz) | 0.85 | 0.00 | **0.0406** |
+
+Gece gündüzden **7.17× karanlık**, ve **ateş gecenin parlaklığını ikiye
+katlıyor** (0.0406 → 0.0765). Ateşin oyundaki karşılığı artık ekranda.
+
+### Değişmezim fazla katıydı — kod doğruydu
+
+Testi *"ekranın gecesi ile simülasyonun gecesi HER NOKTADA aynı olmalı"* diye
+yazdım; düştü. Ayrışma **t = 0.000**'daydı: şafak anı fiziksel olarak karanlık
+ama simülasyonun "gece" dediği evre (günün son çeyreği) değil. Doğru değişmez
+**tek yönlü**: *simülasyon gece diyorsa ekran karanlık olmalı.* Tersi serbest
+ve doğru — şafak kısa bir karanlıktır. İkinci bir madde o karanlığın
+`SAFAK_SURESI`'ni aşmadığını denetliyor, yoksa oyuncu gündüzün bir bölümünü
+gece sanardı.

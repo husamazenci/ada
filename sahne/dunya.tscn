@@ -7,6 +7,8 @@
 [ext_resource type="Script" path="res://betik/cizim/soz-katmani.gd" id="5_soz"]
 [ext_resource type="PackedScene" uid="uid://wqc4ncx56k33" path="res://varlik/karakter/temel/Superhero_Male_FullBody.gltf" id="6_govde"]
 [ext_resource type="AnimationLibrary" uid="uid://cxywrxnmaec55" path="res://varlik/karakter/animasyon/UAL1_Standard.glb" id="7_anim"]
+[ext_resource type="Script" path="res://betik/cizim/ates.gd" id="8_ates"]
+[ext_resource type="Script" path="res://betik/cizim/gokyuzu.gd" id="9_gok"]
 
 [sub_resource type="Environment" id="Environment_gri"]
 background_mode = 1
@@ -29,6 +31,31 @@ size = Vector3(60, 1, 60)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oyuncu"]
 albedo_color = Color(0.62, 0.63, 0.66, 1)
 roughness = 0.9
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_alev"]
+; Işık saçan alev. Doku yok: yarı gerçekçi hedefe uzak ama gri kutuda
+; okunabilirlik yeterli — yerini gerçek parçacık efekti alacak (pano).
+albedo_color = Color(1, 0.55, 0.18, 1)
+emission_enabled = true
+emission = Color(1, 0.45, 0.12, 1)
+emission_energy_multiplier = 3.5
+shading_mode = 0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_alev"]
+material = SubResource("StandardMaterial3D_alev")
+top_radius = 0.02
+bottom_radius = 0.22
+height = 0.55
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kutuk"]
+albedo_color = Color(0.22, 0.17, 0.13, 1)
+roughness = 1.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_kutuk"]
+material = SubResource("StandardMaterial3D_kutuk")
+top_radius = 0.09
+bottom_radius = 0.09
+height = 0.9
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_govde"]
 radius = 0.28
@@ -60,6 +87,35 @@ shape = SubResource("BoxShape3D_zemin")
 
 [node name="Ag" type="MeshInstance3D" parent="Zemin"]
 mesh = SubResource("BoxMesh_zemin")
+
+; GÜNÜN IŞIĞI. Güneşi, ortam ışığını ve gök rengini TEK ELDEN sürer;
+; üçü ayrı yerden ayarlansaydı biri gece kalır öteki gündüz olurdu.
+[node name="Gokyuzu" type="Node3D" parent="."]
+script = ExtResource("9_gok")
+
+; OCAK. Konumu kampın merkezi; oyuncu ve arkadaş bunun çevresinde duruyor.
+[node name="Ates" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, -2)
+script = ExtResource("8_ates")
+
+[node name="Isik" type="OmniLight3D" parent="Ates"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+light_color = Color(1, 0.72, 0.42, 1)
+light_energy = 2.4
+omni_range = 6.0
+shadow_enabled = true
+
+[node name="Alev" type="MeshInstance3D" parent="Ates"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.28, 0)
+mesh = SubResource("CylinderMesh_alev")
+
+[node name="Kutuk1" type="MeshInstance3D" parent="Ates"]
+transform = Transform3D(1, 0, 0, 0, 0.17, 0.98, 0, -0.98, 0.17, 0, 0.09, 0)
+mesh = SubResource("CylinderMesh_kutuk")
+
+[node name="Kutuk2" type="MeshInstance3D" parent="Ates"]
+transform = Transform3D(0.17, 0, -0.98, 0.96, 0.17, 0.17, 0.17, -0.98, 0.03, 0, 0.09, 0)
+mesh = SubResource("CylinderMesh_kutuk")
 
 [node name="Oyuncu" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)

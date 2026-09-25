@@ -22,6 +22,9 @@ var sim
 var _bekleyen_eylem := "bekle"
 var _kayit_sayaci := 0.0
 var _arkadas: Node3D
+var _oyuncu_dugum: Node3D
+var _ates: Node3D
+var _gokyuzu: Node3D
 var _soz: CanvasLayer
 var _cagir_basili_sn := 0.0
 var _cagri_islendi := false
@@ -29,6 +32,9 @@ var _cagri_islendi := false
 func _ready() -> void:
 	sim = D.new()
 	_arkadas = get_node_or_null(^"Arkadas")
+	_oyuncu_dugum = get_node_or_null(^"Oyuncu")
+	_ates = get_node_or_null(^"Ates")
+	_gokyuzu = get_node_or_null(^"Gokyuzu")
 	_soz = get_node_or_null(^"Soz")
 	# Çağrı gecikmesi bandın İÇİNDE rastgele seçilir. Saf makine belirlenimci
 	# başlar ki test aynı sayıyı görsün; tohumu OYUN atar, test atmaz.
@@ -48,6 +54,15 @@ func _process(delta: float) -> void:
 	if _arkadas:
 		sim.mesafe_m = _mesafe_m()
 
+	# ATEŞ IŞIĞI ÇEMBERİ — K-058'in ekrandaki karşılığı. Bu iki alan bugüne
+	# kadar HİÇ yazılmıyordu: ikisi de hep false kalıyor, yani "ateşin
+	# çemberinde algı gündüz gibi çalışır" istisnası oyunda ÖLÜYDÜ. Testte
+	# geçiyordu çünkü test alanları elle kuruyordu — tam da §5.2'nin
+	# "testte geçiyor ama ekranda yok" ailesi.
+	if _ates and _oyuncu_dugum and _arkadas:
+		sim.oyuncu_atesin_isiginda = _ates.isiginda_mi(_oyuncu_dugum.global_position)
+		sim.arkadas_atesin_isiginda = _ates.isiginda_mi(_arkadas.global_position)
+
 	var dt: float = (delta * zaman_carpani) / gun_suresi_sn
 	sim.adim(dt, func(_d): return _eylemi_al())
 
@@ -56,6 +71,13 @@ func _process(delta: float) -> void:
 	# refleksi 50 kat hızlanmamalı — ölçtüğümüz şey ölçmek istediğimiz şey
 	# olmalı (§5.8).
 	sim.cagri_ilerle(delta)
+
+	if _gokyuzu:
+		_gokyuzu.t = sim.t
+
+	if _ates:
+		_ates.yaniyor = sim.ates_yaniyor
+		_ates.yakit = sim.ates_yakit
 
 	if _arkadas:
 		_arkadas.guven = sim.guven.deger

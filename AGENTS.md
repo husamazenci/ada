@@ -329,9 +329,11 @@ bunlar `@export var` ile tanımlanır, editör panelinde kaydırıcı olur ve **
 | Ateş ve yakıt (K-070) | `godot --headless --path . --script res://testler/ates.gd` |
 | Yaban köpeği (K-071) | `godot --headless --path . --script res://testler/kopek.gd` |
 | "Bekle" sözü (K-072) | `godot --headless --path . --script res://testler/soz.gd` |
+| Günün ışığı (K-073) | `godot --headless --path . --script res://testler/isik.gd` |
 | Kadraj (görüntü + ölçüm) | `godot --path . --script araclar/kadraj.gd` — görünür pencere |
 | Çağrı sondası (ekranda) | `godot --path . --script araclar/cagri-sondasi.gd` — görünür pencere |
 | Performans bütçesi | `godot --path . --script araclar/butce.gd` — görünür pencere, ~12 s |
+| Gün dönüşü (ekranda) | `godot --path . --script araclar/gun-donusu.gd` — görünür pencere |
 | Negatif kontroller (hepsi) | `./testler/negatif-kontrol.sh` — ~3 dk |
 
 Çıkış kodu **0** geçti · **1** başarısız · **2** çalıştırılamadı.
